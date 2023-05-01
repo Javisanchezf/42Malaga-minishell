@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:28:44 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/01 13:01:48 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/05/01 13:05:58 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ char	*ft_get_text_minishell(void)
 		exit(EXIT_FAILURE); //Poner ft_error y liberar lo que haga falta
 	aux = ft_strrchr(path, '/') + 1;
 	aux = ft_strjoin("\033[36;1m", aux); //Proteger
-	text_minishell = ft_strjoin(aux, "> \033[0m"); //Proteger
+	text_minishell = ft_strjoin(aux, " ⮞ \033[0m"); //Proteger
 	free(aux);
 	return (text_minishell);
 }
 
 
-int ft_getline()
+void ft_getline()
 {
 	char	*input;
 	char	*text_minishell;
@@ -56,13 +56,11 @@ int ft_getline()
 		if (strcmp(input, "exit") == 0)
 		{
 			free(input);
-			return (1);
+			break ;
 		}
 		printf("Entrada: %s\n", input);
 		free(input);
 	}
-
-	return (1);
 }
 
 int	main()
