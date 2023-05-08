@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+         #
+#    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/30 20:32:35 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/01 12:14:27 by javiersa         ###   ########.fr        #
+#    Updated: 2023/05/08 18:35:03 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ CC = gcc
 CLEAN = rm -Rf
 SRC = src/main.c
 PARAMS = 4 2 3 4 5
+DATETIME := $(shell date +%Y-%m-%dT%H:%M:%S%z)
 
 OBJS := $(SRC:.c=.o)
 
@@ -58,7 +59,7 @@ libftplusre: libftplusclean libftplusmake
 git: fclean gitignore
 	@git add *
 	@echo "$(BOLD)$(YELLOW)Git:$(WHITE) Adding all archives.$(DEFAULT)"
-	@git commit -m "Little changes"
+	@git commit -m "Little changes $(DATETIME)"
 	@echo "$(BOLD)$(CYAN)Git:$(WHITE) Commit this changes with "Little changes".$(DEFAULT)"
 	@git push
 	@echo "$(BOLD)$(GREEN)Git:$(WHITE) Pushing all changes.$(DEFAULT)"
