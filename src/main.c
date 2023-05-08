@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:28:44 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/01 13:05:58 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/05/08 18:28:06 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_get_text_minishell(void)
 		exit(EXIT_FAILURE); //Poner ft_error y liberar lo que haga falta
 	aux = ft_strrchr(path, '/') + 1;
 	aux = ft_strjoin("\033[36;1m", aux); //Proteger
-	text_minishell = ft_strjoin(aux, " ⮞ \033[0m"); //Proteger
+	text_minishell = ft_strjoin(aux, " -> \033[0m"); //Proteger
 	free(aux);
 	return (text_minishell);
 }
@@ -53,7 +53,7 @@ void ft_getline()
 		input = readline(text_minishell);
 		free(text_minishell);
 		add_history(input);
-		if (strcmp(input, "exit") == 0)
+		if (ft_strncmp(input, "exit", 5) == 0)
 		{
 			free(input);
 			break ;
