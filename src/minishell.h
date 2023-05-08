@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 01:59:23 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/01 13:01:44 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/05/08 18:31:59 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
 # define HEADER ("\n\033[34;1m\
 ███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     \n\
 ████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     \n\
@@ -32,5 +33,13 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <libgen.h>
+
+typedef	struct s_cdm
+{
+	char	*cmd;  // COMANDO: LS, PWD...
+	char	**opt;  // OPCIONES: -a, -ld...
+	char	*path; // RUTA DEL COMANDO
+	char	unif; // |, <, >, ...
+} t_cmd;
 
 #endif

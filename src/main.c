@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:28:44 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/08 18:28:06 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/05/08 18:31:34 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void ft_getline()
 	}
 }
 
-int	main()
+int	main(int argc, char **argv, char **env)
 {
 	ft_printf("%s", &(HEADER));
 	ft_getline();
