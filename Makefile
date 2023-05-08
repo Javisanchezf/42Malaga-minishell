@@ -6,7 +6,7 @@
 #    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/30 20:32:35 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/08 18:36:25 by javiersa         ###   ########.fr        #
+#    Updated: 2023/05/08 18:36:42 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC = gcc
 CLEAN = rm -Rf
 SRC = src/main.c
 PARAMS = 4 2 3 4 5
-DATETIME := $(shell date +%Y-%m-%d | %H:%M:%S)
+DATETIME := $(shell date +%Y-%m-%d %H:%M:%S)
 
 OBJS := $(SRC:.c=.o)
 
