@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:28:44 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/08 18:31:34 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:18:09 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ char	*ft_get_text_minishell(void)
 	return (text_minishell);
 }
 
-
-void ft_getline()
+void ft_getline(void)
 {
 	char	*input;
 	char	*text_minishell;
