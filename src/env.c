@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:36:25 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/09 21:05:09 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/05/09 21:21:52 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_env	*enviroment_extract(char **env, int i)
 		if (aux == NULL)
 			printf("WTF\n"); //Gestionar el error
 		enviroment[i].value = ft_substr(env[i], 0, aux - env[i]);
-		enviroment[i].variable = getenv(enviroment[i].value);
+		enviroment[i].variable = getenv(enviroment[i].value); //proteger si es null
 	}
 	return (enviroment);
 }
