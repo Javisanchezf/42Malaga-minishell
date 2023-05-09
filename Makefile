@@ -6,13 +6,13 @@
 #    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/30 20:32:35 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/09 17:18:55 by javiersa         ###   ########.fr        #
+#    Updated: 2023/05/09 17:33:42 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell.a
 PROGRAM = minishell
-CFLAGS = -Wall -Werror -Wextra -pthread
+CFLAGS = -Wall -Werror -Wextra
 PERSONALNAME = Minishell
 LIBFTPLUS = libftplus
 CC = gcc

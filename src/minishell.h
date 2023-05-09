@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 01:59:23 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/08 18:31:59 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:23:56 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@
 \n\033[0m")
 
 # include "../libftplus/libftplus.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <libgen.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <libgen.h>
 
-typedef	struct s_cdm
+typedef struct s_cdm
 {
 	char	*cmd;  // COMANDO: LS, PWD...
 	char	**opt;  // OPCIONES: -a, -ld...
 	char	*path; // RUTA DEL COMANDO
 	char	unif; // |, <, >, ...
-} t_cmd;
+}				t_cmd;
 
 #endif
