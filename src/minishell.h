@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 01:59:23 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/09 17:23:56 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/05/09 21:09:05 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,18 @@ typedef struct s_cdm
 	char	*path; // RUTA DEL COMANDO
 	char	unif; // |, <, >, ...
 }				t_cmd;
+
+typedef struct s_env
+{
+	char	*variable;
+	char	*value;
+}				t_env;
+
+typedef struct s_data
+{
+	t_env		*env;
+}				t_data;
+
+t_env	*enviroment_extract(char **env, int i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:28:44 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/09 17:22:32 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/05/09 21:05:30 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,34 @@ void	ft_getline(void)
 	}
 }
 
+void	cleaner(t_data	*data, int i)
+{
+	while (data->env[++i].value)
+		ft_free_and_null((void **)&data->env[i].value);
+	ft_free_and_null((void **)&data->env);
+}
+
+// Add atexit(ft_leaks); in main and # include <stdlib.h>
+
+void	ft_leaks(void)
+{
+	system("leaks -q minishell");
+}
+
 int	main(int argc, char **argv, char **env)
 {
+	t_data	data;
+
 	(void)argc;
 	(void)argv;
-	(void)env;
+	// (void)env;
+	atexit(ft_leaks);
 	ft_printf("%s", &(HEADER));
+	data.env = enviroment_extract(env, 0);
+	int i = -1;
+	while (data.env[++i].value != 0)
+		ft_printf("Variable: %s Value: %s\n", data.env[i].value, data.env[i].variable);
 	ft_getline();
+	cleaner(&data, -1);
+   return 0;
 }
