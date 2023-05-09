@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:28:44 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/09 17:18:09 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:22:09 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ void ft_getline(void)
 
 int	main(int argc, char **argv, char **env)
 {
+	(void)argc;
+	(void)argv;
+	(void)env;
 	ft_printf("%s", &(HEADER));
 	ft_getline();
 }
