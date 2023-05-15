@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/30 20:32:35 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/08 18:38:48 by javiersa         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = minishell.a
 PROGRAM = minishell
 CFLAGS = -Wall -Werror -Wextra -pthread
@@ -17,7 +5,7 @@ PERSONALNAME = Minishell
 LIBFTPLUS = libftplus
 CC = gcc
 CLEAN = rm -Rf
-SRC = src/main.c
+SRC = src/minishell.c src/error.c src/free.c src/pipe_utils.c src/pipes.c
 PARAMS = 4 2 3 4 5
 DATETIME := $(shell date +%Y-%m-%d' '%H:%M:%S)
 
@@ -61,7 +49,14 @@ git: fclean gitignore
 	@echo "$(BOLD)$(YELLOW)Git:$(WHITE) Adding all archives.$(DEFAULT)"
 	@git commit -m "Little changes $(DATETIME)"
 	@echo "$(BOLD)$(CYAN)Git:$(WHITE) Commit this changes with "Little changes $(DATETIME)".$(DEFAULT)"
-	@git push
+	@git push 
+	@echo "$(BOLD)$(GREEN)Git:$(WHITE) Pushing all changes.$(DEFAULT)"
+antdelga_git: fclean gitignore
+	@git add *
+	@echo "$(BOLD)$(YELLOW)Git:$(WHITE) Adding all archives.$(DEFAULT)"
+	@git commit -m "Little changes $(DATETIME)"
+	@echo "$(BOLD)$(CYAN)Git:$(WHITE) Commit this changes with "Little changes $(DATETIME)".$(DEFAULT)"
+	@git push --set-upstream origin antdelga
 	@echo "$(BOLD)$(GREEN)Git:$(WHITE) Pushing all changes.$(DEFAULT)"
 gitignore:
 	@echo ".*\n*.out\n*.o\n*.a">.gitignore
