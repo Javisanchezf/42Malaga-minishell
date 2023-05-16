@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 01:59:23 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/09 21:09:05 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:34:22 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ typedef struct s_data
 	t_env		*env;
 }				t_data;
 
-t_env	*enviroment_extract(char **env, int i);
+void	ft_getline(void);
 
 #endif

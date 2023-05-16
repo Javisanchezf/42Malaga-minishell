@@ -6,7 +6,7 @@
 #    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/30 20:32:35 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/09 20:49:09 by javiersa         ###   ########.fr        #
+#    Updated: 2023/05/16 19:31:13 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ PERSONALNAME = Minishell
 LIBFTPLUS = libftplus
 CC = gcc
 CLEAN = rm -Rf
-SRC = src/main.c src/env.c
+SRC = src/main.c src/get_line.c
 PARAMS = 4 2 3 4 5
 DATETIME := $(shell date +%Y-%m-%d' '%H:%M:%S)
 
