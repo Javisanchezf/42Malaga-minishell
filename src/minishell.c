@@ -54,15 +54,13 @@ int	main(int argc, char **argv, char **envp)
 	link.fd_t_in = dup(0);
 	link.fd_t_out = dup(1);
 	link.cmd_count = 3;
+	link.envp = envp;
 	cmd[0].opt = ft_split("ls -l -a", ' ');
 	cmd[0].cmd = "/bin/ls";
-	cmd[0].envp = envp;
 	cmd[1].opt = ft_split("wc -l", ' ');
 	cmd[1].cmd = "/usr/bin/wc";
-	cmd[1].envp = envp;
 	cmd[2].opt = ft_split("cat -e", ' ');
 	cmd[2].cmd = "/bin/cat";
-	cmd[2].envp = envp;
 
 	/* ESTO SÍ PODRÍA SERVIR */
 	if (argc != 1)

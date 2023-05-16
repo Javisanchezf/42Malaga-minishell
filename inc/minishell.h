@@ -30,13 +30,13 @@ typedef struct s_command
 {
 	char	*cmd;
 	char	**opt;
-	char	**envp;
 
 }	t_command;
 
 typedef struct s_pipe
 {
 	int		cmd_count;
+	char	**envp;
 	int		piping[2];
 	int		fd_in;
 	int		fd_t_in;
@@ -60,7 +60,7 @@ void	check_awk(t_command *cmd);
 /* Functions for pipes.c */
 void	child_generator(t_pipe *link, t_command *cmd);
 void	create_tube(t_pipe *link, int cont);
-void	child(t_command *cmd);
+void	child(t_command *cmd, t_pipe *link);
 
 /*Functions for error.c*/
 void	argc_error(void);

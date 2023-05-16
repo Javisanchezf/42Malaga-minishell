@@ -1,6 +1,6 @@
 #include "../inc/minishell.h"
 
-void	child(t_command *cmd)
+void	child(t_command *cmd, t_pipe *link)
 {
 	if (!cmd->cmd)
 	{
@@ -9,7 +9,7 @@ void	child(t_command *cmd)
 		err_msg_exit(CMD_ERROR);
 	}
 	check_awk(cmd);
-	execve(cmd->cmd, cmd->opt, cmd->envp);
+	execve(cmd->cmd, cmd->opt, link->envp);
 }
 
 void	create_tube(t_pipe *link, int cont)
@@ -45,7 +45,7 @@ void	child_generator(t_pipe *link, t_command *cmd)
 		create_tube(link, cont);
 		pid[cont] = fork();
 		if (!pid[cont])
-			child(&cmd[cont]);
+			child(&cmd[cont], link);
 		waitpid(pid[cont], &to_wait, 0);
 		free_matrix(cmd[cont].opt);
 	}
