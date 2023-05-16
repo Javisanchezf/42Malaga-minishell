@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/30 20:28:44 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/16 12:52:31 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:30:07 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,26 @@
 // 	}
 // 	free(git_dir);
 // 	return ("> \033[0m");
+// }
+
+// t_env	*enviroment_extract(char **env, int i)
+// {
+// 	t_env	*enviroment;
+// 	char	*aux;
+
+// 	while (env[i])
+// 		i++;
+// 	enviroment = ft_calloc(i + 1, sizeof(t_env));
+// 	i = -1;
+// 	while (env[++i])
+// 	{
+// 		aux = ft_strchr(env[i], '=');
+// 		if (aux == NULL)
+// 			printf("WTF\n"); //Gestionar el error
+// 		enviroment[i].value = ft_substr(env[i], 0, aux - env[i]);
+// 		enviroment[i].variable = getenv(enviroment[i].value); //proteger si es null
+// 	}
+// 	return (enviroment);
 // }
 
 // char	*parse_aux(char *input, char delimiter, int *i)
@@ -55,16 +75,12 @@
 // 	}
 // }
 
-int	count_commands(char *input)
+char	*count_commands(char *input, int *commands, int i)
 {
-	int		commands;
-	int		i;
-	int		j;
 	char	aux;
 	char	*dquote;
 
-	commands = 1;
-	i = 0;
+	*commands = 1;
 	while (input[i])
 	{
 		while (input[i] && (input[i] != '|' && input[i] != '\'' && input[i] != '\"'))
@@ -72,29 +88,31 @@ int	count_commands(char *input)
 		if (input[i] == '\'' || input[i] == '\"')
 		{
 			aux = input[i];
+			i++;
 			while (1)
 			{
 				while (input[i] && input[i] != aux)
 					i++;
 				if (!input[i])
 				{
-					j = -1;
-					while (++j < commands)
-						printf("pipe ");
-					dquote = ft_strjoin("\n", readline("dquote> ")); //proteger
+					dquote = ft_strjoin("\n", input); // proteger
+					free(input);
+					input = dquote;
+					dquote = readline("\033[36;1m> \033[0m"); //proteger
 					input = ft_freeandjoin(input, dquote); //proteger
 				}
 				else
 					break ;
 			}
+			i++;
 		}
 		else if (input[i] == '|')
 		{
-			commands++;
+			(*commands)++;
 			i++;
 		}
 	}
-	return (commands);
+	return (input);
 }
 
 char	*ft_get_text_minishell(void)
@@ -117,28 +135,34 @@ void ft_getline()
 {
 	char	*input;
 	char	*text_minishell;
+	int		n_commands;
 
 	while (1)
 	{
 		text_minishell = ft_get_text_minishell();
 		input = readline(text_minishell);
 		free(text_minishell);
-			int i = 0;
-			i = count_commands(input);
+			input = count_commands(input, &n_commands, 0);
 		add_history(input);
 		if (ft_strncmp(input, "exit", 5) == 0)
 		{
 			free(input);
 			break ;
 		}
-		printf("Entrada: %s, comandos: %d\n", input, i);
+		printf("Entrada: %s, comandos: %d\n", input, n_commands);
 		free(input);
 	}
+}
+
+void	ft_leaks(void)
+{
+	system("leaks -q minishell");
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	ft_printf("%s", &(HEADER));
+	atexit(ft_leaks);
 	(void)argc;
 	(void)argv;
 	(void)env;
