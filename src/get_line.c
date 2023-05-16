@@ -1,4 +1,37 @@
+
 #include "minishell.h"
+
+// static char	**ft_splitfree(char **split, int n)
+// {
+// 	while (n-- > 0)
+// 		free(split[n]);
+// 	free(split);
+// 	return (0);
+// }
+
+// char	**extract_commands(char *input, int n_commands, int i, int start)
+// {
+// 	char	**input_parse;
+// 	int		n_args;
+
+// 	n_args = 0;
+// 	input_parse = (char **)ft_calloc((n_commands + 1), sizeof(char *)); //Proteger
+// 	while (input[i])
+// 	{
+// 		while (input[i] && (input[i] != '|' && \
+// 		input[i] != '\'' && input[i] != '\"'))
+// 			i++;
+// 		if (input[i] == '\'' || input[i] == '\"')
+// 			input = special_chars(input, &i);
+// 		if (input[i] == '|')
+// 		{
+// 			input_parse[n_args] = ft_substr(input, start, i - start + 1); //Proteger
+// 			n_args++;
+// 			start = i;
+// 		}
+// 	}
+// 	return (input_parse);
+// }
 
 static char	*ft_get_text_minishell(void)
 {
@@ -57,7 +90,7 @@ static char	*readlineplus(int *commands, int i)
 			i++;
 		if (input[i] == '\'' || input[i] == '\"')
 			input = special_chars(input, &i);
-		else if (input[i] == '|')
+		if (input[i] == '|')
 		{
 			(*commands)++;
 			i++;
