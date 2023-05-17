@@ -1,18 +1,6 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/30 20:32:35 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/16 19:31:13 by javiersa         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = minishell.a
 PROGRAM = minishell
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -I "/Users/$(USER)/.brew/opt/readline/include/"
 PERSONALNAME = Minishell
 LIBFTPLUS = libftplus
 CC = gcc
@@ -26,7 +14,7 @@ OBJS := $(SRC:.c=.o)
 all: libftplusmake2 $(PROGRAM)
 
 $(PROGRAM): $(NAME)
-	@$(CC) $(CFLAGS) $(NAME) $(LIBFTPLUS)/libftplus.a -o $(PROGRAM) -lreadline
+	@$(CC) $(CFLAGS) $(NAME) $(LIBFTPLUS)/libftplus.a -L"/Users/$(USER)/.brew/opt/readline/lib/" -o $(PROGRAM) -lreadline
 	@echo "$(MAGENTA)Program $(PERSONALNAME) created successfully.$(DEFAULT)"
 
 .c.o:
@@ -70,6 +58,9 @@ salsa_git: fclean gitignore
 	@echo "$(BOLD)$(CYAN)Git:$(WHITE) Commit this changes with "Little changes $(DATETIME)".$(DEFAULT)"
 	@git push --set-upstream origin salsa_branch
 	@echo "$(BOLD)$(GREEN)Git:$(WHITE) Pushing all changes.$(DEFAULT)"
+submodules:
+	@git submodule update --init --recursive
+	@echo "$(GREEN)The submodules have been created and updated successfully.$(DEFAULT)"
 gitignore:
 	@echo ".*\n*.out\n*.o\n*.a">.gitignore
 	@echo "$(GREEN)Creating:$(DEFAULT) Gitignore."
@@ -95,6 +86,3 @@ WHITE	:= \033[37;1m
 DEFAULT	:= \033[0m
 
 .PHONY : all clean fclean re bonus git gitignore submodules 42prepare .c.o
-
-#gcc -g -o myprogram myprogram.c
-#leaks myprogram

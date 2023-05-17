@@ -1,0 +1,15 @@
+echo a>">a.txt"
+echo a>"$USER"
+echo a>'$USER'
+echo hola | echo "esto es un fake || "
+ls -l | grep ".txt" > files.txt
+
+file="archivo.txt"
+echo "El tamaño del archivo $file es $(wc -c < "$file") bytes."
+
+PACO=adios | echo $PACO
+
+env
+env > a.txt
+
+cat << paco
