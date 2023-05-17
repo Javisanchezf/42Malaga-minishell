@@ -34,35 +34,6 @@
 // 	return (enviroment);
 // }
 
-// char	*parse_aux(char *input, char delimiter, int *i)
-// {
-// 	int	start;
-
-// 	start = *i;
-// 	while (input[*i] && input[*i] != delimiter)
-// 		*i++;
-// 	if (input[*i] == delimiter)
-// 		return (ft_substr(input, start, *i - start + 1));
-
-// }
-
-// char	**parse(char *input)
-// {
-// 	char	**input_parse;
-// 	int		i;
-// 	int		n_args;
-
-// 	i = 0;
-// 	n_args = 0;
-// 	while (input[i])
-// 	{
-// 		while (ft_isspace(input[i]))
-// 			i++;
-// 		if (input[i] == '\'' || input[i] == '\"')
-// 			input_parse[n_args] = parse_aux(input, input[i], &i);
-// 	}
-// }
-
 void	ft_leaks(void)
 {
 	system("leaks -q minishell");
