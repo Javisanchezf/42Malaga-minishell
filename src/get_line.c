@@ -67,7 +67,8 @@ static char	*special_chars(char *input, int *i)
 			add_history(input);
 			rl_replace_line("", 0);
 			rl_redisplay();
-			ft_putstr_fd("\033[31;1mminishell: syntax error due to unclosed quotes.\n\033[0m", 2);
+			ft_putstr_fd("\033[31;1mminishell: syntax \
+error due to unclosed quotes.\n\033[0m", 2);
 			input[0] = 0;
 			(*i) = -1;
 		}
@@ -104,7 +105,10 @@ char	**extract_commands(char *input, int n_commands, int i)
 	{
 		while (++n_args < n_commands)
 		{
-			if (input_parse[n_args][0] == 0)
+			i = 0;
+			while (ft_isspace(input_parse[n_args][i]))
+				i++;
+			if (input_parse[n_args][i] == 0)
 			{
 				ft_putstr_fd("\033[31;1mminishell: syntax error near unexpected toke '|'.\n\033[0m", 2);
 				free(input_parse);
@@ -164,15 +168,16 @@ static char	*readlineplus(int *commands, char *text_minishell, int i)
 	return (input);
 }
 
-void print_commands(char **argumentos)
+void	print_commands(char **argumentos)
 {
-    int i = 0;
-    
-    while (argumentos[i] != NULL)
+	int		i;
+
+	i = 0;
+	while (argumentos[i] != NULL)
 	{
-        printf("Comando %d: %s\n", i, argumentos[i]);
-        i++;
-    }
+		printf("Comando %d: %s\n", i, argumentos[i]);
+		i++;
+	}
 }
 
 void	ft_getline(void)

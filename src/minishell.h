@@ -30,15 +30,14 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <libgen.h>
 
 typedef struct s_cdm
 {
-	char	*cmd;  // COMANDO: LS, PWD...
-	char	**opt;  // OPCIONES: -a, -ld...
-	char	*path; // RUTA DEL COMANDO
-	char	unif; // |, <, >, ...
-}				t_cmd;
+	char	*cmd;
+	char	**opt;
+	char	*input;
+	char	*output;
+}				t_command;
 
 typedef struct s_env
 {
@@ -49,6 +48,8 @@ typedef struct s_env
 typedef struct s_data
 {
 	t_env		*env;
+	t_command	*cmd;
+	pid_t		*pid;
 }				t_data;
 
 void	ft_getline(void);
