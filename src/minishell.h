@@ -53,5 +53,6 @@ typedef struct s_data
 }				t_data;
 
 void	ft_getline(void);
+char	**extract_commands(char *input, int n_commands, int i);
 
 #endif

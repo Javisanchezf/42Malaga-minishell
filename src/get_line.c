@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 // static char	*special_chars(char *input, int *i)
@@ -52,74 +51,31 @@
 // 	return (input);
 // }
 
+static void	add_history_plus(char *input)
+{
+	add_history(input);
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 static char	*special_chars(char *input, int *i)
 {
 	char	aux;
 
 	aux = input[*i];
 	(*i)++;
-	while (1)
+	while (input[*i] && input[*i] != aux)
+		(*i)++;
+	if (!input[*i])
 	{
-		while (input[*i] && input[*i] != aux)
-			(*i)++;
-		if (!input[*i])
-		{
-			add_history(input);
-			rl_replace_line("", 0);
-			rl_redisplay();
-			ft_putstr_fd("\033[31;1mminishell: syntax \
+		add_history_plus(input);
+		ft_putstr_fd("\033[31;1mminishell: syntax \
 error due to unclosed quotes.\n\033[0m", 2);
-			input[0] = 0;
-			(*i) = -1;
-		}
-		break ;
+		input[0] = 0;
+		(*i) = -1;
 	}
 	(*i)++;
 	return (input);
-}
-
-char	**extract_commands(char *input, int n_commands, int i)
-{
-	char	**input_parse;
-	int		n_args;
-
-	input_parse = (char **)ft_calloc((n_commands + 1), sizeof(char *)); //Proteger
-	input_parse[0] = &input[0];
-	n_args = 1;
-	while (n_args < n_commands)
-	{
-		while (input[i] && (input[i] != '|' && input[i] != '\'' && input[i] != '\"'))
-			i++;
-		if (input[i] == '\'' || input[i] == '\"')
-			input = special_chars(input, &i);
-		if (input[i] == '|')
-		{
-			input[i] = 0;
-			i++;
-			input_parse[n_args] = &input[i];
-			n_args++;
-		}
-	}
-	n_args = -1;
-	if (n_commands != 1)
-	{
-		while (++n_args < n_commands)
-		{
-			i = 0;
-			while (ft_isspace(input_parse[n_args][i]))
-				i++;
-			if (input_parse[n_args][i] == 0)
-			{
-				ft_putstr_fd("\033[31;1mminishell: syntax error near unexpected toke '|'.\n\033[0m", 2);
-				free(input_parse);
-				input_parse = (char **)ft_calloc(2, sizeof(char *)); //proteger
-				input[0] = 0;
-				input_parse[0] = input;
-				break ;
-			}
-		}
-	}
-	return (input_parse);
 }
 
 static char	*ft_get_text_minishell(void)
@@ -158,26 +114,10 @@ static char	*readlineplus(int *commands, char *text_minishell, int i)
 		}
 	}
 	if (input && *input)
-	{
-		add_history(input);
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
+		add_history_plus(input);
 	else
 		*commands = 1;
 	return (input);
-}
-
-void	print_commands(char **argumentos)
-{
-	int		i;
-
-	i = 0;
-	while (argumentos[i] != NULL)
-	{
-		printf("Comando %d: %s\n", i, argumentos[i]);
-		i++;
-	}
 }
 
 void	ft_getline(void)
@@ -190,7 +130,6 @@ void	ft_getline(void)
 	{
 		input = readlineplus(&n_commands, ft_get_text_minishell(), 0);
 			borrar = extract_commands(input, n_commands, 0);
-			print_commands(borrar);
 			free(borrar);
 		if (ft_strncmp(input, "exit", 5) == 0)
 		{
