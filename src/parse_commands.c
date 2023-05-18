@@ -1,17 +1,5 @@
 #include "minishell.h"
 
-static void	print_commands(char *prompt, char **argumentos)
-{
-	int		i;
-
-	i = 0;
-	while (argumentos[i] != NULL)
-	{
-		printf("%s %d: %s\n",prompt, i, argumentos[i]);
-		i++;
-	}
-}
-
 static char	**check_void_pipes(int n_commands, char**input_parse, char *input)
 {
 	int	i;
@@ -69,9 +57,13 @@ char	**extract_commands(char *input, int n_commands, int i)
 void	parse(char *input, int n_commands)
 {
 	char	**commands;
+	char	**borrar;
 
 	commands = extract_commands(input, n_commands, 0);
-	print_commands("Comand", commands);
-	// print_commands("Argumento", ft_split_mod(input_parse[0], 0, 0, 0));
+	ft_printf_split(commands);
+	// ft_split_free(commands);
+	borrar = ft_split_mod(commands[0], 0, 0, 0);
 	free(commands);
+	ft_printf_split(borrar);
+	ft_split_free(borrar);
 }
