@@ -13,8 +13,9 @@ void	forward_operators(char *input, int *i)
 		(*i)++;
 	if (input[*i] == '\'' || input[*i] == '\"')
 		forward_quotes(input, i);
-	while (!is_separator_char(input[*i]))
-		(*i)++;
+	else
+		while (!is_separator_char(input[*i]))
+			(*i)++;
 }
 
 static int	ft_size_split_mod(char *input)

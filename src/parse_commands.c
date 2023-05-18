@@ -12,14 +12,14 @@ char	forward_quotes(char *input, int *i)
 	return (aux);
 }
 
-static void	print_commands(char **argumentos)
+static void	print_commands(char *prompt, char **argumentos)
 {
 	int		i;
 
 	i = 0;
 	while (argumentos[i] != NULL)
 	{
-		printf("Comando %d: %s\n", i, argumentos[i]);
+		printf("%s %d: %s\n",prompt, i, argumentos[i]);
 		i++;
 	}
 }
@@ -75,7 +75,7 @@ char	**extract_commands(char *input, int n_commands, int i)
 		}
 	}
 	input_parse = check_void_pipes(n_commands, input_parse, input);
-	print_commands(input_parse);
-	// print_commands(ft_split_mod(input_parse[0]));
+	print_commands("Comand", input_parse);
+	// print_commands("Argumento", ft_split_mod(input_parse[0]));
 	return (input_parse);
 }

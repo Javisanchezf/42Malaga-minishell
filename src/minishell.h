@@ -33,8 +33,8 @@
 
 typedef struct s_cdm
 {
-	char	*cmd;
 	char	**opt;
+	char	*cmd;
 	char	*input;
 	char	*output;
 }				t_command;
