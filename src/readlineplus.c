@@ -93,48 +93,24 @@ static char	*ft_get_text_minishell(void)
 	return (text_minishell);
 }
 
-static char	*readlineplus(int *commands, char *text_minishell, int i)
+char	*readlineplus(void)
 {
 	char	*input;
+	char	*text_minishell;
+	int		i;
 
+	i = 0;
+	text_minishell = ft_get_text_minishell();
 	input = readline(text_minishell);
 	free(text_minishell);
-	*commands = 1;
 	while (input[i])
 	{
-		while (input[i] && (input[i] != '|' && \
-		input[i] != '\'' && input[i] != '\"'))
+		while (input[i] && (input[i] != '\'' && input[i] != '\"'))
 			i++;
 		if (input[i] == '\'' || input[i] == '\"')
 			input = special_chars(input, &i);
-		if (input[i] == '|')
-		{
-			(*commands)++;
-			i++;
-		}
 	}
 	if (input && *input)
 		add_history_plus(input);
-	else
-		*commands = 1;
 	return (input);
-}
-
-void	ft_getline(void)
-{
-	char	*input;
-	int		n_commands;
-
-	while (1)
-	{
-		input = readlineplus(&n_commands, ft_get_text_minishell(), 0);
-		parse(input, n_commands);
-		if (ft_strncmp(input, "exit", 5) == 0)
-		{
-			free(input);
-			break ;
-		}
-		free(input);
-	}
-	rl_clear_history();
 }

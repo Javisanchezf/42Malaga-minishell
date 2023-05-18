@@ -41,10 +41,19 @@ void	ft_leaks(void)
 
 int	main(int argc, char **argv, char **env)
 {
+	char	*input;
+	// t_data	data;
+
 	atexit(ft_leaks);
 	ft_printf("%s", &(HEADER));
 	(void)argc;
 	(void)argv;
 	(void)env;
-	ft_getline();
+	while (1)
+	{
+		input = readlineplus();
+		parse_line(input);
+		free(input);
+	}
+	rl_clear_history();
 }

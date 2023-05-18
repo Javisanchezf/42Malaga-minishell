@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int	ft_size_split_mod(char *input, int i, int n)
+static int	ft_size_split_by_args(char *input, int i, int n)
 {
 	while (input[i])
 	{
@@ -34,13 +34,13 @@ static char	**ft_splitfree(char **split, int n)
 	return (0);
 }
 
-char	**ft_split_mod(char *input, int i, int j, int size_split)
+char	**split_by_args(char *input, int i, int j, int size_split)
 {
 	char	**split;
 	int		n;
 
 	n = -1;
-	size_split = ft_size_split_mod(input, 0, 0);
+	size_split = ft_size_split_by_args(input, 0, 0);
 	split = (char **)ft_calloc((size_split + 1), sizeof(char *));
 	if (!split || !input)
 		return (0);
