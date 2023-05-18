@@ -6,7 +6,7 @@
 #    By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 18:02:29 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/18 18:20:45 by javiersa         ###   ########.fr        #
+#    Updated: 2023/05/18 18:21:15 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,9 +68,9 @@ libftplusre: libftplusclean libftplusmake
 git: fclean gitignore
 	@git add *
 	@echo "$(BOLD)$(YELLOW)Git ($(GIT_BRANCH)):$(WHITE) Adding all archives.$(DEFAULT)"
-	@git commit -m "($(DATETIME)) - Little changes by $(USER)"
+	@git commit -m "$(DATETIME) - Little changes by $(USER)"
 	@echo "$(BOLD)$(CYAN)Git ($(GIT_BRANCH)):$(WHITE) Commit this changes in brunch\
-	 $(GIT_BRANCH) with "($(DATETIME)) - Little changes by $(USER)".$(DEFAULT)"
+	 $(GIT_BRANCH) with "$(DATETIME) - Little changes by $(USER)".$(DEFAULT)"
 	@git push --set-upstream origin $(GIT_BRANCH)
 	@echo "$(BOLD)$(GREEN)Git ($(GIT_BRANCH)):$(WHITE) Pushing all changes.$(DEFAULT)"
 submodules:
