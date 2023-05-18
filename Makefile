@@ -66,10 +66,7 @@ gitignore:
 	@echo ".*\n*.out\n*.o\n*.a">.gitignore
 	@echo "$(GREEN)Creating:$(DEFAULT) Gitignore."
 42prepare: submodules
-	@rm -rf $(LIBFT)/.git
-	@rm -rf $(NEXTILE)/.git
-	@rm -rf $(PRINTF)/.git
-	@rm -rf .git .gitmodules
+	@rm -rf .git*
 	@echo "$(GREEN)All .git removed.$(DEFAULT)"
 valgrind:
 	valgrind --leak-check=full ./$(PROGRAM) $(PARAMS)
