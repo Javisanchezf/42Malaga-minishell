@@ -62,7 +62,9 @@ gitignore:
 42prepare: submodules
 	@rm -rf .git*
 	@echo "$(GREEN)All .git removed.$(DEFAULT)"
-valgrind:
+valgrind_datarace: $(PROGRAM)
+	valgrind --tool="helgrind" ./$(PROGRAM) $(PARAMS)
+valgrind_leaks: $(PROGRAM)
 	valgrind --leak-check=full ./$(PROGRAM) $(PARAMS)
 
 #COLORS
@@ -78,4 +80,4 @@ WHITE	:= \033[37;1m
 DEFAULT	:= \033[0m
 
 .PHONY : all clean fclean re submodules git gitignore 42prepare\
-	git brunch_git submodules gitignore 42prepare valgrind
+	git submodules gitignore 42prepare valgrind_datarace valgrind_leaks
