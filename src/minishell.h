@@ -54,5 +54,7 @@ typedef struct s_data
 
 void	ft_getline(void);
 char	**extract_commands(char *input, int n_commands, int i);
+char	**ft_split_mod(char *s);
+char	forward_quotes(char *input, int *i);
 
 #endif

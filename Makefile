@@ -5,7 +5,7 @@ PERSONALNAME = Minishell
 LIBFTPLUS = libftplus
 CC = gcc
 CLEAN = rm -Rf
-SRC = src/main.c src/get_line.c src/parse_commands.c
+SRC = src/main.c src/get_line.c src/parse_commands.c src/split_mod.c
 PARAMS = 4 2 3 4 5
 DATETIME := $(shell date +%Y-%m-%d' '%H:%M:%S)
 

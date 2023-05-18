@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static char	forward_quotes(char *input, int *i)
+char	forward_quotes(char *input, int *i)
 {
 	char	aux;
 
@@ -49,7 +49,6 @@ near unexpected toke '|'.\n\033[0m", 2);
 			}
 		}
 	}
-	print_commands(input_parse);
 	return (input_parse);
 }
 
@@ -76,5 +75,7 @@ char	**extract_commands(char *input, int n_commands, int i)
 		}
 	}
 	input_parse = check_void_pipes(n_commands, input_parse, input);
+	print_commands(input_parse);
+	print_commands(ft_split_mod(input_parse[0]));
 	return (input_parse);
 }
