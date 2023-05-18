@@ -1,3 +1,16 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/05/18 18:02:29 by javiersa          #+#    #+#              #
+#    Updated: 2023/05/18 18:17:31 by javiersa         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+# General variables
 NAME = minishell.a
 PROGRAM = minishell
 CFLAGS = -Wall -Werror -Wextra -I "/Users/$(USER)/.brew/opt/readline/include/"
@@ -7,11 +20,15 @@ LIBFTPLUS_LIB = $(LIBFTPLUS)/libftplus.a
 CC = gcc
 CLEAN = rm -Rf
 SRC = src/main.c src/get_line.c src/parse_commands.c src/split_mod.c src/parse_utils.c
+OBJS := $(SRC:.c=.o)
+
+# Personal use variables
 PARAMS = 4 2 3 4 5
 DATETIME := $(shell date +%Y-%m-%d' '%H:%M:%S)
 GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+USER := $(shell whoami)
 
-OBJS := $(SRC:.c=.o)
+# General rules
 
 all: $(PROGRAM)
 
@@ -35,6 +52,8 @@ fclean: libftplusfclean clean
 	@echo "$(RED)Removing:$(DEFAULT) Program $(PROGRAM)."
 re: fclean libftplusclean all libftplusmake
 
+# Lib rules
+
 $(LIBFTPLUS_LIB): libftplusmake
 
 libftplusmake:
@@ -49,8 +68,9 @@ libftplusre: libftplusclean libftplusmake
 git: fclean gitignore
 	@git add *
 	@echo "$(BOLD)$(YELLOW)Git ($(GIT_BRANCH)):$(WHITE) Adding all archives.$(DEFAULT)"
-	@git commit -m "Little changes $(DATETIME)"
-	@echo "$(BOLD)$(CYAN)Git ($(GIT_BRANCH)):$(WHITE) Commit this changes in brunch $(GIT_BRANCH) with "Little changes $(DATETIME)".$(DEFAULT)"
+	@git commit -m "Little changes by $(USER) $(DATETIME)"
+	@echo "$(BOLD)$(CYAN)Git ($(GIT_BRANCH)):$(WHITE) Commit this changes in brunch\
+	 $(GIT_BRANCH) with "Little changes by $(USER) $(DATETIME)".$(DEFAULT)"
 	@git push --set-upstream origin $(GIT_BRANCH)
 	@echo "$(BOLD)$(GREEN)Git ($(GIT_BRANCH)):$(WHITE) Pushing all changes.$(DEFAULT)"
 submodules:
