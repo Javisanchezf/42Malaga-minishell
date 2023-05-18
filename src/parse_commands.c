@@ -1,17 +1,5 @@
 #include "minishell.h"
 
-char	forward_quotes(char *input, int *i)
-{
-	char	aux;
-
-	aux = input[*i];
-	(*i)++;
-	while (input[*i] && input[*i] != aux)
-		(*i)++;
-	(*i)++;
-	return (aux);
-}
-
 static void	print_commands(char *prompt, char **argumentos)
 {
 	int		i;
@@ -75,7 +63,15 @@ char	**extract_commands(char *input, int n_commands, int i)
 		}
 	}
 	input_parse = check_void_pipes(n_commands, input_parse, input);
-	print_commands("Comand", input_parse);
-	// print_commands("Argumento", ft_split_mod(input_parse[0]));
 	return (input_parse);
+}
+
+void	parse(char *input, int n_commands)
+{
+	char	**commands;
+
+	commands = extract_commands(input, n_commands, 0);
+	print_commands("Comand", commands);
+	// print_commands("Argumento", ft_split_mod(input_parse[0], 0, 0, 0));
+	free(commands);
 }

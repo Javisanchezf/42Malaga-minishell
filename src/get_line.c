@@ -124,13 +124,11 @@ void	ft_getline(void)
 {
 	char	*input;
 	int		n_commands;
-		char	**borrar;
 
 	while (1)
 	{
 		input = readlineplus(&n_commands, ft_get_text_minishell(), 0);
-			borrar = extract_commands(input, n_commands, 0);
-			free(borrar);
+		parse(input, n_commands);
 		if (ft_strncmp(input, "exit", 5) == 0)
 		{
 			free(input);

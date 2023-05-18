@@ -1,30 +1,7 @@
 #include "minishell.h"
 
-int	is_separator_char(char c)
+static int	ft_size_split_mod(char *input, int i, int n)
 {
-	return (c == '<' || c == '>' || c == '\'' || c == '\"' || ft_isspace(c) || c == 0);
-}
-
-void	forward_operators(char *input, int *i)
-{
-	while (input[*i] && (input[*i] == '<' || input[*i] == '>'))
-		(*i)++;
-	while (ft_isspace(input[*i]))
-		(*i)++;
-	if (input[*i] == '\'' || input[*i] == '\"')
-		forward_quotes(input, i);
-	else
-		while (!is_separator_char(input[*i]))
-			(*i)++;
-}
-
-static int	ft_size_split_mod(char *input)
-{
-	int		i;
-	int		n;
-
-	i = 0;
-	n = 0;
 	while (input[i])
 	{
 		while (ft_isspace(input[i]))
@@ -57,19 +34,17 @@ static char	**ft_splitfree(char **split, int n)
 	return (0);
 }
 
-char	**ft_split_mod(char *input)
+char	**ft_split_mod(char *input, int i, int j, int size_split)
 {
 	char	**split;
-	int		i;
-	int		j;
 	int		n;
 
-	i = 0;
 	n = -1;
-	split = (char **)ft_calloc((ft_size_split_mod(input) + 1), sizeof(char *));
+	size_split = ft_size_split_mod(input, 0, 0);
+	split = (char **)ft_calloc((size_split + 1), sizeof(char *));
 	if (!split || !input)
 		return (0);
-	while (input[i] && ++n < ft_size_split_mod(input))
+	while (input[i] && ++n < size_split)
 	{
 		while (ft_isspace(input[i]))
 			i++;

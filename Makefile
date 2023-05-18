@@ -5,9 +5,10 @@ PERSONALNAME = Minishell
 LIBFTPLUS = libftplus
 CC = gcc
 CLEAN = rm -Rf
-SRC = src/main.c src/get_line.c src/parse_commands.c src/split_mod.c
+SRC = src/main.c src/get_line.c src/parse_commands.c src/split_mod.c src/parse_utils.c
 PARAMS = 4 2 3 4 5
 DATETIME := $(shell date +%Y-%m-%d' '%H:%M:%S)
+GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 OBJS := $(SRC:.c=.o)
 
@@ -51,12 +52,12 @@ git: fclean gitignore
 	@echo "$(BOLD)$(CYAN)Git:$(WHITE) Commit this changes with "Little changes $(DATETIME)".$(DEFAULT)"
 	@git push
 	@echo "$(BOLD)$(GREEN)Git:$(WHITE) Pushing all changes.$(DEFAULT)"
-salsa_git: fclean gitignore
+brunch_git: fclean gitignore
 	@git add *
 	@echo "$(BOLD)$(YELLOW)Git:$(WHITE) Adding all archives.$(DEFAULT)"
 	@git commit -m "Little changes $(DATETIME)"
-	@echo "$(BOLD)$(CYAN)Git:$(WHITE) Commit this changes with "Little changes $(DATETIME)".$(DEFAULT)"
-	@git push --set-upstream origin salsa_branch
+	@echo "$(BOLD)$(CYAN)Git:$(WHITE) Commit this changes in brunch $(GIT_BRANCH) with "Little changes $(DATETIME)".$(DEFAULT)"
+	@git push --set-upstream origin $(GIT_BRANCH)
 	@echo "$(BOLD)$(GREEN)Git:$(WHITE) Pushing all changes.$(DEFAULT)"
 submodules:
 	@git submodule update --init --recursive

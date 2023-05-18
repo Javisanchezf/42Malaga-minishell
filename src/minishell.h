@@ -1,7 +1,10 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define HEADER ("\n\033[34;1m\
+/*----------------------------HEADER----------------------------*/
+
+# define HEADER \
+("\n\033[34;1m\
 ███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     \n\
 ████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     \n\
 ██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     \n\
@@ -13,16 +16,8 @@
                              By                                    \n\
                 --- javiersa && antdelga ---                       \n\
 \n\033[0m")
-# define BOLD ("\033[1m")
-# define BLACK ("\033[30;1m")
-# define RED ("\033[31;1m")
-# define GREEN ("\033[32;1m")
-# define YELLOW ("\033[33;1m")
-# define BLUE ("\033[34;1m")
-# define MAGENTA ("\033[35;1m")
-# define CYAN ("\033[36;1m")
-# define WHITE ("\033[37;1m")
-# define DEFAULT ("\033[0m")
+
+/*----------------------------LIBRARIES----------------------------*/
 
 # include "../libftplus/libftplus.h"
 # include <stdio.h>
@@ -30,6 +25,8 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+/*----------------------------STRUCTS----------------------------*/
 
 typedef struct s_cdm
 {
@@ -52,9 +49,16 @@ typedef struct s_data
 	pid_t		*pid;
 }				t_data;
 
+/*----------------------------PARSE UTILS----------------------------*/
+
+void	forward_quotes(char *input, int *i);
+void	forward_operators(char *input, int *i);
+int		is_separator_char(char c);
+
+/*----------------------------OTHERS----------------------------*/
+
 void	ft_getline(void);
-char	**extract_commands(char *input, int n_commands, int i);
-char	**ft_split_mod(char *s);
-char	forward_quotes(char *input, int *i);
+void	parse(char *input, int n_commands);
+char	**ft_split_mod(char *input, int i, int j, int size_split);
 
 #endif
