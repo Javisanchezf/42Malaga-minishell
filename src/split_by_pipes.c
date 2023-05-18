@@ -58,12 +58,20 @@ void	parse(char *input, int n_commands)
 {
 	char	**commands;
 	char	**borrar;
+	int		i;
 
+	i = 0;
+	(void)i;
 	commands = extract_commands(input, n_commands, 0);
 	ft_printf_split(commands);
+	// while (commands[i] != NULL)
+	// {
+
+	// }
 	// ft_split_free(commands);
 	borrar = ft_split_mod(commands[0], 0, 0, 0);
-	free(commands);
 	ft_printf_split(borrar);
 	ft_split_free(borrar);
+	// free(commands[0]);
+	free(commands);
 }

@@ -14,25 +14,25 @@
 // 	return ("> \033[0m");
 // }
 
-t_env	*enviroment_extract(char **env, int i)
-{
-	t_env	*enviroment;
-	char	*aux;
+// t_env	*enviroment_extract(char **env, int i)
+// {
+// 	t_env	*enviroment;
+// 	char	*aux;
 
-	while (env[i])
-		i++;
-	enviroment = ft_calloc(i + 1, sizeof(t_env)); //proteger
-	i = -1;
-	while (env[++i])
-	{
-		aux = ft_strchr(env[i], '=');
-		if (aux == NULL)
-			printf("WTF\n"); //Gestionar el error
-		enviroment[i].value = ft_substr(env[i], 0, aux - env[i]);
-		enviroment[i].variable = getenv(enviroment[i].value); //proteger si es null
-	}
-	return (enviroment);
-}
+// 	while (env[i])
+// 		i++;
+// 	enviroment = ft_calloc(i + 1, sizeof(t_env)); //proteger
+// 	i = -1;
+// 	while (env[++i])
+// 	{
+// 		aux = ft_strchr(env[i], '=');
+// 		if (aux == NULL)
+// 			printf("WTF\n"); //Gestionar el error
+// 		enviroment[i].value = ft_substr(env[i], 0, aux - env[i]);
+// 		enviroment[i].variable = getenv(enviroment[i].value); //proteger si es null
+// 	}
+// 	return (enviroment);
+// }
 
 void	ft_leaks(void)
 {
