@@ -54,11 +54,11 @@ git: fclean gitignore
 	@echo "$(BOLD)$(GREEN)Git:$(WHITE) Pushing all changes.$(DEFAULT)"
 brunch_git: fclean gitignore
 	@git add *
-	@echo "$(BOLD)$(YELLOW)Git $(RED)($(GIT_BRANCH)):$(WHITE) Adding all archives.$(DEFAULT)"
+	@echo "$(BOLD)$(YELLOW)Git $(RED)($(GIT_BRANCH))$(YELLOW):$(WHITE) Adding all archives.$(DEFAULT)"
 	@git commit -m "Little changes $(DATETIME)"
-	@echo "$(BOLD)$(CYAN)Git:$(WHITE) Commit this changes in brunch $(GIT_BRANCH) with "Little changes $(DATETIME)".$(DEFAULT)"
+	@echo "$(BOLD)$(CYAN)Git $(RED)($(GIT_BRANCH))$(CYAN):$(WHITE) Commit this changes in brunch $(GIT_BRANCH) with "Little changes $(DATETIME)".$(DEFAULT)"
 	@git push --set-upstream origin $(GIT_BRANCH)
-	@echo "$(BOLD)$(GREEN)Git:$(WHITE) Pushing all changes.$(DEFAULT)"
+	@echo "$(BOLD)$(GREEN)Git $(RED)($(GIT_BRANCH))$(GREEN):$(WHITE) Pushing all changes.$(DEFAULT)"
 submodules:
 	@git submodule update --init --recursive
 	@echo "$(GREEN)The submodules have been created and updated successfully.$(DEFAULT)"
