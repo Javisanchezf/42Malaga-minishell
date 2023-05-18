@@ -79,5 +79,6 @@ CYAN	:= \033[36;1m
 WHITE	:= \033[37;1m
 DEFAULT	:= \033[0m
 
-.PHONY : all clean fclean re submodules git gitignore 42prepare\
-	git submodules gitignore 42prepare valgrind_datarace valgrind_leaks
+.PHONY : all clean fclean re \
+libftplusmake libftplusclean libftplusfclean libftplusre \
+git submodules gitignore 42prepare valgrind_datarace valgrind_leaks
