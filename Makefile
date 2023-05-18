@@ -3,6 +3,7 @@ PROGRAM = minishell
 CFLAGS = -Wall -Werror -Wextra -I "/Users/$(USER)/.brew/opt/readline/include/"
 PERSONALNAME = Minishell
 LIBFTPLUS = libftplus
+LIBFTPLUS_LIB = $(LIBFTPLUS)/libftplus.a
 CC = gcc
 CLEAN = rm -Rf
 SRC = src/main.c src/get_line.c src/parse_commands.c src/split_mod.c src/parse_utils.c
@@ -12,10 +13,10 @@ GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 OBJS := $(SRC:.c=.o)
 
-all: libftplusmake $(PROGRAM)
+all: $(PROGRAM)
 
-$(PROGRAM): $(NAME)
-	@$(CC) $(CFLAGS) $(NAME) $(LIBFTPLUS)/libftplus.a -L"/Users/$(USER)/.brew/opt/readline/lib/" -o $(PROGRAM) -lreadline
+$(PROGRAM): $(LIBFTPLUS_LIB) $(NAME)
+	@$(CC) $(CFLAGS) $(NAME) $(LIBFTPLUS_LIB) -L"/Users/$(USER)/.brew/opt/readline/lib/" -o $(PROGRAM) -lreadline
 	@echo "$(MAGENTA)Program $(PERSONALNAME) created successfully.$(DEFAULT)"
 
 .c.o:
@@ -34,6 +35,8 @@ fclean: libftplusfclean clean
 	@echo "$(RED)Removing:$(DEFAULT) Program $(PROGRAM)."
 re: fclean libftplusclean all libftplusmake
 
+$(LIBFTPLUS_LIB): libftplusmake
+
 libftplusmake:
 	@make -C $(LIBFTPLUS)
 libftplusclean:
@@ -44,13 +47,6 @@ libftplusre: libftplusclean libftplusmake
 
 #Personal use
 git: fclean gitignore
-	@git add *
-	@echo "$(BOLD)$(YELLOW)Git:$(WHITE) Adding all archives.$(DEFAULT)"
-	@git commit -m "Little changes $(DATETIME)"
-	@echo "$(BOLD)$(CYAN)Git:$(WHITE) Commit this changes with "Little changes $(DATETIME)".$(DEFAULT)"
-	@git push
-	@echo "$(BOLD)$(GREEN)Git:$(WHITE) Pushing all changes.$(DEFAULT)"
-brunch_git: fclean gitignore
 	@git add *
 	@echo "$(BOLD)$(YELLOW)Git ($(GIT_BRANCH)):$(WHITE) Adding all archives.$(DEFAULT)"
 	@git commit -m "Little changes $(DATETIME)"
