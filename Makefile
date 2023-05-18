@@ -12,7 +12,7 @@ GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
 OBJS := $(SRC:.c=.o)
 
-all: libftplusmake2 $(PROGRAM)
+all: libftplusmake $(PROGRAM)
 
 $(PROGRAM): $(NAME)
 	@$(CC) $(CFLAGS) $(NAME) $(LIBFTPLUS)/libftplus.a -L"/Users/$(USER)/.brew/opt/readline/lib/" -o $(PROGRAM) -lreadline
@@ -32,12 +32,10 @@ fclean: libftplusfclean clean
 	@$(CLEAN) ./$(NAME) ./$(PROGRAM)
 	@echo "$(RED)Removing:$(DEFAULT) Library $(NAME)."
 	@echo "$(RED)Removing:$(DEFAULT) Program $(PROGRAM)."
-re: fclean libftplusclean all libftplusmake2
+re: fclean libftplusclean all libftplusmake
 
 libftplusmake:
 	@make -C $(LIBFTPLUS)
-libftplusmake2:
-	@make nolibtool -C $(LIBFTPLUS)
 libftplusclean:
 	@make clean -C $(LIBFTPLUS)
 libftplusfclean:
@@ -83,4 +81,5 @@ CYAN	:= \033[36;1m
 WHITE	:= \033[37;1m
 DEFAULT	:= \033[0m
 
-.PHONY : all clean fclean re bonus git gitignore submodules 42prepare .c.o
+.PHONY : all clean fclean re submodules git gitignore 42prepare\
+	git brunch_git submodules gitignore 42prepare valgrind
