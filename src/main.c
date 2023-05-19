@@ -14,31 +14,35 @@
 // 	return ("> \033[0m");
 // }
 
-t_env	*enviroment_extract(char **env, int i)
+void	enviroment_extract(char **env, t_data *data)
 {
-	t_env	*enviroment;
+	int		i;
 	char	*aux;
 
+	i = 0;
 	while (env[i])
 		i++;
-	enviroment = ft_calloc(i + 1, sizeof(t_env)); //proteger
+	data->n_envs = i;
+	data->env = ft_calloc(i + 1, sizeof(t_env));
+	if (!data->env)
+		ft_error("Problem allocating memory.0", 0);
 	i = -1;
 	while (env[++i])
 	{
 		aux = ft_strchr(env[i], '=');
-		if (aux == NULL)
-			printf("WTF\n"); //Gestionar el error
-		enviroment[i].value = ft_substr(env[i], 0, aux - env[i]);
-		enviroment[i].variable = getenv(enviroment[i].value); //proteger si es null
+		data->env[i].value = ft_substr(env[i], 0, aux - env[i]);
+		data->env[i].variable = ft_substr(env[i], aux - \
+		env[i] + 1, ft_strlen(ft_strchr(env[i], '=')) - 1);
+		if (!data->env[i].variable)
+			data->env[i].variable = ft_calloc(1, 1);
 	}
-	return (enviroment);
 }
 
 void	init_data(t_data *data, char **env)
 {
 	data->n_commands = 0;
 	(void)env;
-	// data->env = enviroment_extract(env, 0);
+	enviroment_extract(env, data);
 }
 
 void	ft_leaks(void)
