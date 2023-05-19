@@ -52,8 +52,11 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		input = readlineplus();
-		parse_line(input);
-		free(input);
+		if (input)
+		{
+			parse_line(input);
+			free(input);
+		}
 	}
 	rl_clear_history();
 }
