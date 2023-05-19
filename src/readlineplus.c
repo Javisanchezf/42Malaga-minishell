@@ -51,24 +51,33 @@ static char	*get_line_fd1(void)
 	return (aux);
 }
 
-static int	check_pipe(char *input, int *i, int type)
+static char	*check_pipe(char *input, int *i, int type)
 {
+	char	*dquote;
+
 	if (type == 1)
 		(*i)++;
 	while (ft_isspace(input[*i]))
 		(*i)++;
 	if (!input[*i] || input[*i] == '|')
 	{
-		if (type == 1 || input[*i] == '|')
+		if (input[*i] == '|')
 		{
 			add_history_plus(input);
 			ft_putstr_fd("\033[31;1mminishell: syntax error \
 near unexpected toke '|'.\n\033[0m", 2);
 		}
+		else if (type == 1 && !input[*i])
+		{
+			dquote = ft_strjoin(input, "\n"); // proteger
+			free(input);
+			input = readline("\033[36;1m> \033[0m"); //proteger
+			return (ft_freeandjoin(dquote, input)); //proteger
+		}
 		ft_free_and_null((void **)&input);
-		return (1);
+		return (NULL);
 	}
-	return (0);
+	return (input);
 }
 
 static int	check_quotes(char *input, int *i)
@@ -98,7 +107,7 @@ char	*readlineplus(void)
 
 	i = 0;
 	input = get_line_fd1();
-	if (!input || check_pipe(input, &i, 0) == 1)
+	if (!input || !check_pipe(input, &i, 0))
 		return (NULL);
 	while (input[i])
 	{
@@ -109,8 +118,11 @@ char	*readlineplus(void)
 			if (check_quotes(input, &i) == 1)
 				return (NULL);
 		if (input[i] == '|')
-			if (check_pipe(input, &i, 1) == 1)
+		{
+			input = check_pipe(input, &i, 1);
+			if (!input)
 				return (NULL);
+		}
 	}
 	if (input && *input)
 		add_history_plus(input);
