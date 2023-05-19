@@ -61,6 +61,7 @@ int	main(int argc, char **argv, char **env)
 		input = readlineplus();
 		if (input)
 			parse_line(input, &data);
+		ft_leaks();
 		clean_commands(&data);
 	}
 	clean_and_exit_success(&data);
