@@ -6,7 +6,7 @@
 #    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 18:02:29 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/19 21:42:12 by javiersa         ###   ########.fr        #
+#    Updated: 2023/05/19 23:17:37 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ submodules:
 	@git submodule update --init --recursive
 	@echo "$(GREEN)The submodules have been created and updated successfully.$(DEFAULT)"
 gitignore:
-	@echo ".*\n*.out\n*.o\n*.a">.gitignore
+	@echo ".*\n*.out\n*.o\n*.a\n*.dSYM">.gitignore
 	@echo "$(GREEN)Creating:$(DEFAULT) Gitignore."
 42prepare: submodules
 	@rm -rf .git*
