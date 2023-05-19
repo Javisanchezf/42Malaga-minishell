@@ -29,8 +29,8 @@ static int	ft_size_split_by_args(char *input, int i, int n)
 static char	**ft_splitfree(char **split, int n)
 {
 	while (n-- > 0)
-		free(split[n]);
-	free(split);
+		ft_free_and_null((void **)&split[n]);
+	ft_free_and_null((void **)&split);
 	return (0);
 }
 

@@ -45,9 +45,9 @@ static char	*get_line_fd1(void)
 	aux = ft_strrchr(path, '/') + 1;
 	aux = ft_strjoin("\033[36;1m", aux); // Proteger
 	text_minishell = ft_strjoin(aux, " -> \033[0m"); // Proteger
-	free(aux);
+	ft_free_and_null((void **)&aux);
 	aux = readline(text_minishell);
-	free(text_minishell);
+	ft_free_and_null((void **)&text_minishell);
 	return (aux);
 }
 

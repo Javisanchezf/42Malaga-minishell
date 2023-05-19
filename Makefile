@@ -6,7 +6,7 @@
 #    By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 18:02:29 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/18 19:28:07 by javiersa         ###   ########.fr        #
+#    Updated: 2023/05/19 17:36:47 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFTPLUS_LIB = $(LIBFTPLUS)/libftplus.a
 CC = gcc
 CLEAN = rm -Rf
 SRC = src/main.c src/readlineplus.c src/parse_utils.c src/parse_line.c\
-src/split_by_args.c src/split_by_pipes.c
+src/split_by_args.c src/split_by_pipes.c src/clean.c
 OBJS := $(SRC:.c=.o)
 
 # Personal use variables
@@ -86,7 +86,7 @@ gitignore:
 valgrind_datarace: $(PROGRAM)
 	valgrind --tool="helgrind" ./$(PROGRAM) $(PARAMS)
 valgrind_leaks: $(PROGRAM)
-	valgrind --leak-check=full ./$(PROGRAM) $(PARAMS)
+	valgrind --leak-check=full -s ./$(PROGRAM) $(PARAMS)
 
 #COLORS
 BOLD	:= \033[1m

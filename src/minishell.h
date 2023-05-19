@@ -31,7 +31,7 @@
 typedef struct s_command
 {
 	char	**opt;
-	char	*cmd;
+	char	*path;
 	char	*input;
 	char	*output;
 	int		output_tipe; //-1 estandar, 0 para > y 1 para >>
@@ -48,6 +48,7 @@ typedef struct s_data
 {
 	t_env		*env;
 	t_command	*cmd;
+	int			n_commands;
 }				t_data;
 
 /*----------------------------PARSE UTILS----------------------------*/
@@ -61,9 +62,14 @@ int		is_separator_char(char c);
 char	**split_by_args(char *input, int i, int j, int size_split);
 char	**split_by_pipes(char *input, int n_commands, int i);
 
+/*----------------------------CLEAN----------------------------*/
+
+void	clean_commands(t_data *data);
+void	clean_and_exit_success(t_data *data);
+
 /*----------------------------OTHERS----------------------------*/
 
 char	*readlineplus(void);
-void	parse_line(char *input);
+void	parse_line(char *input, t_data *data);
 
 #endif
