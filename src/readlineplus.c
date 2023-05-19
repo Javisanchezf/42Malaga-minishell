@@ -65,10 +65,6 @@ static int	check_pipe(char *input, int *i, int type)
 			ft_putstr_fd("\033[31;1mminishell: syntax error \
 near unexpected toke '|'.\n\033[0m", 2);
 		}
-		else if (type == 1 && !input[*i])
-		(
-			
-		)
 		ft_free_and_null((void **)&input);
 		return (1);
 	}
