@@ -1,31 +1,5 @@
 #include "minishell.h"
 
-// static char	*special_chars(char *input, int *i)
-// {
-// 	char	aux;
-// 	char	*dquote;
-
-// 	aux = input[*i];
-// 	(*i)++;
-// 	while (1)
-// 	{
-// 		while (input[*i] && input[*i] != aux)
-// 			(*i)++;
-// 		if (!input[*i])
-// 		{
-// 			dquote = ft_strjoin(input, "\n"); // proteger
-// 			free(input);
-// 			input = dquote;
-// 			dquote = readline("\033[36;1m> \033[0m"); //proteger
-// 			input = ft_freeandjoin(input, dquote); //proteger
-// 		}
-// 		else
-// 			break ;
-// 	}
-// 	(*i)++;
-// 	return (input);
-// }
-
 static void	add_history_plus(char *input)
 {
 	if (input && *input)

@@ -1,16 +1,5 @@
 #include "minishell.h"
 
-int		n_commands(char **commands)
-{
-	int	i;
-
-	i = 0;
-	if (commands && *commands && **commands)
-		while (commands[i])
-			i++;
-	return (i);
-}
-
 void	parse_line(char *input, t_data *data)
 {
 	char	**commands;
