@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	n_commands(char **commands)
+int		n_commands(char **commands)
 {
 	int	i;
 
@@ -18,7 +18,7 @@ void	parse_line(char *input, t_data *data)
 
 	commands = split_by_pipes(input, 0, 0);
 	i = 0;
-	data->n_commands = n_commands(commands);
+	data->n_commands = ft_split_size(commands);
 	data->cmd = ft_calloc(data->n_commands + 1 ,sizeof(t_command)); //Proteger
 	while (commands[i])
 	{
