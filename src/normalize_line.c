@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	*normalize_line(char *input, t_data data)
+char	*normalize_line(char *input, t_data *data)
 {
 	int		i;
 	int		j;
@@ -12,17 +12,22 @@ char	*normalize_line(char *input, t_data data)
 	while (input[i])
 	{
 		j = i;
-		while (input[i] != '\'' && input[i] != '\"' && input[i] != '$' && input[i])
+		while (input[i] && input[i] != '$')
 			i++;
+		// while (input[i] != '\'' && input[i] != '\"' && input[i] != '$' && input[i])
+		// 	i++;
 		aux = ft_substr(input, j, i - j + 1);
 		line = ft_freeandjoin(line, aux);
-		j = i;
 		if (input[i] != '$')
 		{
+			i++;
+			j = i;
 			while (input[i] && input[i] != '$' && !ft_isspace(input[i]))
-				j++;
-			
+				i++;
+			aux = ft_getenv(input, data, j, i - j + 1);
+			line = ft_freeandjoin(line, aux);
 		}
 	}
+	free(input);
 	return (line);
 }

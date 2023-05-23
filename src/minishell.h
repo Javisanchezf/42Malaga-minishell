@@ -58,7 +58,7 @@ typedef struct s_data
 void	forward_quotes(char *input, int *i);
 void	forward_operators(char *input, int *i);
 int		is_separator_char(char c);
-char	*ft_getenv(char *env, t_data *data);
+char	*ft_getenv(char *env, t_data *data, int start, int size);
 
 /*----------------------------SPLITS----------------------------*/
 

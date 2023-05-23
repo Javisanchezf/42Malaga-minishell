@@ -1,5 +1,34 @@
 #include "minishell.h"
 
+char	*normalize_line(char *input, t_data *data)
+{
+	int		i;
+	int		j;
+	char	*line;
+	char	*aux;
+
+	i = 0;
+	line = ft_calloc(1, sizeof(char));
+	while (input[i])
+	{
+		j = i;
+		while (input[i] && input[i] != '$')
+			i++;
+		aux = ft_substr(input, j, i - j);
+		line = ft_freeandjoin(line, aux);
+		if (input[i] == '$')
+		{
+			i++;
+			j = i;
+			while (input[i] && input[i] != '$' && !ft_isspace(input[i]))
+				i++;
+			aux = ft_getenv(input, data, j, i - j);
+			line = ft_freeandjoin(line, aux);
+		}
+	}
+	return (line);
+}
+
 void	parse_line(char *input, t_data *data)
 {
 	char	**commands;
@@ -11,7 +40,10 @@ void	parse_line(char *input, t_data *data)
 	data->cmd = ft_calloc(data->n_commands + 1 ,sizeof(t_command)); //Proteger
 	while (commands[i])
 	{
-		data->cmd[i].opt = split_by_args(commands[i], 0, 0, 0);
+		char *borrar = normalize_line(commands[i], data);
+		data->cmd[i].opt = split_by_args(borrar, 0, 0, 0);
+		free(borrar);
+		// data->cmd[i].opt = split_by_args(commands[i], 0, 0, 0);
 		data->cmd[i].path = ft_strdup("");
 		data->cmd[i].input = ft_strdup("");
 		data->cmd[i].output = ft_strdup("");

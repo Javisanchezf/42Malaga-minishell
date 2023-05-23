@@ -29,3 +29,7 @@ ech$SHIT3 hola
 
 export SHIT4="echo hola | cat -e"
 $SHIT4
+
+echo $
+
+echo $$

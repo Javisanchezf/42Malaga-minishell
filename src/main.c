@@ -44,10 +44,10 @@ void	init_data(t_data *data, char **env)
 	(void)env;
 	enviroment_extract(env, data);
 	data->lastcmd_value = 0;
-	// char *borrar = ft_getenv("TER", data);
-	// ft_printf("Puntero: %p, String: %s\n", borrar, borrar);
-	// ft_printf("Puntero: %p, String: %s\n", data->env[2].variable, data->env[2].variable);
-	// free(borrar);
+	char *borrar = ft_getenv("aPATH", data, 1, 4);
+	ft_printf("Puntero: %p, String: %s\n", borrar, borrar);
+	ft_printf("Puntero: %p, String: %s\n", data->env[2].variable, data->env[2].variable);
+	free(borrar);
 }
 
 void	ft_leaks(void)

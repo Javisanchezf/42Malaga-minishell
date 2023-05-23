@@ -5,16 +5,14 @@ int	is_separator_char(char c)
 	return (c == '<' || c == '>' || ft_isspace(c) || c == 0);
 }
 
-char	*ft_getenv(char *env, t_data *data)
+char	*ft_getenv(char *env, t_data *data, int start, int size)
 {
-	int	size;
 	int	i;
 
 	i = -1;
-	size = ft_strlen(env);
 	while (++i < data->n_envs)
 		if (ft_strlen(data->env[i].value) == size)
-			if (ft_strncmp(env, data->env[i].value, size) == 0)
+			if (ft_strncmp(&env[start], data->env[i].value, size) == 0)
 				break ;
 	if (i < data->n_envs)
 		return (ft_strdup(data->env[i].variable));
