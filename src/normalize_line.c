@@ -16,6 +16,13 @@ char	*normalize_line(char *input, t_data data)
 			i++;
 		aux = ft_substr(input, j, i - j + 1);
 		line = ft_freeandjoin(line, aux);
+		j = i;
+		if (input[i] != '$')
+		{
+			while (input[i] && input[i] != '$' && !ft_isspace(input[i]))
+				j++;
+			
+		}
 	}
 	return (line);
 }

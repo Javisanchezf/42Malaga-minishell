@@ -49,7 +49,7 @@ near unexpected toke '|'.\n\033[0m", 2);
 		}
 		else if (type == 1 && !input[*i])
 		{
-			dquote = ft_strjoin(input, "\n");
+			dquote = ft_strjoin(input, " ");
 			free(input);
 			input = readline("\033[36;1m> \033[0m");
 			return (ft_freeandjoin(dquote, input));
