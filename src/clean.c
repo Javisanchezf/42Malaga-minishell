@@ -24,6 +24,7 @@ void	clean_and_exit_success(t_data *data)
 	i = -1;
 	while (++i < data->n_envs)
 	{
+		printf("Value: %s, Variable: %s\n", data->env[i].value, data->env[i].variable);
 		ft_free_and_null((void **)&data->env[i].value);
 		ft_free_and_null((void **)&data->env[i].variable);
 	}

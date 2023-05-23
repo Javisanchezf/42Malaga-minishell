@@ -26,3 +26,6 @@ echo hola $SHIT2 cat -e
 
 export SHIT3=o
 ech$SHIT3 hola
+
+export SHIT4="echo hola | cat -e"
+$SHIT4

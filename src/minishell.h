@@ -50,7 +50,7 @@ typedef struct s_data
 	int			n_envs;
 	t_command	*cmd;
 	int			n_commands;
-	int			exit_value;
+	int			exevec_value;
 }				t_data;
 
 /*----------------------------PARSE UTILS----------------------------*/
@@ -58,6 +58,7 @@ typedef struct s_data
 void	forward_quotes(char *input, int *i);
 void	forward_operators(char *input, int *i);
 int		is_separator_char(char c);
+char	*ft_getenv(char *env, t_data *data);
 
 /*----------------------------SPLITS----------------------------*/
 
