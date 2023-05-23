@@ -50,6 +50,7 @@ typedef struct s_data
 	int			n_envs;
 	t_command	*cmd;
 	int			n_commands;
+	int			exit_value;
 }				t_data;
 
 /*----------------------------PARSE UTILS----------------------------*/

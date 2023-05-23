@@ -28,10 +28,13 @@
 
 static void	add_history_plus(char *input)
 {
-	add_history(input);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (input && *input)
+	{
+		add_history(input);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
 static char	*get_line_fd1(void)
@@ -124,7 +127,6 @@ char	*readlineplus(void)
 				return (NULL);
 		}
 	}
-	if (input && *input)
-		add_history_plus(input);
+	add_history_plus(input);
 	return (input);
 }

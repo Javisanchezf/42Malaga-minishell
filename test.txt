@@ -13,3 +13,16 @@ env
 env > a.txt
 
 cat << paco
+
+<test1 <test2 <<fin <<fan <<fen <<<<fon cat -e <<<<<<<fun <susi <<susi <<<susi <<<<<<<susi
+ech'o' hola
+ec"h"'o' hola
+
+export SHIT1="<<"
+$SHIT1 a cat
+
+export SHIT2="|"
+echo hola $SHIT2 cat -e
+
+export SHIT3=o
+ech$SHIT3 hola
