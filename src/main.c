@@ -43,7 +43,7 @@ void	init_data(t_data *data, char **env)
 	data->n_commands = 0;
 	(void)env;
 	enviroment_extract(env, data);
-	data->exevec_value = 0;
+	data->lastcmd_value = 0;
 	// char *borrar = ft_getenv("TER", data);
 	// ft_printf("Puntero: %p, String: %s\n", borrar, borrar);
 	// ft_printf("Puntero: %p, String: %s\n", data->env[2].variable, data->env[2].variable);
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **env)
 	init_data(&data, env);
 	while (1)
 	{
-		input = readlineplus();
+		input = readlineplus(&data);
 		if (input)
 			parse_line(input, &data);
 		ft_leaks();

@@ -11,7 +11,7 @@ static void	add_history_plus(char *input)
 	}
 }
 
-static char	*get_line_fd1(void)
+static char	*get_line_fd1(t_data *data)
 {
 	char	*text_minishell;
 	char	path[1024];
@@ -20,8 +20,11 @@ static char	*get_line_fd1(void)
 	if (getcwd(path, sizeof(path)) == NULL)
 		exit(EXIT_FAILURE); // Poner ft_error y liberar lo que haga falta
 	aux = ft_strrchr(path, '/') + 1;
-	aux = ft_strjoin("\033[36;1m", aux); // Proteger
-	text_minishell = ft_strjoin(aux, " -> \033[0m"); // Proteger
+	if (data->lastcmd_value == 0)
+		aux = ft_strjoin("\033[32;1m➜ \033[36;1m", aux); // Proteger
+	else
+		aux = ft_strjoin("\033[31;1m➜ \033[36;1m", aux); // Proteger
+	text_minishell = ft_strjoin(aux, " \033[0m"); // Proteger
 	ft_free_and_null((void **)&aux);
 	aux = readline(text_minishell);
 	ft_free_and_null((void **)&text_minishell);
@@ -77,13 +80,13 @@ error due to unclosed quotes.\n\033[0m", 2);
 	return (0);
 }
 
-char	*readlineplus(void)
+char	*readlineplus(t_data *data)
 {
 	char	*input;
 	int		i;
 
 	i = 0;
-	input = get_line_fd1();
+	input = get_line_fd1(data);
 	if (!input || !check_pipe(input, &i, 0))
 		return (NULL);
 	while (input[i])

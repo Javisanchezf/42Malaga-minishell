@@ -50,7 +50,7 @@ typedef struct s_data
 	int			n_envs;
 	t_command	*cmd;
 	int			n_commands;
-	int			exevec_value;
+	int			lastcmd_value;
 }				t_data;
 
 /*----------------------------PARSE UTILS----------------------------*/
@@ -72,7 +72,7 @@ void	clean_and_exit_success(t_data *data);
 
 /*----------------------------OTHERS----------------------------*/
 
-char	*readlineplus(void);
+char	*readlineplus(t_data *data);
 void	parse_line(char *input, t_data *data);
 
 #endif
