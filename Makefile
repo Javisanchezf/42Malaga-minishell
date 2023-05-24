@@ -6,7 +6,7 @@
 #    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 18:02:29 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/19 23:17:37 by javiersa         ###   ########.fr        #
+#    Updated: 2023/05/24 18:24:19 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,7 @@ LIBFTPLUS = libftplus
 LIBFTPLUS_LIB = $(LIBFTPLUS)/libftplus.a
 CC = gcc
 CLEAN = rm -Rf
-SRC = src/main.c src/readlineplus.c src/parse_utils.c src/parse_line.c\
-src/split_by_args.c src/split_by_pipes.c src/clean.c
+SRC = $(wildcard src/*.c)
 OBJS := $(SRC:.c=.o)
 
 # Personal use variables
