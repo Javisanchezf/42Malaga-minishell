@@ -87,7 +87,7 @@ char	*readlineplus(t_data *data)
 
 	i = 0;
 	input = get_line_fd1(data);
-	ctrl_d(input);
+	ctrl_d(input, data);
 	if (!input || !check_pipe(input, &i, 0))
 		return (NULL);
 	while (input[i])

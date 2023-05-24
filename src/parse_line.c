@@ -2,7 +2,7 @@
 
 // int archivo = open(nombreArchivo, O_WRONLY | O_CREAT, 0644);
 
-char *dollar_excepctions(char *input, char *line, int *i, t_data *data)
+char	*dollar_excepctions(char *input, char *line, int *i, t_data *data)
 {
 	char	*aux;
 	int		j;
@@ -90,7 +90,6 @@ void	parse_line(char *input, t_data *data)
 		char *borrar = normalize_line(commands[i], data);
 		data->cmd[i].opt = split_by_args(borrar, 0, 0, 0);
 		free(borrar);
-		// data->cmd[i].opt = split_by_args(commands[i], 0, 0, 0);
 		data->cmd[i].path = ft_strdup("");
 		data->cmd[i].input = ft_strdup("");
 		data->cmd[i].output = ft_strdup("");

@@ -12,11 +12,11 @@ void	sigint_handler(int sig)
 	rl_redisplay();
 }
 
-void	ctrl_d(char *input)
+void	ctrl_d(char *input, t_data *data)
 {
 	if (!input)
 	{
 		ft_putstr_fd("exit\n", 2);
-		exit (0);
+		clean_and_exit_success(data);
 	}
 }

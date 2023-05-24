@@ -76,6 +76,6 @@ void	parse_line(char *input, t_data *data);
 
 /*----------------------------SIGNALS----------------------------*/
 void	sigint_handler(int sig);
-void	ctrl_d(char *input);
+void	ctrl_d(char *input, t_data *data);
 
 #endif
