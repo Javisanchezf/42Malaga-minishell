@@ -28,7 +28,7 @@ void	init_data(t_data *data, char **env, int argc, char **argv)
 {
 	if (write(1, NULL, 0) == -1 || read(0, NULL, 0) == -1)
 	{
-		perror("Error: No write/write permissions on main fd.");
+		perror("Error: No write/read permissions on main fd.");
 		exit(EXIT_FAILURE);
 	}
 	ft_printf("%s", &(HEADER));
