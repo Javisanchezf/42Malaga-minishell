@@ -1,19 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/01 01:59:23 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/08 18:31:59 by antdelga         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define HEADER ("\n\033[34;1m\
+/*----------------------------HEADER----------------------------*/
+
+# define HEADER \
+("\n\033[34;1m\
 ███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     \n\
 ████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     \n\
 ██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     \n\
@@ -26,20 +17,63 @@
                 --- javiersa && antdelga ---                       \n\
 \n\033[0m")
 
-# include "../libftplus/libftplus.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <libgen.h>
+/*----------------------------LIBRARIES----------------------------*/
 
-typedef	struct s_cdm
+# include "../libftplus/libftplus.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/wait.h>
+/*----------------------------STRUCTS----------------------------*/
+
+typedef struct s_command
 {
-	char	*cmd;  // COMANDO: LS, PWD...
-	char	**opt;  // OPCIONES: -a, -ld...
-	char	*path; // RUTA DEL COMANDO
-	char	unif; // |, <, >, ...
-} t_cmd;
+	char	**opt;
+	char	*path;
+	char	*input;
+	char	*output;
+	int		output_tipe; //-1 estandar, 0 para > y 1 para >>
+	int		input_tipe; //-1 estandar, 0 para < y 1 para <<
+}				t_command;
+
+typedef struct s_env
+{
+	char	*variable;
+	char	*value;
+}				t_env;
+
+typedef struct s_data
+{
+	t_env		*env;
+	int			n_envs;
+	t_command	*cmd;
+	int			n_commands;
+	int			lastcmd_value;
+}				t_data;
+
+/*----------------------------PARSE UTILS----------------------------*/
+
+void	forward_quotes(char *input, int *i);
+void	forward_operators(char *input, int *i);
+int		is_separator_char(char c);
+char	*ft_getenv(char *env, t_data *data, int start, int size);
+
+
+/*----------------------------SPLITS----------------------------*/
+
+char	**split_by_args(char *input, int i, int j, int size_split);
+char	**split_by_pipes(char *input, int n_commands, int i);
+
+/*----------------------------CLEAN----------------------------*/
+
+void	clean_commands(t_data *data);
+void	clean_and_exit_success(t_data *data);
+
+/*----------------------------OTHERS----------------------------*/
+
+char	*readlineplus(t_data *data);
+void	parse_line(char *input, t_data *data);
 
 #endif

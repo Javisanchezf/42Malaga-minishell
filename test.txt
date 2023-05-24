@@ -1,0 +1,35 @@
+echo a>">a.txt"
+echo a>"$USER"
+echo a>'$USER'
+echo hola | echo "esto es un fake || "
+ls -l | grep ".txt" > files.txt
+
+file="archivo.txt"
+echo "El tamaño del archivo $file es $(wc -c < "$file") bytes."
+
+PACO=adios | echo $PACO
+
+env
+env > a.txt
+
+cat << paco
+
+<test1 <test2 <<fin <<fan <<fen <<<<fon cat -e <<<<<<<fun <susi <<susi <<<susi <<<<<<<susi
+ech'o' hola
+ec"h"'o' hola
+
+export SHIT1="<<"
+$SHIT1 a cat
+
+export SHIT2="|"
+echo hola $SHIT2 cat -e
+
+export SHIT3=o
+ech$SHIT3 hola
+
+export SHIT4="echo hola | cat -e"
+$SHIT4
+
+echo $
+
+echo $$

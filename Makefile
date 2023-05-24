@@ -5,28 +5,36 @@
 #                                                     +:+ +:+         +:+      #
 #    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/30 20:32:35 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/08 18:38:48 by javiersa         ###   ########.fr        #
+#    Created: 2023/05/18 18:02:29 by javiersa          #+#    #+#              #
+#    Updated: 2023/05/19 23:17:37 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# General variables
 NAME = minishell.a
 PROGRAM = minishell
-CFLAGS = -Wall -Werror -Wextra -pthread
+CFLAGS = -Wall -Werror -Wextra -I "/Users/$(USER)/.brew/opt/readline/include/"
 PERSONALNAME = Minishell
 LIBFTPLUS = libftplus
+LIBFTPLUS_LIB = $(LIBFTPLUS)/libftplus.a
 CC = gcc
 CLEAN = rm -Rf
-SRC = src/main.c
-PARAMS = 4 2 3 4 5
-DATETIME := $(shell date +%Y-%m-%d' '%H:%M:%S)
-
+SRC = src/main.c src/readlineplus.c src/parse_utils.c src/parse_line.c\
+src/split_by_args.c src/split_by_pipes.c src/clean.c
 OBJS := $(SRC:.c=.o)
 
-all: libftplusmake2 $(PROGRAM)
+# Personal use variables
+PARAMS = 4 2 3 4 5
+DATETIME := $(shell date +%Y-%m-%d' '%H:%M:%S)
+GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+USER := $(shell whoami)
 
-$(PROGRAM): $(NAME)
-	@$(CC) $(CFLAGS) $(NAME) $(LIBFTPLUS)/libftplus.a -o $(PROGRAM) -lreadline
+# General rules
+
+all: $(PROGRAM)
+
+$(PROGRAM): $(LIBFTPLUS_LIB) $(NAME)
+	@$(CC) $(CFLAGS) $(NAME) $(LIBFTPLUS_LIB) -L"/Users/$(USER)/.brew/opt/readline/lib/" -o $(PROGRAM) -lreadline
 	@echo "$(MAGENTA)Program $(PERSONALNAME) created successfully.$(DEFAULT)"
 
 .c.o:
@@ -43,12 +51,14 @@ fclean: libftplusfclean clean
 	@$(CLEAN) ./$(NAME) ./$(PROGRAM)
 	@echo "$(RED)Removing:$(DEFAULT) Library $(NAME)."
 	@echo "$(RED)Removing:$(DEFAULT) Program $(PROGRAM)."
-re: fclean libftplusclean all libftplusmake2
+re: fclean libftplusclean all libftplusmake
+
+# Lib rules
+
+$(LIBFTPLUS_LIB): libftplusmake
 
 libftplusmake:
 	@make -C $(LIBFTPLUS)
-libftplusmake2:
-	@make nolibtool -C $(LIBFTPLUS)
 libftplusclean:
 	@make clean -C $(LIBFTPLUS)
 libftplusfclean:
@@ -58,22 +68,25 @@ libftplusre: libftplusclean libftplusmake
 #Personal use
 git: fclean gitignore
 	@git add *
-	@echo "$(BOLD)$(YELLOW)Git:$(WHITE) Adding all archives.$(DEFAULT)"
-	@git commit -m "Little changes $(DATETIME)"
-	@echo "$(BOLD)$(CYAN)Git:$(WHITE) Commit this changes with "Little changes $(DATETIME)".$(DEFAULT)"
-	@git push
-	@echo "$(BOLD)$(GREEN)Git:$(WHITE) Pushing all changes.$(DEFAULT)"
+	@echo "$(BOLD)$(YELLOW)Git ($(GIT_BRANCH)):$(WHITE) Adding all archives.$(DEFAULT)"
+	@git commit -m "[$(DATETIME)] - Little changes by $(USER)"
+	@echo "$(BOLD)$(CYAN)Git ($(GIT_BRANCH)):$(WHITE) Commit this changes in brunch\
+	 $(GIT_BRANCH) with "[$(DATETIME)] - Little changes by $(USER)".$(DEFAULT)"
+	@git push --set-upstream origin $(GIT_BRANCH)
+	@echo "$(BOLD)$(GREEN)Git ($(GIT_BRANCH)):$(WHITE) Pushing all changes.$(DEFAULT)"
+submodules:
+	@git submodule update --init --recursive
+	@echo "$(GREEN)The submodules have been created and updated successfully.$(DEFAULT)"
 gitignore:
-	@echo ".*\n*.out\n*.o\n*.a">.gitignore
+	@echo ".*\n*.out\n*.o\n*.a\n*.dSYM">.gitignore
 	@echo "$(GREEN)Creating:$(DEFAULT) Gitignore."
 42prepare: submodules
-	@rm -rf $(LIBFT)/.git
-	@rm -rf $(NEXTILE)/.git
-	@rm -rf $(PRINTF)/.git
-	@rm -rf .git .gitmodules
+	@rm -rf .git*
 	@echo "$(GREEN)All .git removed.$(DEFAULT)"
-valgrind:
-	valgrind --leak-check=full ./$(PROGRAM) $(PARAMS)
+valgrind_datarace: $(PROGRAM)
+	valgrind --tool="helgrind" ./$(PROGRAM) $(PARAMS)
+valgrind_leaks: $(PROGRAM)
+	valgrind --leak-check=full -s ./$(PROGRAM) $(PARAMS)
 
 #COLORS
 BOLD	:= \033[1m
@@ -87,7 +100,6 @@ CYAN	:= \033[36;1m
 WHITE	:= \033[37;1m
 DEFAULT	:= \033[0m
 
-.PHONY : all clean fclean re bonus git gitignore submodules 42prepare .c.o
-
-#gcc -g -o myprogram myprogram.c
-#leaks myprogram
+.PHONY : all clean fclean re \
+libftplusmake libftplusclean libftplusfclean libftplusre \
+git submodules gitignore 42prepare valgrind_datarace valgrind_leaks
