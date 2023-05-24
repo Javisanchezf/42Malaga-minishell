@@ -26,6 +26,12 @@ void	enviroment_extract(char **env, t_data *data)
 
 void	init_data(t_data *data, char **env, int argc, char **argv)
 {
+	if (write(1, "", 0) == -1)
+	{
+		perror("Error: There are no write permissions on fd 0.");
+		exit(EXIT_FAILURE);
+	}
+	ft_printf("%s", &(HEADER));
 	data->n_commands = 0;
 	enviroment_extract(env, data);
 	data->lastcmd_value = 0;
@@ -46,7 +52,6 @@ int	main(int argc, char **argv, char **env)
 	t_data	data;
 
 	atexit(ft_leaks);
-	ft_printf("%s", &(HEADER));
 	init_data(&data, env, argc, argv);
 	while (1)
 	{
