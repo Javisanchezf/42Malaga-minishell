@@ -1,70 +1,65 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/30 20:28:44 by javiersa          #+#    #+#             */
-/*   Updated: 2023/05/08 18:31:34 by antdelga         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-// char *is_in_git_repo(char *cwd)
-// {
-// 	char *git_dir;
-
-// 	git_dir = ft_strjoin(cwd, "/.git"); //Proteger
-// 	if (access(git_dir, F_OK) != -1)
-// 	{
-// 		free(git_dir);
-// 		return ("\033[34;1m (git) \033[36;1m> \033[0m");
-// 	}
-// 	free(git_dir);
-// 	return ("> \033[0m");
-// }
-
-char	*ft_get_text_minishell(void)
+void	enviroment_extract(char **env, t_data *data)
 {
-	char	*text_minishell;
-	char	path[1024];
+	int		i;
 	char	*aux;
 
-	if (getcwd(path, sizeof(path)) == NULL)
-		exit(EXIT_FAILURE); //Poner ft_error y liberar lo que haga falta
-	aux = ft_strrchr(path, '/') + 1;
-	aux = ft_strjoin("\033[36;1m", aux); //Proteger
-	text_minishell = ft_strjoin(aux, " -> \033[0m"); //Proteger
-	free(aux);
-	return (text_minishell);
+	i = 0;
+	while (env[i])
+		i++;
+	data->n_envs = i;
+	data->env = ft_calloc(i + 1, sizeof(t_env));
+	if (!data->env)
+		ft_error("Problem allocating memory.0", 0);
+	i = -1;
+	while (env[++i])
+	{
+		aux = ft_strchr(env[i], '=');
+		data->env[i].value = ft_substr(env[i], 0, aux - env[i]);
+		data->env[i].variable = ft_substr(env[i], aux - \
+		env[i] + 1, ft_strlen(ft_strchr(env[i], '=')) - 1);
+		if (!data->env[i].variable)
+			data->env[i].variable = ft_calloc(1, 1);
+	}
 }
 
-
-void ft_getline()
+void	init_data(t_data *data, char **env, int argc, char **argv)
 {
-	char	*input;
-	char	*text_minishell;
-
-	while (1)
+	if (write(1, NULL, 0) == -1 || read(0, NULL, 0) == -1)
 	{
-		text_minishell = ft_get_text_minishell();
-		input = readline(text_minishell);
-		free(text_minishell);
-		add_history(input);
-		if (ft_strncmp(input, "exit", 5) == 0)
-		{
-			free(input);
-			break ;
-		}
-		printf("Entrada: %s\n", input);
-		free(input);
+		perror("Error: No write/write permissions on main fd.");
+		exit(EXIT_FAILURE);
 	}
+	ft_printf("%s", &(HEADER));
+	data->n_commands = 0;
+	enviroment_extract(env, data);
+	data->lastcmd_value = 0;
+	signal(SIGINT, sigint_handler);
+	signal(SIGTSTP, sigint_handler);
+	(void)argc;
+	(void)argv;
+}
+
+void	ft_leaks(void)
+{
+	system("leaks -q minishell");
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	ft_printf("%s", &(HEADER));
-	ft_getline();
+	char	*input;
+	t_data	data;
+
+	atexit(ft_leaks);
+	init_data(&data, env, argc, argv);
+	while (1)
+	{
+		input = readlineplus(&data);
+		if (input)
+			parse_line(input, &data);
+		ft_leaks();
+		clean_commands(&data);
+	}
+	clean_and_exit_success(&data);
 }
