@@ -25,7 +25,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
+# include <sys/wait.h>
 /*----------------------------STRUCTS----------------------------*/
 
 typedef struct s_command
@@ -59,6 +59,7 @@ void	forward_quotes(char *input, int *i);
 void	forward_operators(char *input, int *i);
 int		is_separator_char(char c);
 char	*ft_getenv(char *env, t_data *data, int start, int size);
+
 
 /*----------------------------SPLITS----------------------------*/
 
