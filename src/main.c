@@ -66,6 +66,17 @@ void sigint_handler(int sig) {
 	rl_redisplay();
 }
 
+void sigint_arrow(int sig) {
+	(void) sig;
+	rl_on_new_line();
+	rl_redisplay();
+	ft_putstr_fd("  ", 1);
+	ft_printf("\n");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
