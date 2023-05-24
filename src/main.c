@@ -58,7 +58,6 @@ int	main(int argc, char **argv, char **env)
 	char	*input;
 	t_data	data;
 
-
 	atexit(ft_leaks);
 	ft_printf("%s", &(HEADER));
 	(void)argc;
