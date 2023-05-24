@@ -3,8 +3,7 @@
 
 /*----------------------------HEADER----------------------------*/
 
-# define HEADER \
-("\n\033[34;1m\
+# define HEADER ("\n\033[34;1m\
 ███╗   ███╗██╗███╗   ██╗██╗███████╗██╗  ██╗███████╗██╗     ██╗     \n\
 ████╗ ████║██║████╗  ██║██║██╔════╝██║  ██║██╔════╝██║     ██║     \n\
 ██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║     \n\
@@ -33,8 +32,8 @@ typedef struct s_command
 	char	**opt;
 	char	*path;
 	char	*input;
-	char	*output;
 	int		output_tipe; //-1 estandar, 0 para > y 1 para >>
+	char	*output;
 	int		input_tipe; //-1 estandar, 0 para < y 1 para <<
 }				t_command;
 

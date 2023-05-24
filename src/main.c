@@ -1,19 +1,5 @@
 #include "minishell.h"
 
-// char *is_in_git_repo(char *cwd)
-// {
-// 	char *git_dir;
-
-// 	git_dir = ft_strjoin(cwd, "/.git"); //Proteger
-// 	if (access(git_dir, F_OK) != -1)
-// 	{
-// 		ft_free_and_null((void **)&git_dir);
-// 		return ("\033[34;1m (git) \033[36;1m> \033[0m");
-// 	}
-// 	ft_free_and_null((void **)&git_dir);
-// 	return ("> \033[0m");
-// }
-
 void	enviroment_extract(char **env, t_data *data)
 {
 	int		i;
