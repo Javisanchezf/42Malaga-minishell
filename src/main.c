@@ -38,14 +38,15 @@ void	enviroment_extract(char **env, t_data *data)
 	}
 }
 
-void	init_data(t_data *data, char **env)
+void	init_data(t_data *data, char **env, int argc, char **argv)
 {
 	data->n_commands = 0;
-	(void)env;
 	enviroment_extract(env, data);
 	data->lastcmd_value = 0;
 	signal(SIGINT, sigint_handler);
 	signal(SIGTSTP, sigint_handler);
+	(void)argc;
+	(void)argv;
 }
 
 void	ft_leaks(void)
@@ -60,9 +61,7 @@ int	main(int argc, char **argv, char **env)
 
 	atexit(ft_leaks);
 	ft_printf("%s", &(HEADER));
-	(void)argc;
-	(void)argv;
-	init_data(&data, env);
+	init_data(&data, env, argc, argv);
 	while (1)
 	{
 		input = readlineplus(&data);
