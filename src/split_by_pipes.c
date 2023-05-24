@@ -36,7 +36,8 @@ char	**split_by_pipes(char *input, int size_split, int i)
 	n = 1;
 	while (n < size_split)
 	{
-		while (input[i] && input[i] != '|' && input[i] != '\'' && input[i] != '\"')
+		while (input[i] && input[i] != '|' && \
+		input[i] != '\'' && input[i] != '\"')
 			i++;
 		if (input[i] == '\'' || input[i] == '\"')
 			forward_quotes(input, &i);

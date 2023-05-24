@@ -1,19 +1,5 @@
 #include "minishell.h"
 
-// char *is_in_git_repo(char *cwd)
-// {
-// 	char *git_dir;
-
-// 	git_dir = ft_strjoin(cwd, "/.git"); //Proteger
-// 	if (access(git_dir, F_OK) != -1)
-// 	{
-// 		ft_free_and_null((void **)&git_dir);
-// 		return ("\033[34;1m (git) \033[36;1m> \033[0m");
-// 	}
-// 	ft_free_and_null((void **)&git_dir);
-// 	return ("> \033[0m");
-// }
-
 void	enviroment_extract(char **env, t_data *data)
 {
 	int		i;
@@ -38,14 +24,21 @@ void	enviroment_extract(char **env, t_data *data)
 	}
 }
 
-void	init_data(t_data *data, char **env)
+void	init_data(t_data *data, char **env, int argc, char **argv)
 {
+	if (write(1, NULL, 0) == -1 || read(0, NULL, 0) == -1)
+	{
+		perror("Error: No write/write permissions on main fd.");
+		exit(EXIT_FAILURE);
+	}
+	ft_printf("%s", &(HEADER));
 	data->n_commands = 0;
-	(void)env;
 	enviroment_extract(env, data);
 	data->lastcmd_value = 0;
 	signal(SIGINT, sigint_handler);
 	signal(SIGTSTP, sigint_handler);
+	(void)argc;
+	(void)argv;
 }
 
 void	ft_leaks(void)
@@ -59,10 +52,7 @@ int	main(int argc, char **argv, char **env)
 	t_data	data;
 
 	atexit(ft_leaks);
-	ft_printf("%s", &(HEADER));
-	(void)argc;
-	(void)argv;
-	init_data(&data, env);
+	init_data(&data, env, argc, argv);
 	while (1)
 	{
 		input = readlineplus(&data);
