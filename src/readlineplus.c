@@ -80,16 +80,6 @@ error due to unclosed quotes.\n\033[0m", 2);
 	return (0);
 }
 
-void	ctrl_d(char *input)
-{
-	if (!input)
-	{
-		ft_putstr_fd("exit\n", 2);
-		exit (0);
-	}
-	// return (1);
-}
-
 char	*readlineplus(t_data *data)
 {
 	char	*input;

@@ -60,7 +60,6 @@ void	forward_operators(char *input, int *i);
 int		is_separator_char(char c);
 char	*ft_getenv(char *env, t_data *data, int start, int size);
 
-
 /*----------------------------SPLITS----------------------------*/
 
 char	**split_by_args(char *input, int i, int j, int size_split);
@@ -75,5 +74,9 @@ void	clean_and_exit_success(t_data *data);
 
 char	*readlineplus(t_data *data);
 void	parse_line(char *input, t_data *data);
+
+/*----------------------------SIGNALS----------------------------*/
+void	sigint_handler(int sig);
+void	ctrl_d(char *input);
 
 #endif
