@@ -18,7 +18,7 @@ static char	*get_line_fd1(t_data *data)
 	char	*aux;
 
 	if (getcwd(path, sizeof(path) - 1) == NULL)
-		path[0] = '/';
+		ft_strlcpy(path, "/minishell", 10);
 	aux = ft_strrchr(path, '/') + 1;
 	if (data->lastcmd_value == 0)
 		aux = ft_strjoin("\033[32;1m➜ \033[36;1m", aux); // Proteger

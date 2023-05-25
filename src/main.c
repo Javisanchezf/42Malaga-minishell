@@ -3,25 +3,22 @@
 void	enviroment_extract(char **env, t_data *data)
 {
 	int		i;
-	char	*aux;
+	int		size;
 
 	i = 0;
 	while (env[i])
 		i++;
-	data->n_envs = i;
-	data->env = ft_calloc(i + 1, sizeof(t_env));
+	data->env = (char **)ft_calloc((i + 1), sizeof(char *));
 	if (!data->env)
-		ft_error("Problem allocating memory.0", 0);
+		ft_error("Problem allocating memory.", 0);
 	i = -1;
 	while (env[++i])
 	{
-		aux = ft_strchr(env[i], '=');
-		data->env[i].value = ft_substr(env[i], 0, aux - env[i]);
-		data->env[i].variable = ft_substr(env[i], aux - \
-		env[i] + 1, ft_strlen(ft_strchr(env[i], '=')) - 1);
-		if (!data->env[i].variable)
-			data->env[i].variable = ft_calloc(1, 1);
+		size = ft_strlen(env[i]);
+		data->env[i] = ft_calloc(size + 1, sizeof(char));
+		ft_strlcpy(data->env[i], env[i], size + 1);
 	}
+	ft_printf_split(data->env);
 }
 
 void	init_data(t_data *data, char **env, int argc, char **argv)

@@ -18,7 +18,7 @@ char	*dollar_excepctions(char *input, char *line, int *i, t_data *data)
 	{
 		(*i)++;
 		aux = ft_itoa(data->lastcmd_value);
-		return(ft_freeandjoin(line, aux));
+		return (ft_freeandjoin(line, aux));
 	}
 	else
 	{

@@ -7,15 +7,18 @@ int	is_separator_char(char c)
 
 char	*ft_getenv(char *env, t_data *data, int start, int size)
 {
-	int	i;
+	int		i;
+	char	*aux;
 
-	i = -1;
-	while (++i < data->n_envs)
-		if (ft_strlen(data->env[i].value) == size)
-			if (ft_strncmp(&env[start], data->env[i].value, size) == 0)
-				break ;
-	if (i < data->n_envs)
-		return (ft_strdup(data->env[i].variable));
+	i = 0;
+	while (data->env[i])
+	{
+		aux = ft_strchr(data->env[i], '=') + 1;
+		if (size == aux - data->env[i] - 1)
+			if (ft_strncmp(&env[start], data->env[i], size - 2) == 0)
+				return (ft_strdup(aux));
+		i++;
+	}
 	return (ft_strdup(""));
 }
 

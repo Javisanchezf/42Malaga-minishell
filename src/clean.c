@@ -18,15 +18,8 @@ void	clean_commands(t_data *data)
 
 void	clean_and_exit_success(t_data *data)
 {
-	int	i;
-
 	clean_commands(data);
-	i = -1;
-	while (++i < data->n_envs)
-	{
-		ft_free_and_null((void **)&data->env[i].value);
-		ft_free_and_null((void **)&data->env[i].variable);
-	}
+	ft_split_free(data->env);
 	rl_clear_history();
 	exit(EXIT_SUCCESS);
 }
