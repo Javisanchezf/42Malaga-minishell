@@ -2,31 +2,59 @@
 
 // int archivo = open(nombreArchivo, O_WRONLY | O_CREAT, 0644);
 
-char	*dollar_excepctions(char *input, char *line, int *i, t_data *data)
+char	*dollar_normalize(char *input, char *line, int *i, t_data *data)
 {
 	char	*aux;
 	int		j;
 
 	(*i)++;
-	if(ft_isspace(input[*i]) || !input[*i] || input[*i] == '\'' || input[*i] == '\"')
+	if (ft_isspace(input[*i]) || !input[*i] || \
+	input[*i] == '\'' || input[*i] == '\"')
 	{
 		aux = ft_strjoin(line, "$");
-		free(line);
-		return (aux);
+		return (free(line), aux);
 	}
 	else if (input[*i] == '?')
 	{
 		(*i)++;
-		aux = ft_itoa(data->lastcmd_value);
-		return (ft_freeandjoin(line, aux));
+		return (ft_freeandjoin(line, ft_itoa(data->lastcmd_value)));
 	}
 	else
 	{
 		j = *i;
-		while (input[*i] && input[*i] != '$' && !ft_isspace(input[*i])  && input[*i] != '\'' && input[*i] != '\"')
+		while (input[*i] && input[*i] != '$' && !ft_isspace(input[*i]) \
+		&& input[*i] != '\'' && input[*i] != '\"')
 			(*i)++;
 		aux = ft_getenv(input, data, j, *i - j);
-		return(ft_freeandjoin(line, aux));
+		return (ft_freeandjoin(line, aux));
+	}
+	return (line);
+}
+
+char	*quotes_normalize(char *input, char *line, int *i, t_data *data)
+{
+	int		j;
+
+	j = *i;
+	if (input[*i] == '\'')
+	{
+		forward_quotes(input, i);
+		line = ft_freeandjoin(line, ft_substr(input, j + 1, *i - j - 2));
+	}
+	else if (input[*i] == '\"')
+	{
+		(*i)++;
+		while (input[*i] != '\"' && input[*i])
+		{
+			while (input[*i] == '$')
+				line = dollar_normalize(input, line, i, data);
+			if (input[*i] && input[*i] != '\"')
+			{
+				(*i)++;
+				line = ft_freeandjoin(line, ft_substr(input, *i - 1, 1));
+			}
+		}
+		(*i)++;
 	}
 	return (line);
 }
@@ -36,42 +64,20 @@ char	*normalize_line(char *input, t_data *data)
 	int		i;
 	int		j;
 	char	*line;
-	char	*aux;
 
 	i = 0;
 	line = ft_calloc(1, sizeof(char));
 	while (input[i])
 	{
 		j = i;
-		while (input[i] && input[i] != '$' && input[i] != '\'' && input[i] != '\"')
+		while (input[i] && input[i] != '$' && \
+		input[i] != '\'' && input[i] != '\"')
 			i++;
-		aux = ft_substr(input, j, i - j);
-		line = ft_freeandjoin(line, aux);
-		j = i;
+		line = ft_freeandjoin(line, ft_substr(input, j, i - j));
 		if (input[i] == '$')
-			line = dollar_excepctions(input, line, &i, data);
-		else if (input[i] == '\'')
-		{
-			forward_quotes(input, &i);
-			aux = ft_substr(input, j + 1, i - j - 2);
-			line = ft_freeandjoin(line, aux);
-		}
-		else if (input[i] == '\"')
-		{
-			i++;
-			while (input[i] != '\"' && input[i])
-			{
-				while (input[i] == '$')
-					line = dollar_excepctions(input, line, &i, data);
-				if (input[i] && input[i] != '\"')
-				{
-					i++;
-					aux = ft_substr(input, i - 1, 1);
-					line = ft_freeandjoin(line, aux);
-				}
-			}
-			i++;
-		}
+			line = dollar_normalize(input, line, &i, data);
+		else if (input[i] == '\'' || input[i] == '\"')
+			line = quotes_normalize(input, line, &i, data);
 	}
 	return (line);
 }

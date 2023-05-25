@@ -21,10 +21,10 @@ static char	*get_line_fd1(t_data *data)
 		ft_strlcpy(path, "/minishell", 10);
 	aux = ft_strrchr(path, '/') + 1;
 	if (data->lastcmd_value == 0)
-		aux = ft_strjoin("\033[32;1m➜ \033[36;1m", aux); // Proteger
+		aux = ft_strjoin("\033[32;1m➜ \033[36;1m", aux);
 	else
-		aux = ft_strjoin("\033[31;1m➜ \033[36;1m", aux); // Proteger
-	text_minishell = ft_strjoin(aux, " \033[0m"); // Proteger
+		aux = ft_strjoin("\033[31;1m➜ \033[36;1m", aux);
+	text_minishell = ft_strjoin(aux, " \033[0m");
 	ft_free_and_null((void **)&aux);
 	aux = readline(text_minishell);
 	ft_free_and_null((void **)&text_minishell);
