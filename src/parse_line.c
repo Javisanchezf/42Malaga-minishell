@@ -1,6 +1,22 @@
 #include "minishell.h"
 
 // int archivo = open(nombreArchivo, O_WRONLY | O_CREAT, 0644);
+// void	forward_operators(char *input, int *i)
+// {
+// 	while (input[*i] && (input[*i] == '<' || input[*i] == '>'))
+// 		(*i)++;
+// 	while (ft_isspace(input[*i]))
+// 		(*i)++;
+// 	if (input[*i] == '\'' || input[*i] == '\"')
+// 		forward_quotes(input, i);
+// 	else
+// 		while (!is_separator_char(input[*i]))
+// 			(*i)++;
+// }
+// int	is_separator_char(char c)
+// {
+// 	return (c == '<' || c == '>' || ft_isspace(c) || c == 0);
+// }
 
 char	*dollar_normalize(char *input, char *line, int *i, t_data *data)
 {
@@ -94,7 +110,7 @@ void	parse_line(char *input, t_data *data)
 	while (commands[i])
 	{
 		char *borrar = normalize_line(commands[i], data);
-		data->cmd[i].opt = split_by_args(borrar, 0, 0, 0);
+		data->cmd[i].opt = ft_split(borrar, ' ');
 		free(borrar);
 		data->cmd[i].path = ft_strdup("");
 		data->cmd[i].input = ft_strdup("");

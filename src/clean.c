@@ -12,8 +12,9 @@ void	clean_commands(t_data *data)
 		ft_free_and_null((void **)&data->cmd[i].input);
 		ft_free_and_null((void **)&data->cmd[i].output);
 	}
+	if (data->n_commands != 0)
+		ft_free_and_null((void **)&data->cmd);
 	data->n_commands = 0;
-	ft_free_and_null((void **)&data->cmd);
 }
 
 void	clean_and_exit_success(t_data *data)

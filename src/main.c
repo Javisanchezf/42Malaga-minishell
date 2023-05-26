@@ -18,7 +18,6 @@ void	enviroment_extract(char **env, t_data *data)
 		data->env[i] = ft_calloc(size + 1, sizeof(char));
 		ft_strlcpy(data->env[i], env[i], size + 1);
 	}
-	ft_printf_split(data->env);
 }
 
 void	init_data(t_data *data, char **env, int argc, char **argv)
@@ -33,7 +32,6 @@ void	init_data(t_data *data, char **env, int argc, char **argv)
 	enviroment_extract(env, data);
 	data->lastcmd_value = 0;
 	signal(SIGINT, sigint_handler);
-	signal(SIGTSTP, sigint_handler);
 	(void)argc;
 	(void)argv;
 }
