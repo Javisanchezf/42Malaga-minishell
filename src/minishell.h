@@ -45,27 +45,21 @@ typedef struct s_data
 	int			lastcmd_value;
 }				t_data;
 
+/*----------------------------PARSE GENERAL----------------------------*/
+
+char	*readlineplus(t_data *data);
+void	parse_line(char *input, t_data *data);
+
 /*----------------------------PARSE UTILS----------------------------*/
 
 void	forward_quotes(char *input, int *i);
-void	forward_operators(char *input, int *i);
-int		is_separator_char(char c);
 char	*ft_getenv(char *env, t_data *data, int start, int size);
-
-/*----------------------------SPLITS----------------------------*/
-
-char	**split_by_args(char *input, int i, int j, int size_split);
 char	**split_by_pipes(char *input, int n_commands, int i);
 
 /*----------------------------CLEAN----------------------------*/
 
 void	clean_commands(t_data *data);
 void	clean_and_exit_success(t_data *data);
-
-/*----------------------------OTHERS----------------------------*/
-
-char	*readlineplus(t_data *data);
-void	parse_line(char *input, t_data *data);
 
 /*----------------------------SIGNALS----------------------------*/
 void	sigint_handler(int sig);
