@@ -37,16 +37,9 @@ typedef struct s_command
 	int		input_tipe; //-1 estandar, 0 para < y 1 para <<
 }				t_command;
 
-typedef struct s_env
-{
-	char	*variable;
-	char	*value;
-}				t_env;
-
 typedef struct s_data
 {
-	t_env		*env;
-	int			n_envs;
+	char		**env;
 	t_command	*cmd;
 	int			n_commands;
 	int			lastcmd_value;
