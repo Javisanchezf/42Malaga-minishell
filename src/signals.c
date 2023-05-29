@@ -15,8 +15,5 @@ void	sigint_handler(int sig)
 void	ctrl_d(char *input, t_data *data)
 {
 	if (!input)
-	{
-		ft_putstr_fd("exit\n", 2);
 		clean_and_exit_success(data);
-	}
 }

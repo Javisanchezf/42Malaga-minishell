@@ -13,7 +13,10 @@ void	clean_commands(t_data *data)
 		ft_free_and_null((void **)&data->cmd[i].output);
 	}
 	if (data->n_commands != 0)
+	{
 		ft_free_and_null((void **)&data->cmd);
+		ft_split_free(data->rute);
+	}
 	data->n_commands = 0;
 }
 

@@ -25,6 +25,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <signal.h>
+# include <errno.h>
 /*----------------------------STRUCTS----------------------------*/
 
 typedef struct s_command
@@ -34,8 +36,17 @@ typedef struct s_command
 	char	*input;
 	int		output_tipe; //-1 estandar, 0 para > y 1 para >>
 	char	*output;
-	int		input_tipe; //-1 estandar, 0 para < y 1 para <<
+	int		input_tipe;  //-1 estandar, 0 para < y 1 para <<
 }				t_command;
+
+typedef struct s_link
+{
+	int		piping[2];
+	int		fd_in;
+	int		fd_t_in;
+	int		fd_out;
+	int		fd_t_out;
+}	t_link;
 
 typedef struct s_data
 {
@@ -43,7 +54,13 @@ typedef struct s_data
 	t_command	*cmd;
 	int			n_commands;
 	int			lastcmd_value;
+	char		**rute;
+	t_link		tube;
 }				t_data;
+
+/*----------------------------MACROS----------------------------*/
+# define CMD_ERROR "Command not found"
+# define PIPE_ERROR "Pipe error"
 
 /*----------------------------PARSE GENERAL----------------------------*/
 
@@ -64,5 +81,13 @@ void	clean_and_exit_success(t_data *data);
 /*----------------------------SIGNALS----------------------------*/
 void	sigint_handler(int sig);
 void	ctrl_d(char *input, t_data *data);
+
+/*----------------------------UTILS----------------------------*/
+void	ft_leaks(void);
+void	sub_dup2(int zero, int one);
+char  	*ft_getcmd(t_data *data, char *cmd);
+
+/*----------------------------PIPES----------------------------*/
+void	child_generator(t_data *data);
 
 #endif
