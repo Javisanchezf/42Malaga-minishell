@@ -71,7 +71,7 @@ static int	check_quotes(char *input, int *i)
 	{
 		add_history_plus(input);
 		ft_putstr_fd("\033[31;1mminishell: syntax \
-error due to unclosed quotes.\n\033[0m", 2);
+		error due to unclosed quotes.\n\033[0m", 2);
 		ft_free_and_null((void **)&input);
 		return (1);
 	}

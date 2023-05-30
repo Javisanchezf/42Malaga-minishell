@@ -20,7 +20,7 @@ char  *ft_getcmd(t_data *data, char *cmd)
 
     i = 0;
     if (access(cmd, X_OK) == 0)
-        return (cmd);
+        return (ft_strdup(cmd));
     while (data->rute[i])
     {
         aux = ft_strjoin(data->rute[i], "/");

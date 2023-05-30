@@ -2,14 +2,8 @@
 
 int	child(t_command *comando, t_data *data)
 {
-	int	exit_value;
-
-	exit_value = execve(comando->path, comando->opt, data->env);
-	if (exit_value == -1)
-	{
-		perror(CMD_ERROR);
-		// printf("%d\n", exit_value);
-	}
+	execve(comando->path, comando->opt, data->env);
+	perror(CMD_ERROR);
 	exit(errno);
 }
 
