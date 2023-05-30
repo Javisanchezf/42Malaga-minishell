@@ -44,23 +44,21 @@ void	create_tube(t_data *data, int cont)
 void	child_generator(t_data *data)
 {
 	int		cont;
-	pid_t	*pid;
+	pid_t	pid;
 	int		inp_fd;
 	int 	aux;
 
 	inp_fd = dup(0);
 	cont = -1;
-	pid = ft_calloc(sizeof(pid_t), data->n_commands);
 	while (++cont < data->n_commands)
 	{
 		create_tube(data, cont);
-		pid[cont] = fork();
-		if (pid[cont] == 0)
+		pid = fork();
+		if (pid == 0)
 			child(&data->cmd[cont], data);
-		waitpid(pid[cont], &aux, 0);
+		waitpid(pid, &aux, 0);
 		if (WIFEXITED(aux))
 			data->lastcmd_value = WEXITSTATUS(aux);
 	}
-	free(pid);
 	dup2(inp_fd, 0);
 }
