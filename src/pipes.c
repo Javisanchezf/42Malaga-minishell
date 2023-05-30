@@ -2,8 +2,23 @@
 
 int	child(t_command *comando, t_data *data)
 {
+	if (!comando->path[0])
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(comando->opt[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(127);
+	}
+
+	
+	select_builtin(data, comando);
+
 	execve(comando->path, comando->opt, data->env);
-	perror(CMD_ERROR);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(comando->opt[0], 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(strerror(errno), 2);
+	ft_putstr_fd("\n", 2);
 	exit(errno);
 }
 
@@ -12,7 +27,6 @@ void	create_tube(t_data *data, int cont)
 	int	piping[2];
 
 	dup2(data->tube.fd_in, 0);
-	// close(data->tube.fd_in);
 	if (cont != data->n_commands - 1)
 	{
 		if (pipe(piping) == -1)

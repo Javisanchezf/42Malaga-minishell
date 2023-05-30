@@ -37,7 +37,7 @@ typedef struct s_command
 	int		output_tipe; //-1 estandar, 0 para > y 1 para >>
 	char	*output;
 	int		input_tipe;  //-1 estandar, 0 para < y 1 para <<
-}				t_command;
+}	t_command;
 
 typedef struct s_link
 {
@@ -89,5 +89,9 @@ char  	*ft_getcmd(t_data *data, char *cmd);
 
 /*----------------------------PIPES----------------------------*/
 void	child_generator(t_data *data);
+
+/*----------------------------BUILTINS----------------------------*/
+void	select_builtin(t_data *data, t_command *comando);
+
 
 #endif
