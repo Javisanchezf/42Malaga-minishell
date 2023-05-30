@@ -95,6 +95,8 @@ char	*normalize_line(char *input, t_data *data)
 		else if (input[i] == '\'' || input[i] == '\"')
 			line = quotes_normalize(input, line, &i, data);
 	}
+	// if (!line)
+	// 	return (ft_strdup(""));
 	return (line);
 }
 

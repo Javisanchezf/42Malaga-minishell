@@ -12,14 +12,16 @@ void	sub_dup2(int zero, int one)
 }
 
 
-char  *ft_getcmd(t_data *data, char *cmd)
+char	*ft_getcmd(t_data *data, char *cmd)
 {
-    int     i;
-    char    *aux;
-    char    *c;
+	int		i;
+    char	*aux;
+    char	*c;
 
-    i = 0;
-    if (access(cmd, X_OK) == 0)
+	i = 0;
+	if (!cmd)
+		return (ft_strdup(""));
+	if (access(cmd, X_OK) == 0)
         return (ft_strdup(cmd));
     while (data->rute[i])
     {

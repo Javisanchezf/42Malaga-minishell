@@ -55,9 +55,9 @@ int	main(int argc, char **argv, char **env)
 		{
 			parse_line(input, &data);
 			child_generator(&data);
+			clean_commands(&data);
 		}
 		// ft_leaks();
-		clean_commands(&data);
 	}
 	clean_and_exit_success(&data);
 }

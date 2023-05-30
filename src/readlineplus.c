@@ -94,15 +94,15 @@ char	*readlineplus(t_data *data)
 		while (input[i] && (input[i] != '\'' && \
 		input[i] != '\"' && input[i] != '|'))
 			i++;
-		if (input[i] == '\'' || input[i] == '\"')
-			if (check_quotes(input, &i) == 1)
-				return (NULL);
 		if (input[i] == '|')
 		{
 			input = check_pipe(input, &i, 1);
 			if (!input)
 				return (NULL);
 		}
+		else if (input[i] == '\'' || input[i] == '\"')
+			if (check_quotes(input, &i) == 1)
+				return (NULL);
 	}
 	add_history_plus(input);
 	return (input);

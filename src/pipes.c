@@ -5,12 +5,13 @@ int	child(t_command *comando, t_data *data)
 	if (!comando->path[0])
 	{
 		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(comando->opt[0], 2);
+		if (comando->opt[0])
+			ft_putstr_fd(comando->opt[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		exit(127);
 	}
 
-	
+
 	select_builtin(data, comando);
 
 	execve(comando->path, comando->opt, data->env);
