@@ -73,6 +73,7 @@ void	forward_quotes(char *input, int *i);
 char	*ft_getenv(char *env, t_data *data, int start, int size);
 char	**split_by_pipes(char *input, int n_commands, int i);
 char	**split_by_args(char *input, int i, int j, int size_split);
+int		parse_redirections(t_data *data, int i);
 
 /*----------------------------CLEAN----------------------------*/
 
@@ -86,14 +87,13 @@ void	ctrl_d(char *input, t_data *data);
 /*----------------------------UTILS----------------------------*/
 void	ft_leaks(void);
 void	sub_dup2(int zero, int one);
-char  	*ft_getcmd(t_data *data, char *cmd);
+char	*ft_getcmd(t_data *data, char *cmd);
 char	*ft_strjoin_freedom(char *s1, char *s2);
 
 /*----------------------------PIPES----------------------------*/
 void	child_generator(t_data *data);
 
 /*----------------------------BUILTINS----------------------------*/
-int	select_builtin(t_data *data, t_command *comando);
-
+int		select_builtin(t_data *data, t_command *comando);
 
 #endif

@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-// int archivo = open(nombreArchivo, O_WRONLY | O_CREAT, 0644);
-
 char	*dollar_normalize(char *input, char *line, int *i, t_data *data)
 {
 	char	*aux;
@@ -86,7 +84,7 @@ char	**normalize_line(char **split, t_data *data)
 		ft_free_and_null((void **)&split[k]);
 		split[k] = line;
 	}
-	return(split);
+	return (split);
 }
 
 void	parse_line(char *input, t_data *data)
@@ -106,8 +104,8 @@ void	parse_line(char *input, t_data *data)
 	{
 		data->cmd[i].opt = normalize_line(split_by_args(commands[i], 0, 0, 0), data);
 		data->cmd[i].path = ft_getcmd(data, data->cmd[i].opt[0]);
-		data->cmd[i].input = ft_strdup("");
-		data->cmd[i].output = ft_strdup("");
+		if (parse_redirections(data, i) == 1)
+			break ;
 		i++;
 	}
 	ft_free_and_null((void **)&commands);
