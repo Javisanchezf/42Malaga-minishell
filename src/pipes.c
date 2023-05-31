@@ -10,10 +10,6 @@ int	child(t_command *comando, t_data *data)
 		ft_putstr_fd(": command not found\n", 2);
 		exit(127);
 	}
-
-
-	select_builtin(data, comando);
-
 	execve(comando->path, comando->opt, data->env);
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(comando->opt[0], 2);
@@ -53,6 +49,9 @@ void	child_generator(t_data *data)
 	while (++cont < data->n_commands)
 	{
 		create_tube(data, cont);
+		if (data->n_commands == 1)
+			if (select_builtin(data, &data->cmd[cont]) == 1)
+				continue ;
 		pid = fork();
 		if (pid == 0)
 			child(&data->cmd[cont], data);

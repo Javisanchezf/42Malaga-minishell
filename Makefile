@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
+#    By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 18:02:29 by javiersa          #+#    #+#              #
-#    Updated: 2023/05/30 19:48:09 by javiersa         ###   ########.fr        #
+#    Updated: 2023/05/31 17:50:10 by antdelga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,9 @@ USER := $(shell whoami)
 # General rules
 
 all: $(PROGRAM)
+
+#show_image:
+#    img2txt -f utf8 sfc.png
 
 $(PROGRAM): $(LIBFTPLUS_LIB) $(NAME)
 	@$(CC) $(CFLAGS) $(NAME) $(LIBFTPLUS_LIB) -L"/Users/$(USER)/.brew/opt/readline/lib/" -o $(PROGRAM) -lreadline

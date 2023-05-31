@@ -2,28 +2,37 @@
 
 void bt_cd(t_data *data, t_command *cmd)
 {
-	// char	*aux;
 	int		i;
-	(void) data;
-	printf("%s\n", cmd->opt[1]);
-    if (chdir(cmd->opt[1]) != 0)
-		perror("cd");
-	i = -1;
-	while(ft_strncmp(data->env[++i], "PWD=", 4) != 0)
-		;
+	char	*aux;
+
+	if (!cmd->opt[1])
+	{
+		aux = ft_getenv("ZDOTDIR", data, 0, 7);
+		if (chdir(aux) != 0)
+			return (free(aux), perror("cdsd"));
+		free(aux);
+	}
+	else
+	{
+		// printf("OPT: %s\n", cmd->opt[1]);
+		if (chdir(cmd->opt[1]) != 0)
+			return (perror("cd"));
+	}
+	i = 0;
+	while(ft_strncmp(data->env[i], "PWD=", 4) != 0)
+		i++;
 	if (data->env[i])
 	{
-		printf("entro\n");
-		free(data->env[i]);
-		data->env[i] = ft_strdup("/Users/antdelga/Desktop");
+		if (getcwd(data->env[i], 2048) == NULL)
+        	return (perror("pwd"));
+		data->env[i] = ft_strjoin("PWD=", data->env[i]);
 	}
-
-	exit(0);
-	
 }
 
-void	select_builtin(t_data *data, t_command *comando)
+int	select_builtin(t_data *data, t_command *comando)
 {
 	if (ft_strncmp(comando->opt[0], "cd", 2) == 0)
-		bt_cd(data, comando);
+		return (bt_cd(data, comando), 1);
+	return (0);
 }
+
