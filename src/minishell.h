@@ -87,12 +87,13 @@ void	ctrl_d(char *input, t_data *data);
 void	ft_leaks(void);
 void	sub_dup2(int zero, int one);
 char  	*ft_getcmd(t_data *data, char *cmd);
+char	*ft_strjoin_freedom(char *s1, char *s2);
 
 /*----------------------------PIPES----------------------------*/
 void	child_generator(t_data *data);
 
 /*----------------------------BUILTINS----------------------------*/
-void	select_builtin(t_data *data, t_command *comando);
+int	select_builtin(t_data *data, t_command *comando);
 
 
 #endif

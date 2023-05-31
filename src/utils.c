@@ -36,6 +36,34 @@ char	*ft_getcmd(t_data *data, char *cmd)
     return (ft_strdup(""));
 }
 
+char	*ft_strjoin_freedom(char *s1, char *s2)
+{
+	size_t	i;
+	size_t	j;
+	char	*strjoin;
+
+	j = ft_strlen(s1) + ft_strlen(s2);
+	i = 0;
+	strjoin = malloc ((j + 1) * sizeof(char));
+	if (!strjoin)
+		return (0);
+	while (s1[i])
+	{
+		strjoin[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+	{
+		strjoin[i + j] = s2[j];
+		j++;
+	}
+	strjoin[i + j] = 0;
+	free(s2);
+	return (strjoin);
+}
+
+
 
 
 

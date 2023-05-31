@@ -32,6 +32,9 @@ void	init_data(t_data *data, char **env, int argc, char **argv)
 	enviroment_extract(env, data);
 	data->lastcmd_value = 0;
 	signal(SIGINT, sigint_handler);
+	data->tube.fd_in = dup(0);
+	data->tube.fd_t_in = dup(0);
+	data->tube.fd_t_out = dup(1);
 	(void)argc;
 	(void)argv;
 }
@@ -44,9 +47,6 @@ int	main(int argc, char **argv, char **env)
 	// atexit(ft_leaks);
 	init_data(&data, env, argc, argv);
 
-	data.tube.fd_in = dup(0);
-	data.tube.fd_t_in = dup(0);
-	data.tube.fd_t_out = dup(1);
 
 	while (1)
 	{
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **env)
 			child_generator(&data);
 			clean_commands(&data);
 		}
-		// ft_leaks();
+		ft_leaks();
 	}
 	clean_and_exit_success(&data);
 }
