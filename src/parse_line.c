@@ -1,22 +1,6 @@
 #include "minishell.h"
 
 // int archivo = open(nombreArchivo, O_WRONLY | O_CREAT, 0644);
-// void	forward_operators(char *input, int *i)
-// {
-// 	while (input[*i] && (input[*i] == '<' || input[*i] == '>'))
-// 		(*i)++;
-// 	while (ft_isspace(input[*i]))
-// 		(*i)++;
-// 	if (input[*i] == '\'' || input[*i] == '\"')
-// 		forward_quotes(input, i);
-// 	else
-// 		while (!is_separator_char(input[*i]))
-// 			(*i)++;
-// }
-// int	is_separator_char(char c)
-// {
-// 	return (c == '<' || c == '>' || ft_isspace(c) || c == 0);
-// }
 
 char	*dollar_normalize(char *input, char *line, int *i, t_data *data)
 {
@@ -75,29 +59,34 @@ char	*quotes_normalize(char *input, char *line, int *i, t_data *data)
 	return (line);
 }
 
-char	*normalize_line(char *input, t_data *data)
+char	**normalize_line(char **split, t_data *data)
 {
 	int		i;
 	int		j;
 	char	*line;
+	int		k;
 
-	i = 0;
-	line = ft_calloc(1, sizeof(char));
-	while (input[i])
+	k = -1;
+	while (split[++k])
 	{
-		j = i;
-		while (input[i] && input[i] != '$' && \
-		input[i] != '\'' && input[i] != '\"')
-			i++;
-		line = ft_freeandjoin(line, ft_substr(input, j, i - j));
-		if (input[i] == '$')
-			line = dollar_normalize(input, line, &i, data);
-		else if (input[i] == '\'' || input[i] == '\"')
-			line = quotes_normalize(input, line, &i, data);
+		i = 0;
+		line = ft_calloc(1, sizeof(char));
+		while (split[k][i])
+		{
+			j = i;
+			while (split[k][i] && split[k][i] != '$' && \
+			split[k][i] != '\'' && split[k][i] != '\"')
+				i++;
+			line = ft_freeandjoin(line, ft_substr(split[k], j, i - j));
+			if (split[k][i] == '$')
+				line = dollar_normalize(split[k], line, &i, data);
+			else if (split[k][i] == '\'' || split[k][i] == '\"')
+				line = quotes_normalize(split[k], line, &i, data);
+		}
+		ft_free_and_null((void **)&split[k]);
+		split[k] = line;
 	}
-	// if (!line)
-	// 	return (ft_strdup(""));
-	return (line);
+	return(split);
 }
 
 void	parse_line(char *input, t_data *data)
@@ -107,27 +96,20 @@ void	parse_line(char *input, t_data *data)
 	int		i;
 
 	commands = split_by_pipes(input, 0, 0);
-	i = 0;
 	data->n_commands = ft_split_size(commands);
 	data->cmd = ft_calloc(data->n_commands + 1 ,sizeof(t_command)); //Proteger
 	aux = ft_getenv("PATH", data, 0, 4);
 	data->rute = ft_split(aux, ':');
 	ft_free_and_null((void **)&aux);
+	i = 0;
 	while (commands[i])
 	{
-		char *borrar = normalize_line(commands[i], data);
-		data->cmd[i].opt = ft_split(borrar, ' ');
-		free(borrar);
+		data->cmd[i].opt = normalize_line(split_by_args(commands[i], 0, 0, 0), data);
 		data->cmd[i].path = ft_getcmd(data, data->cmd[i].opt[0]);
 		data->cmd[i].input = ft_strdup("");
 		data->cmd[i].output = ft_strdup("");
 		i++;
 	}
 	ft_free_and_null((void **)&commands);
-	if (ft_strncmp(input, "exit", 5) == 0)
-	{
-		ft_free_and_null((void **)&input);
-		clean_and_exit_success(data);
-	}
 	ft_free_and_null((void **)&input);
 }

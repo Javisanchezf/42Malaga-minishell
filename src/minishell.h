@@ -72,6 +72,7 @@ void	parse_line(char *input, t_data *data);
 void	forward_quotes(char *input, int *i);
 char	*ft_getenv(char *env, t_data *data, int start, int size);
 char	**split_by_pipes(char *input, int n_commands, int i);
+char	**split_by_args(char *input, int i, int j, int size_split);
 
 /*----------------------------CLEAN----------------------------*/
 
