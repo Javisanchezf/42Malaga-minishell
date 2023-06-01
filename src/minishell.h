@@ -58,6 +58,7 @@ typedef struct s_data
 	t_link		tube;
 }				t_data;
 
+/*----------------------------COLORS----------------------------*/
 # define BOLD	"\033[1m"
 # define BLACK	"\033[30;1m"
 # define RED	"\033[31;1m"
@@ -74,20 +75,18 @@ typedef struct s_data
 # define PIPE_ERROR "Pipe error"
 
 /*----------------------------PARSE GENERAL----------------------------*/
-
 char	*readlineplus(t_data *data);
 void	parse_line(char *input, t_data *data);
-
-/*----------------------------PARSE UTILS----------------------------*/
-
-void	forward_quotes(char *input, int *i);
-char	*ft_getenv(char *env, t_data *data, int start, int size);
-char	**split_by_pipes(char *input, int n_commands, int i);
-char	**split_by_args(char *input, int i, int j, int size_split);
 int		parse_redirections(t_data *data, int i);
 
-/*----------------------------CLEAN----------------------------*/
+/*----------------------------PARSE UTILS----------------------------*/
+char	**split_by_pipes(char *input, int n_commands, int i);
+char	**split_by_args(char *input, int i, int j, int size_split);
+char	**chain_delete_one(char **array, int index);
+void	forward_quotes(char *input, int *i);
+char	*ft_getenv(char *env, t_data *data, int start, int size);
 
+/*----------------------------CLEAN----------------------------*/
 void	clean_commands(t_data *data);
 void	clean_and_exit_success(t_data *data);
 

@@ -1,34 +1,5 @@
 #include "minishell.h"
 
-char	**chain_delete_one(char **array, int index)
-{
-	int		size;
-	char	**new_array;
-	int		i;
-	int		j;
-
-	size = 0;
-	size = ft_split_size(array);
-	if (index < 0 || index >= size)
-		return (array);
-	new_array = (char **)ft_calloc((size), sizeof(char *));
-	if (!new_array)
-		return (array);
-	i = -1;
-	j = 0;
-	while (++i < size)
-	{
-		if (i != index)
-		{
-			new_array[j] = array[i];
-			j++;
-		}
-	}
-	ft_free_and_null((void **)&array[index]);
-	ft_free_and_null((void **)&array);
-	return (new_array);
-}
-
 void	input_parse(t_data *data, int i, int j, int cont)
 {
 	int		k;
