@@ -42,7 +42,7 @@ void	child_generator(t_data *data)
 	int		cont;
 	pid_t	pid;
 	int		inp_fd;
-	int 	aux;
+	int		aux;
 
 	inp_fd = dup(0);
 	cont = -1;
@@ -55,7 +55,7 @@ void	child_generator(t_data *data)
 		pid = fork();
 		if (pid == 0)
 			child(&data->cmd[cont], data);
-		waitpid(pid, &aux, 0);
+		waitpid(-1, &aux, 0);
 		if (WIFEXITED(aux))
 			data->lastcmd_value = WEXITSTATUS(aux);
 	}

@@ -1,5 +1,34 @@
 #include "minishell.h"
 
+char	**chain_delete_one(char **array, int index)
+{
+	int		size;
+	char	**new_array;
+	int		i;
+	int		j;
+
+	size = 0;
+	size = ft_split_size(array);
+	if (index < 0 || index >= size)
+		return (array);
+	new_array = (char **)ft_calloc((size), sizeof(char *));
+	if (!new_array)
+		return (array);
+	i = -1;
+	j = 0;
+	while (++i < size)
+	{
+		if (i != index)
+		{
+			new_array[j] = array[i];
+			j++;
+		}
+	}
+	ft_free_and_null((void **)&array[index]);
+	ft_free_and_null((void **)&array);
+	return (new_array);
+}
+
 void	input_parse(t_data *data, int i, int j, int cont)
 {
 	int		k;
@@ -18,7 +47,7 @@ void	input_parse(t_data *data, int i, int j, int cont)
 		//if (file == -1 && errno == EACCES) sustituir todo por: minishell: a.txt: Permission denied
 	}
 	//el << rarito
-	//liberar esa parte del split
+	data->cmd[i].opt = chain_delete_one(data->cmd[i].opt, j);
 }
 
 void	output_parse(t_data *data, int i, int j, int cont)
@@ -38,8 +67,9 @@ void	output_parse(t_data *data, int i, int j, int cont)
 		file = open(data->cmd[i].output, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	//if (file == -1 && errno == EACCES) sustituir todo por: minishell: a.txt: Permission denied
 	close(file);
-	//liberar esa parte del split
+	data->cmd[i].opt = chain_delete_one(data->cmd[i].opt, j);
 }
+
 int	nose(t_data *data, int i, int j, char type)
 {
 	int	cont;
@@ -76,15 +106,21 @@ int	parse_redirections(t_data *data, int i)
 	data->cmd[i].output = ft_strdup("");
 	data->cmd[i].input_type = 0;
 	data->cmd[i].output_type = 0;
-	j = -1;
-	while (data->cmd[i].opt[++j])
+	j = 0;
+	while (data->cmd[i].opt[j])
 	{
 		if (data->cmd[i].opt[j][0] == '<')
+		{
 			if (nose(data, i, j, data->cmd[i].opt[j][0]) == 1)
 				return (1);
-		if (data->cmd[i].opt[j][0] == '>')
+		}
+		else if (data->cmd[i].opt[j][0] == '>')
+		{
 			if (nose(data, i, j, data->cmd[i].opt[j][0]) == 1)
 				return (1);
+		}
+		else
+			j++;
 	}
 	return (0);
 }

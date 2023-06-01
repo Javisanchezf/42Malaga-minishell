@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **env)
 	char	*input;
 	t_data	data;
 
-	atexit(ft_leaks);
+	// atexit(ft_leaks);
 	init_data(&data, env, argc, argv);
 	while (1)
 	{
