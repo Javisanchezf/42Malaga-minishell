@@ -34,9 +34,9 @@ typedef struct s_command
 	char	**opt;
 	char	*path;
 	char	*input;
-	int		output_tipe; //-1 estandar, 0 para > y 1 para >>
+	int		output_type; //0 estandar, 1 para > y 2 para >>
 	char	*output;
-	int		input_tipe;  //-1 estandar, 0 para < y 1 para <<
+	int		input_type;  //0 estandar, 1 para < y 2 para <<
 }	t_command;
 
 typedef struct s_link
