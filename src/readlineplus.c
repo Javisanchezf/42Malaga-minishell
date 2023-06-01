@@ -19,6 +19,11 @@ static char	*get_line_fd1(t_data *data)
 	if (getcwd(path, sizeof(path) - 1) == NULL)
 		ft_strlcpy(path, "/minishell", 10);
 	aux = ft_strrchr(path, '/') + 1;
+	if (!aux[0])
+	{
+		aux[0] = '~';
+		aux[1] = 0;
+	}
 	if (data->lastcmd_value == 0)
 		aux = ft_strjoin("\033[32;1m➜ \033[36;1m", aux);
 	else
