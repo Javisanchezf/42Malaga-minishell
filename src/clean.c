@@ -7,7 +7,6 @@ void	clean_commands(t_data *data)
 	i = -1;
 	while (++i < data->n_commands)
 	{
-		printf("Command: %s\n",data->cmd[i].opt[0]);
 		ft_split_free(data->cmd[i].opt);
 		ft_free_and_null((void **)&data->cmd[i].path);
 		ft_free_and_null((void **)&data->cmd[i].input);
