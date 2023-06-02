@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-/*Se tiene que hacer en otro momento lo del heredoc porque no sustituye $USER y mas royetes*/
+/*Se tiene que hacer en otro momento lo del heredoc porque no sustituye $USER y mas rolletes*/
 void	heredoc(t_data *data, int i)
 {
 	char	*prompt;
