@@ -46,20 +46,20 @@ void	heredoc(t_data *data, int i)
 	prompt = ft_strjoin(aux1, "\'> "DEFAULT);
 	ft_free_and_null((void **)&aux1);
 	aux1 = readline(prompt);
-	aux1 = dollar_heredoc(data, aux1);
 	ctrl_d(aux1, data);
+	aux1 = dollar_heredoc(data, aux1);
 	aux2 = ft_calloc(1, 1);
 	while (ft_strncmp(aux1, data->cmd[i].input, ft_strlen(data->cmd->input) + 1) != 0)
 	{
 		aux2 = ft_freeandjoin(aux2, aux1);
+		aux2 = ft_freeandjoin(aux2, ft_strdup("\n\0"));
 		aux1 = readline(prompt);
-		aux1 = dollar_heredoc(data, aux1);
 		ctrl_d(aux1, data);
+		aux1 = dollar_heredoc(data, aux1);
 	}
 	ft_free_and_null((void **)&data->cmd[i].input);
 	ft_free_and_null((void **)&prompt);
 	data->cmd[i].input = aux2;
-	printf("Dollar heredoc: %s\n", aux2);
 }
 
 void	input_parse(t_data *data, int i, int j, int cont)
