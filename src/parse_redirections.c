@@ -33,7 +33,7 @@ char	*dollar_heredoc(t_data *data , char *str)
 		}
 		str_new = ft_freeandjoin(str_new, ft_substr(str, i, 1));
 	}
-	return (str_new);
+	return (ft_free_and_null((void **)&str), str_new);
 }
 
 void	heredoc(t_data *data, int i)
@@ -57,6 +57,7 @@ void	heredoc(t_data *data, int i)
 		ctrl_d(aux1, data);
 		aux1 = dollar_heredoc(data, aux1);
 	}
+	ft_free_and_null((void **)&aux1);
 	ft_free_and_null((void **)&data->cmd[i].input);
 	ft_free_and_null((void **)&prompt);
 	data->cmd[i].input = aux2;
