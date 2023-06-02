@@ -1,6 +1,41 @@
 #include "minishell.h"
 
-/*Se tiene que hacer en otro momento lo del heredoc porque no sustituye $USER y mas rolletes*/
+char	*dollar_heredoc(t_data *data , char *str)
+{
+	int		i;
+	int		j;
+	char	*str_new;
+
+	i = -1;
+	str_new = ft_calloc(1, 1);
+	while (str[++i])
+	{
+		while (str[i] == '$')
+		{
+			i++;
+			if (ft_isspace(str[i]) || !str[i] || str[i] == '\'' || str[i] == '\"')
+			{
+				str_new = ft_freeandjoin(str_new, ft_strdup("$\0"));
+				i++;
+			}
+			else if (str[i] == '?')
+			{
+				str_new = ft_freeandjoin(str_new, ft_itoa(data->lastcmd_value));
+				i++;
+			}
+			else
+			{
+				j = i;
+				while (str[i] && str[i] != '$' && str[i] != '\'' && str[i] != '\"' && !ft_isspace(str[i]))
+					i++;
+				str_new = ft_freeandjoin(str_new, ft_getenv(str, data, j, i - j));
+			}
+		}
+		str_new = ft_freeandjoin(str_new, ft_substr(str, i, 1));
+	}
+	return (str_new);
+}
+
 void	heredoc(t_data *data, int i)
 {
 	char	*prompt;
@@ -11,17 +46,20 @@ void	heredoc(t_data *data, int i)
 	prompt = ft_strjoin(aux1, "\'> "DEFAULT);
 	ft_free_and_null((void **)&aux1);
 	aux1 = readline(prompt);
+	aux1 = dollar_heredoc(data, aux1);
 	ctrl_d(aux1, data);
 	aux2 = ft_calloc(1, 1);
 	while (ft_strncmp(aux1, data->cmd[i].input, ft_strlen(data->cmd->input) + 1) != 0)
 	{
 		aux2 = ft_freeandjoin(aux2, aux1);
 		aux1 = readline(prompt);
+		aux1 = dollar_heredoc(data, aux1);
 		ctrl_d(aux1, data);
 	}
 	ft_free_and_null((void **)&data->cmd[i].input);
 	ft_free_and_null((void **)&prompt);
 	data->cmd[i].input = aux2;
+	printf("Dollar heredoc: %s\n", aux2);
 }
 
 void	input_parse(t_data *data, int i, int j, int cont)
