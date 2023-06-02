@@ -10,7 +10,7 @@ void	enviroment_extract(char **env, t_data *data)
 		i++;
 	data->env = (char **)ft_calloc((i + 1), sizeof(char *));
 	if (!data->env)
-		ft_error("Problem allocating memory.", 0);
+		ft_error(RED"Problem allocating memory.\n"DEFAULT, 0);
 	i = -1;
 	while (env[++i])
 	{
@@ -24,7 +24,7 @@ void	init_data(t_data *data, char **env, int argc, char **argv)
 {
 	if (write(1, NULL, 0) == -1 || read(0, NULL, 0) == -1)
 	{
-		perror("Error: No write/read permissions on main fd.");
+		perror(RED"Error: No write/read permissions on main fd.\n"DEFAULT);
 		exit(EXIT_FAILURE);
 	}
 	ft_printf("%s", &(HEADER));

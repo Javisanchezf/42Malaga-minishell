@@ -1,5 +1,11 @@
 #include "minishell.h"
 
+/*Problemillas con señales:
+Si hay control C mientras hay heredocs
+Con el control C no se cambia lastcmd
+Resuelto mas o menos: Control D con heredocs pero no se esta liberando memoria y mas paranollas
+*/
+
 void	sigint_handler(int sig)
 {
 	(void) sig;
