@@ -65,6 +65,7 @@ char	**normalize_line(char **split, t_data *data)
 	int		k;
 
 	k = -1;
+
 	while (split[++k])
 	{
 		i = 0;

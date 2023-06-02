@@ -45,7 +45,6 @@ void	input_parse(t_data *data, int i, int j, int cont)
 	}
 	else
 		heredoc(data, i);
-	printf("Heredoc: %s\n", data->cmd[i].input);
 	data->cmd[i].opt = chain_delete_one(data->cmd[i].opt, j);
 }
 

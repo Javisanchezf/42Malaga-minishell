@@ -29,12 +29,12 @@ static int	ft_size_split_by_args(char *input, int i, int n)
 			forward_quotes(input, &i);
 			n++;
 		}
-		if (input[i] == '<' || input[i] == '>')
+		else if (input[i] == '<' || input[i] == '>')
 		{
 			forward_operators(input, &i);
 			n++;
 		}
-		if (!is_separator_char(input[i]))
+		else if (!is_separator_char(input[i]))
 		{
 			n++;
 			while (!is_separator_char(input[i]))
