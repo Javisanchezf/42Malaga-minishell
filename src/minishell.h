@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/03 13:48:58 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/03 13:55:09 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,22 @@ void	child_generator(t_data *data);
 
 /*----------------------------BUILTINS----------------------------*/
 int		select_builtin(t_data *data, t_command *comando);
+
+/*----------------------------BUILTINS----------------------------*/
+int		select_builtin(t_data *data, t_command *comando);
+void	bt_echo_n(t_command *cmd);
+void	bt_pwd(void);
+void	bt_cd(t_data *data, t_command *cmd);
+void	bt_env(t_data *data);
+void	bt_export_aux(t_data *data, t_command *cmd);
+void	bt_export(t_data *data, t_command *cmd, int loc);
+void	bt_unset_aux(t_data *data, t_command *cmd, char **new_env);
+void	bt_unset(t_data *data, t_command *cmd, int loc, int *cont);
+
+/*----------------------BUILTINS UTILS----------------------*/
+int		choose_largest_string(char *a, char *b);
+void	modify_values(int *index, int *loc, int *offset, int *cont);
+void	restart_loop(int *cont, int *loc, char **aux);
+void	bt_unset_init(t_data *data, t_command *cmd);
 
 #endif
