@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_line.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/03 13:48:21 by javiersa          #+#    #+#             */
+/*   Updated: 2023/06/03 13:48:43 by antdelga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*dollar_normalize(char *input, char *line, int *i, t_data *data)
@@ -96,14 +108,15 @@ void	parse_line(char *input, t_data *data)
 
 	commands = split_by_pipes(input, 0, 0);
 	data->n_commands = ft_split_size(commands);
-	data->cmd = ft_calloc(data->n_commands + 1 ,sizeof(t_command)); //Proteger
+	data->cmd = ft_calloc(data->n_commands + 1, sizeof(t_command));
 	aux = ft_getenv("PATH", data, 0, 4);
 	data->rute = ft_split(aux, ':');
 	ft_free_and_null((void **)&aux);
 	i = 0;
 	while (commands[i])
 	{
-		data->cmd[i].opt = normalize_line(split_by_args(commands[i], 0, 0, 0), data);
+		data->cmd[i].opt = \
+		normalize_line(split_by_args(commands[i], 0, 0, 0), data);
 		data->cmd[i].path = ft_getcmd(data, data->cmd[i].opt[0]);
 		if (parse_redirections(data, i) == 1)
 			break ;
