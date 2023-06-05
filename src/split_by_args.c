@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   split_by_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:46:24 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/03 13:46:30 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/05 18:46:41 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_separator_char(char c)
+static int	is_separator_char(char c)
 {
 	return (c == '<' || c == '>' || ft_isspace(c) || c == 0);
 }
 
-void	forward_operators(char *input, int *i)
+static void	forward_operators(char *input, int *i)
 {
 	while (input[*i] && (input[*i] == '<' || input[*i] == '>'))
 		(*i)++;

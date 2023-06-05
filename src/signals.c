@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/03 13:46:44 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/03 13:46:45 by antdelga         ###   ########.fr       */
+/*   Created: 2023/06/05 18:47:30 by javiersa          #+#    #+#             */
+/*   Updated: 2023/06/05 18:47:31 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/03 13:55:09 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/05 19:11:13 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ typedef struct s_command
 	char	**opt;
 	char	*path;
 	char	*input;
-	int		output_type; //0 estandar, 1 para > y 2 para >>
+	int		output_type;
 	char	*output;
-	int		input_type;  //0 estandar, 1 para < y 2 para <<
+	int		input_type;
 }	t_command;
 
 typedef struct s_link
@@ -97,6 +97,7 @@ char	**split_by_args(char *input, int i, int j, int size_split);
 char	**chain_delete_one(char **array, int index);
 void	forward_quotes(char *input, int *i);
 char	*ft_getenv(char *env, t_data *data, int start, int size);
+char	*dollar_heredoc(t_data *data, char *str);
 
 /*----------------------------CLEAN----------------------------*/
 void	clean_commands(t_data *data);

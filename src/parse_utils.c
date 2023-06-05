@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:35 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/03 13:47:39 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/05 19:24:13 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,49 @@ char	**chain_delete_one(char **array, int index)
 	ft_free_and_null((void **)&array[index]);
 	ft_free_and_null((void **)&array);
 	return (new_array);
+}
+
+static char	*conditions_heredoc(t_data *data, char *str, char *str_new, int *i)
+{
+	int	j;
+
+	if (ft_isspace(str[*i]) || !str[*i] || str[*i] == '\'' || str[*i] == '\"')
+	{
+		str_new = ft_freeandjoin(str_new, ft_strdup("$\0"));
+		(*i)++;
+	}
+	else if (str[*i] == '?')
+	{
+		str_new = ft_freeandjoin(str_new, ft_itoa(data->lastcmd_value));
+		(*i)++;
+	}
+	else if (str[*i])
+	{
+		j = *i;
+		while (str[*i] && str[*i] != '$' && str[*i] != '\'' \
+		&& str[*i] != '\"' && !ft_isspace(str[*i]))
+			(*i)++;
+		str_new = ft_freeandjoin(str_new, ft_getenv(str, data, j, *i - j));
+	}
+	return (str_new);
+}
+
+char	*dollar_heredoc(t_data *data, char *str)
+{
+	int		i;
+	char	*str_new;
+
+	i = -1;
+	str_new = ft_calloc(1, 1);
+	while (str[++i])
+	{
+		while (str[i] == '$')
+		{
+			i++;
+			str_new = conditions_heredoc(data, str, str_new, &i);
+		}
+		str_new = ft_freeandjoin(str_new, ft_substr(str, i, 1));
+	}
+	ft_free_and_null((void **)&str);
+	return (str_new);
 }

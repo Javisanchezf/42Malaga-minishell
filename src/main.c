@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/03 13:49:33 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/05 19:36:20 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	enviroment_extract(char **env, t_data *data)
+static void	enviroment_extract(char **env, t_data *data)
 {
 	int		i;
 	int		size;
@@ -32,7 +32,7 @@ void	enviroment_extract(char **env, t_data *data)
 	}
 }
 
-void	init_data(t_data *data, char **env, int argc, char **argv)
+static void	init_data(t_data *data, char **env, int argc, char **argv)
 {
 	if (write(1, NULL, 0) == -1 || read(0, NULL, 0) == -1)
 	{
@@ -64,7 +64,9 @@ int	main(int argc, char **argv, char **env)
 		if (input)
 		{
 			parse_line(input, &data);
+			printf("NOPETA0\n");
 			child_generator(&data);
+			printf("NOPETA1\n");
 			clean_commands(&data);
 		}
 		ft_leaks();

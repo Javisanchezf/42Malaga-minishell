@@ -6,13 +6,13 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:21 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/05 18:42:36 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/05 19:40:49 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*dollar_normalize(char *input, char *line, int *i, t_data *data)
+static char	*dollar_normalize(char *input, char *line, int *i, t_data *data)
 {
 	char	*aux;
 	int		j;
@@ -41,7 +41,7 @@ char	*dollar_normalize(char *input, char *line, int *i, t_data *data)
 	return (line);
 }
 
-char	*quotes_normalize(char *input, char *line, int *i, t_data *data)
+static char	*quotes_normalize(char *input, char *line, int *i, t_data *data)
 {
 	int		j;
 
@@ -69,15 +69,13 @@ char	*quotes_normalize(char *input, char *line, int *i, t_data *data)
 	return (line);
 }
 
-char	**normalize_line(char **split, t_data *data)
+char	**normalize_line(char **split, t_data *data, int i)
 {
-	int		i;
 	int		j;
 	char	*line;
 	int		k;
 
 	k = -1;
-
 	while (split[++k])
 	{
 		i = 0;
@@ -116,10 +114,13 @@ void	parse_line(char *input, t_data *data)
 	while (commands[i])
 	{
 		data->cmd[i].opt = \
-		normalize_line(split_by_args(commands[i], 0, 0, 0), data);
+		normalize_line(split_by_args(commands[i], 0, 0, 0), data, 0);
 		if (parse_redirections(data, i) == 1)
 			break ;
 		data->cmd[i].path = ft_getcmd(data, data->cmd[i].opt[0]);
+		printf("Command N%d :\n--------------------\n", i);
+		ft_printf_split(data->cmd[i].opt);
+		printf("PATH: %s, INPUT t%d: %s, OUTPUT t%d: %s\n", data->cmd[i].path, data->cmd[i].input_type, data->cmd[i].input, data->cmd[i].output_type, data->cmd[i].output);
 		i++;
 	}
 	ft_free_and_null((void **)&commands);

@@ -3,50 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:57 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/03 13:48:04 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/05 19:33:01 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*dollar_heredoc(t_data *data , char *str)
-{
-	int		i;
-	int		j;
-	char	*str_new;
-
-	i = -1;
-	str_new = ft_calloc(1, 1);
-	while (str[++i])
-	{
-		while (str[i] == '$')
-		{
-			i++;
-			if (ft_isspace(str[i]) || !str[i] || str[i] == '\'' || str[i] == '\"')
-			{
-				str_new = ft_freeandjoin(str_new, ft_strdup("$\0"));
-				i++;
-			}
-			else if (str[i] == '?')
-			{
-				str_new = ft_freeandjoin(str_new, ft_itoa(data->lastcmd_value));
-				i++;
-			}
-			else
-			{
-				j = i;
-				while (str[i] && str[i] != '$' && str[i] != '\'' && str[i] != '\"' && !ft_isspace(str[i]))
-					i++;
-				str_new = ft_freeandjoin(str_new, ft_getenv(str, data, j, i - j));
-			}
-		}
-		str_new = ft_freeandjoin(str_new, ft_substr(str, i, 1));
-	}
-	return (ft_free_and_null((void **)&str), str_new);
-}
 
 void	heredoc(t_data *data, int i)
 {
@@ -61,7 +25,8 @@ void	heredoc(t_data *data, int i)
 	ctrl_d(aux1, data);
 	aux1 = dollar_heredoc(data, aux1);
 	aux2 = ft_calloc(1, 1);
-	while (ft_strncmp(aux1, data->cmd[i].input, ft_strlen(data->cmd->input) + 1) != 0)
+	while (ft_strncmp(aux1, data->cmd[i].input, \
+	ft_strlen(data->cmd->input) + 1) != 0)
 	{
 		aux2 = ft_freeandjoin(aux2, aux1);
 		aux2 = ft_freeandjoin(aux2, ft_strdup("\n\0"));
@@ -81,18 +46,19 @@ void	input_parse(t_data *data, int i, int j, int cont)
 	int		file;
 
 	k = 0;
-	while (data->cmd[i].opt[j][k] && (data->cmd[i].opt[j][k] == '<' || ft_isspace(data->cmd[i].opt[j][k])))
+	while (data->cmd[i].opt[j][k] && (data->cmd[i].opt[j][k] == '<' \
+	|| ft_isspace(data->cmd[i].opt[j][k])))
 		k++;
 	data->cmd[i].input_type = cont;
 	ft_free_and_null((void **)&data->cmd[i].output);
-	data->cmd[i].input = ft_substr(data->cmd[i].opt[j], k, ft_strlen(data->cmd[i].opt[j]) - k);
+	data->cmd[i].input = ft_substr(data->cmd[i].opt[j], k, \
+	ft_strlen(data->cmd[i].opt[j]) - k);
 	if (cont == 1 || cont == 3)
 	{
 		file = open(data->cmd[i].output, O_RDONLY, 0644);
 		close(file);
 		if (cont == 3)
 			data->cmd[i].input_type = 2;
-		//if (file == -1 && errno == EACCES) sustituir todo por: minishell: a.txt: Permission denied
 	}
 	else
 		heredoc(data, i);
@@ -105,26 +71,28 @@ void	output_parse(t_data *data, int i, int j, int cont)
 	int		file;
 
 	k = 0;
-	while (data->cmd[i].opt[j][k] && (data->cmd[i].opt[j][k] == '>' || ft_isspace(data->cmd[i].opt[j][k])))
+	while (data->cmd[i].opt[j][k] && (data->cmd[i].opt[j][k] == '>' \
+	|| ft_isspace(data->cmd[i].opt[j][k])))
 		k++;
 	data->cmd[i].output_type = cont;
 	ft_free_and_null((void **)&data->cmd[i].output);
-	data->cmd[i].output = ft_substr(data->cmd[i].opt[j], k, ft_strlen(data->cmd[i].opt[j]) - k);
+	data->cmd[i].output = ft_substr(data->cmd[i].opt[j], k, \
+	ft_strlen(data->cmd[i].opt[j]) - k);
 	if (cont == 1)
 		file = open(data->cmd[i].output, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
 		file = open(data->cmd[i].output, O_WRONLY | O_APPEND | O_CREAT, 0644);
-	//if (file == -1 && errno == EACCES) sustituir todo por: minishell: a.txt: Permission denied
 	close(file);
 	data->cmd[i].opt = chain_delete_one(data->cmd[i].opt, j);
 }
 
-int	nose(t_data *data, int i, int j, char type)
+static int	parse_redirections_aux(t_data *data, int i, int j, char type)
 {
 	int	cont;
 
 	cont = 0;
-	while (data->cmd[i].opt[j][cont] && (data->cmd[i].opt[j][cont] == '<' || data->cmd[i].opt[j][cont] == '>' || ft_isspace(data->cmd[i].opt[j][cont])))
+	while (data->cmd[i].opt[j][cont] && (data->cmd[i].opt[j][cont] == '<' || \
+	data->cmd[i].opt[j][cont] == '>' || ft_isspace(data->cmd[i].opt[j][cont])))
 		cont++;
 	if (!data->cmd[i].opt[j][cont])
 		return (ft_putstr_fd("\033[31;1mminishell: syntax error near\
@@ -134,10 +102,10 @@ int	nose(t_data *data, int i, int j, char type)
 	{
 		if (data->cmd[i].opt[j][cont] != type)
 			return (ft_putstr_fd("\033[31;1mminishell: syntax error near\
- unexpected token\n\033[0m", 2), clean_commands(data), 1); //Puede que haya que cambiar el numero de comandos a i + 1
+ unexpected token\n\033[0m", 2), clean_commands(data), 1);
 		cont++;
 	}
-	if ((cont > 2 && type == '>')|| (cont > 3 && type == '<'))
+	if ((cont > 2 && type == '>') || (cont > 3 && type == '<'))
 		return (ft_putstr_fd("\033[31;1mminishell: syntax error near\
  unexpected token\n\033[0m", 2), clean_commands(data), 1);
 	if (type == '>')
@@ -160,15 +128,15 @@ int	parse_redirections(t_data *data, int i)
 	{
 		if (data->cmd[i].opt[j][0] == '<')
 		{
-			if (nose(data, i, j, data->cmd[i].opt[j][0]) == 1)
+			if (parse_redirections_aux(data, i, j, data->cmd[i].opt[j][0]) == 1)
 				return (1);
 		}
 		else if (data->cmd[i].opt[j][0] == '>')
 		{
-			if (nose(data, i, j, data->cmd[i].opt[j][0]) == 1)
+			if (parse_redirections_aux(data, i, j, data->cmd[i].opt[j][0]) == 1)
 				return (1);
 		}
-		else
+		else if (data->cmd[i].opt[j])
 			j++;
 	}
 	return (0);
