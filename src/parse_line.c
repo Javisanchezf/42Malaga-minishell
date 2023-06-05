@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:21 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/05 19:40:49 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/05 19:43:40 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,6 @@ void	parse_line(char *input, t_data *data)
 		if (parse_redirections(data, i) == 1)
 			break ;
 		data->cmd[i].path = ft_getcmd(data, data->cmd[i].opt[0]);
-		printf("Command N%d :\n--------------------\n", i);
-		ft_printf_split(data->cmd[i].opt);
-		printf("PATH: %s, INPUT t%d: %s, OUTPUT t%d: %s\n", data->cmd[i].path, data->cmd[i].input_type, data->cmd[i].input, data->cmd[i].output_type, data->cmd[i].output);
 		i++;
 	}
 	ft_free_and_null((void **)&commands);
