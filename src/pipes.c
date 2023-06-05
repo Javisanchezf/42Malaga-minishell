@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipes.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
+/*   Updated: 2023/06/03 13:47:22 by antdelga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	child(t_command *comando, t_data *data)
 {
 	if (!comando->path[0])
 	{
-		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(RED"minishell: ", 2);
 		if (comando->opt[0])
 			ft_putstr_fd(comando->opt[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
+		ft_putstr_fd(": command not found\n"DEFAULT, 2);
 		exit(127);
 	}
 	execve(comando->path, comando->opt, data->env);
-	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(RED"minishell: ", 2);
 	ft_putstr_fd(comando->opt[0], 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(strerror(errno), 2);
-	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("\n"DEFAULT, 2);
 	exit(errno);
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_by_args.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/03 13:46:24 by javiersa          #+#    #+#             */
+/*   Updated: 2023/06/03 13:46:30 by antdelga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	is_separator_char(char c)
@@ -29,12 +41,12 @@ static int	ft_size_split_by_args(char *input, int i, int n)
 			forward_quotes(input, &i);
 			n++;
 		}
-		if (input[i] == '<' || input[i] == '>')
+		else if (input[i] == '<' || input[i] == '>')
 		{
 			forward_operators(input, &i);
 			n++;
 		}
-		if (!is_separator_char(input[i]))
+		else if (!is_separator_char(input[i]))
 		{
 			n++;
 			while (!is_separator_char(input[i]))

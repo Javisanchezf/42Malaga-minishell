@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/03 13:27:36 by javiersa          #+#    #+#             */
+/*   Updated: 2023/06/03 13:45:02 by antdelga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_leaks(void)
@@ -11,29 +23,28 @@ void	sub_dup2(int zero, int one)
 	dup2(one, 1);
 }
 
-
 char	*ft_getcmd(t_data *data, char *cmd)
 {
 	int		i;
-    char	*aux;
-    char	*c;
+	char	*aux;
+	char	*c;
 
 	i = 0;
 	if (!cmd)
 		return (ft_strdup(""));
 	if (access(cmd, X_OK) == 0)
-        return (ft_strdup(cmd));
-    while (data->rute[i])
-    {
-        aux = ft_strjoin(data->rute[i], "/");
-        c = ft_strjoin(aux, cmd);
-        free(aux);
-        if (access(c, X_OK) == 0)
-            return (c);
-        free(c);
-        i++;
-    }
-    return (ft_strdup(""));
+		return (ft_strdup(cmd));
+	while (data->rute[i])
+	{
+		aux = ft_strjoin(data->rute[i], "/");
+		c = ft_strjoin(aux, cmd);
+		free(aux);
+		if (access(c, X_OK) == 0)
+			return (c);
+		free(c);
+		i++;
+	}
+	return (ft_strdup(""));
 }
 
 char	*ft_strjoin_freedom(char *s1, char *s2)
@@ -62,9 +73,3 @@ char	*ft_strjoin_freedom(char *s1, char *s2)
 	free(s2);
 	return (strjoin);
 }
-
-
-
-
-
-

@@ -1,4 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/03 13:46:44 by antdelga          #+#    #+#             */
+/*   Updated: 2023/06/03 13:46:45 by antdelga         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+/*Problemillas con señales:
+Si hay control C mientras hay heredocs
+Con el control C no se cambia lastcmd
+Resuelto mas o menos: Control D con heredocs pero no se esta liberando memoria y mas paranollas
+*/
 
 void	sigint_handler(int sig)
 {
