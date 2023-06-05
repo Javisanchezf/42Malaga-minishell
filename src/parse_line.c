@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:21 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/03 13:48:43 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/05 18:42:36 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ void	parse_line(char *input, t_data *data)
 	{
 		data->cmd[i].opt = \
 		normalize_line(split_by_args(commands[i], 0, 0, 0), data);
-		data->cmd[i].path = ft_getcmd(data, data->cmd[i].opt[0]);
 		if (parse_redirections(data, i) == 1)
 			break ;
+		data->cmd[i].path = ft_getcmd(data, data->cmd[i].opt[0]);
 		i++;
 	}
 	ft_free_and_null((void **)&commands);
