@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/03 13:47:22 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/05 22:38:00 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,17 @@ void	child_generator(t_data *data)
 	cont = -1;
 	while (++cont < data->n_commands)
 	{
+		printf("%d\n", data->cmd[cont].output_type);
 		create_tube(data, cont);
+
+		/* BUILTINS */
 		if (data->n_commands == 1)
+		{
 			if (select_builtin(data, &data->cmd[cont]) == 1)
 				continue ;
+		}
+
+		/* LLAMADA A HIJOS */
 		pid = fork();
 		if (pid == 0)
 			child(&data->cmd[cont], data);

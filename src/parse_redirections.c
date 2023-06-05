@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:57 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/05 19:33:01 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/05 22:34:43 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
