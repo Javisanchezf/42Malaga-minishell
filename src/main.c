@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/06 17:02:22 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/06 20:21:47 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ int	main(int argc, char **argv, char **env)
 		input = readlineplus(&data);
 		if (input)
 		{
+			data.input_str = ft_strdup(input);
 			parse_line(input, &data);
 			if (data.cmd->opt[0])
 				child_generator(&data);
 			clean_commands(&data);
+			free(data.input_str);
 		}
 		// ft_leaks();
 	}

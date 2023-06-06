@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/05 20:07:01 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/06 20:25:40 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	bt_cd_setnewpdw(t_data *data)
 {
 	int		i;
 	char	aux2[2048];
+	char	**aux;
 
 	i = 0;
 	while (ft_strncmp(data->env[i], "PWD=", 4) != 0)
@@ -24,12 +25,18 @@ void	bt_cd_setnewpdw(t_data *data)
 	{
 		if (data->env[i + 1])
 		{
-			ft_free_and_null((void **)&data->env[i + 1]);
-			data->env[i + 1] = ft_strdup(data->env[i]);
+			aux = ft_split(data->env[i], '=');
+			if (aux[1])
+			{
+				ft_free_and_null((void **)&data->env[i + 1]);
+				data->env[i + 1] = ft_strjoin("OLDPWD=", aux[1]);
+				ft_split_free(aux);
+			}
 		}
 		ft_free_and_null((void **)&data->env[i]);
 		if (getcwd(aux2, 2048) == NULL)
 			return (perror("PWD"));
+		
 		data->env[i] = ft_strjoin("PWD=", aux2);
 	}
 }
@@ -61,10 +68,33 @@ void	bt_pwd(void)
 		printf("%s\n", aux);
 }
 
-void	bt_echo_n(t_command *cmd)
+void	bt_echo_n(t_data *data, t_command *cmd)
 {
-	if (cmd->opt[2])
-		printf("%s", cmd->opt[2]);
+	int		i;
+	int		index;
+	char	*aux;
+	int		cont;
+
+	aux = ft_strdup(data->input_str);
+	index = -1;
+	while (ft_isspace(aux[++index]))
+		;
+	index += 8;
+	i = 1;
+	cont = 0;
+	while (cmd->opt[++i])
+	{
+		printf("%s", cmd->opt[i]);
+		while (!ft_isspace(aux[index]) && aux[index])
+			index++;
+		while (ft_isspace(aux[index]) && aux[index] && cont < (ft_split_size(cmd->opt) - 3))
+		{
+			printf("%c", aux[index]);
+			index++;
+		}
+		cont++;
+	}
+	free(aux);
 }
 
 int	select_builtin(t_data *data, t_command *comando)
@@ -77,7 +107,7 @@ int	select_builtin(t_data *data, t_command *comando)
 		return (bt_env(data), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "echo", 4) == 0 && \
 	ft_strncmp_null(comando->opt[1], "-n", 2) == 0)
-		return (bt_echo_n(comando), data->lastcmd_value = 0, 1);
+		return (bt_echo_n(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "exit", 4) == 0)
 		return (clean_and_exit_success(data), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "export", 6) == 0)
