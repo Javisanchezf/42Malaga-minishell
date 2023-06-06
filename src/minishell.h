@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/06 14:36:53 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/06 16:51:56 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ char	*dollar_heredoc(t_data *data, char *str);
 /*----------------------------CLEAN----------------------------*/
 void	clean_commands(t_data *data);
 void	clean_and_exit_success(t_data *data);
+void	clean_and_exit_fail(t_data *data);
 
 /*----------------------------SIGNALS----------------------------*/
 void	sigint_handler(int sig);

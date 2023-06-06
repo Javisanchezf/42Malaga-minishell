@@ -1,0 +1,16 @@
+Makefile
+a.txt
+b.txt
+libftplus
+minishell
+minishell.a
+src
+test.txt
+Makefile
+a.txt
+b.txt
+libftplus
+minishell
+minishell.a
+src
+test.txt
