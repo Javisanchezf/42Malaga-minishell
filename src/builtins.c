@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/05 20:07:01 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:13:14 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	bt_cd_setnewpdw(t_data *data)
 {
 	int		i;
 	char	aux2[2048];
+	char	**aux;
 
 	i = 0;
 	while (ft_strncmp(data->env[i], "PWD=", 4) != 0)
@@ -24,12 +25,18 @@ void	bt_cd_setnewpdw(t_data *data)
 	{
 		if (data->env[i + 1])
 		{
-			ft_free_and_null((void **)&data->env[i + 1]);
-			data->env[i + 1] = ft_strdup(data->env[i]);
+			aux = ft_split(data->env[i], '=');
+			if (aux[1])
+			{
+				ft_free_and_null((void **)&data->env[i + 1]);
+				data->env[i + 1] = ft_strjoin("OLDPWD=", aux[1]);
+				ft_split_free(aux);
+			}
 		}
 		ft_free_and_null((void **)&data->env[i]);
 		if (getcwd(aux2, 2048) == NULL)
 			return (perror("PWD"));
+		
 		data->env[i] = ft_strjoin("PWD=", aux2);
 	}
 }
@@ -63,8 +70,15 @@ void	bt_pwd(void)
 
 void	bt_echo_n(t_command *cmd)
 {
-	if (cmd->opt[2])
-		printf("%s", cmd->opt[2]);
+	int	i;
+
+	i = 1;
+	while (cmd->opt[++i])
+	{
+		if (i != 2)
+			printf("%c", ' ');
+		printf("%s", cmd->opt[i]);
+	}
 }
 
 int	select_builtin(t_data *data, t_command *comando)

@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/06 17:02:22 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:13:21 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **env)
 				child_generator(&data);
 			clean_commands(&data);
 		}
-		// ft_leaks();
+		ft_leaks();
 	}
 	clean_and_exit_success(&data);
 }
