@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:18 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/03 13:49:36 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/06 16:51:25 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,12 @@ void	clean_and_exit_success(t_data *data)
 	ft_split_free(data->env);
 	rl_clear_history();
 	exit(EXIT_SUCCESS);
+}
+
+void	clean_and_exit_fail(t_data *data)
+{
+	clean_commands(data);
+	ft_split_free(data->env);
+	rl_clear_history();
+	exit(EXIT_FAILURE);
 }

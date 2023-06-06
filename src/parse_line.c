@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:21 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/05 19:43:40 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:02:37 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

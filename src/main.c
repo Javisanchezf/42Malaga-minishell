@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/05 19:36:20 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:02:22 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,11 @@ int	main(int argc, char **argv, char **env)
 		if (input)
 		{
 			parse_line(input, &data);
-			printf("NOPETA0\n");
-			child_generator(&data);
-			printf("NOPETA1\n");
+			if (data.cmd->opt[0])
+				child_generator(&data);
 			clean_commands(&data);
 		}
-		ft_leaks();
+		// ft_leaks();
 	}
 	clean_and_exit_success(&data);
 }
