@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/05 19:11:13 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/06 14:36:53 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ void	ctrl_d(char *input, t_data *data);
 void	ft_leaks(void);
 void	sub_dup2(int zero, int one);
 char	*ft_getcmd(t_data *data, char *cmd);
-char	*ft_strjoin_freedom(char *s1, char *s2);
+void	reset_fd(int *fds);
+void	print_fds(t_data *data, t_command *cmd);
 
 /*----------------------------PIPES----------------------------*/
 void	child_generator(t_data *data);
