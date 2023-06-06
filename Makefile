@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+         #
+#    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 18:02:29 by javiersa          #+#    #+#              #
-#    Updated: 2023/06/05 22:56:50 by antdelga         ###   ########.fr        #
+#    Updated: 2023/06/06 17:47:24 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ PARAMS = 4 2 3 4 5
 DATETIME := $(shell date +%Y-%m-%d' '%H:%M:%S)
 GIT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 USER := $(shell whoami)
+GITIGNORE = .gitignore
 
 # General rules
 
@@ -66,7 +67,7 @@ libftplusfclean:
 libftplusre: libftplusclean libftplusmake
 
 #Personal use
-git: fclean gitignore
+git: fclean $(GITIGNORE)
 	@git add *
 	@echo "$(BOLD)$(YELLOW)Git ($(GIT_BRANCH)):$(WHITE) Adding all archives.$(DEFAULT)"
 	@git commit -m "[$(DATETIME)] - Little changes by $(USER)"
@@ -77,7 +78,7 @@ git: fclean gitignore
 submodules:
 	@git submodule update --init --recursive
 	@echo "$(GREEN)The submodules have been created and updated successfully.$(DEFAULT)"
-gitignore:
+$(GITIGNORE):
 	@echo ".*\n*.out\n*.o\n*.a\n*.dSYM">.gitignore
 	@echo "$(GREEN)Creating:$(DEFAULT) Gitignore."
 42prepare: submodules

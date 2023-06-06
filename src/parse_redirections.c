@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:57 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/06 17:03:17 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:44:43 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	heredoc(t_data *data, int i)
 void	input_parse(t_data *data, int i, int j, int cont)
 {
 	int		k;
-	// int		file;
+	int		file;
 
 	k = 0;
 	while (data->cmd[i].opt[j][k] && (data->cmd[i].opt[j][k] == '<' \
@@ -55,8 +55,10 @@ void	input_parse(t_data *data, int i, int j, int cont)
 	ft_strlen(data->cmd[i].opt[j]) - k);
 	if (cont == 1 || cont == 3)
 	{
+		file = open(data->cmd[i].output, O_RDONLY, 0644);
+		close(file);
 		if (cont == 3)
-			data->cmd[i].input_type = 0;
+			data->cmd[i].input_type = 2;
 	}
 	else
 		heredoc(data, i);
@@ -66,7 +68,7 @@ void	input_parse(t_data *data, int i, int j, int cont)
 void	output_parse(t_data *data, int i, int j, int cont)
 {
 	int		k;
-	// int		file;
+	int		file;
 
 	k = 0;
 	while (data->cmd[i].opt[j][k] && (data->cmd[i].opt[j][k] == '>' \
@@ -76,6 +78,11 @@ void	output_parse(t_data *data, int i, int j, int cont)
 	ft_free_and_null((void **)&data->cmd[i].output);
 	data->cmd[i].output = ft_substr(data->cmd[i].opt[j], k, \
 	ft_strlen(data->cmd[i].opt[j]) - k);
+	if (cont == 1)
+		file = open(data->cmd[i].output, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	else
+		file = open(data->cmd[i].output, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	close(file);
 	data->cmd[i].opt = chain_delete_one(data->cmd[i].opt, j);
 }
 
