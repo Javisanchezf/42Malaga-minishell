@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/06 17:54:54 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:25:02 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_data
 	int			lastcmd_value;
 	char		**rute;
 	t_link		tube;
+	char		*input_str;
 }				t_data;
 
 /*----------------------------COLORS----------------------------*/
@@ -124,7 +125,7 @@ int		select_builtin(t_data *data, t_command *comando);
 
 /*----------------------------BUILTINS----------------------------*/
 int		select_builtin(t_data *data, t_command *comando);
-void	bt_echo_n(t_command *cmd);
+void	bt_echo_n(t_data *data, t_command *cmd);
 void	bt_pwd(void);
 void	bt_cd(t_data *data, t_command *cmd);
 void	bt_env(t_data *data);
