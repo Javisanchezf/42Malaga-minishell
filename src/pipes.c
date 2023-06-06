@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/06 17:02:29 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/06 21:03:48 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ int	child(t_command *comando, t_data *data)
 		ft_putstr_fd(": command not found\n"DEFAULT, 2);
 		exit(127);
 	}
+	if (!ft_strncmp(comando->opt[0], "cat", 3) && \
+	!comando->opt[1] && comando->input_type == 2)
+		exit(0);
 	execve(comando->path, comando->opt, data->env);
 	ft_putstr_fd(RED"minishell: ", 2);
 	ft_putstr_fd(comando->opt[0], 2);
