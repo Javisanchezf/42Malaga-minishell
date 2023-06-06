@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:27:36 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/06 14:36:47 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/06 17:58:51 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 void	ft_leaks(void)
 {
 	system("leaks -q minishell");
+}
+
+int	ft_strncmp_null(const char *s1, const char *s2, size_t n)
+{
+	if (ft_strlen(s1) < (int)n || ft_strlen(s2) < (int)n)
+		return (1);
+	else
+		return (ft_strncmp(s1, s2, n));
 }
 
 void	sub_dup2(int zero, int one)
