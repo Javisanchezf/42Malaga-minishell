@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/07 18:08:51 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:16:56 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ int		select_builtin(t_data *data, t_command *comando);
 /*----------------------------BUILTINS----------------------------*/
 int		select_builtin(t_data *data, t_command *comando);
 void	bt_echo_n(t_data *data, t_command *cmd);
-void	bt_pwd(void);
 void	bt_cd(t_data *data, t_command *cmd);
 void	bt_env(t_data *data);
 void	bt_export_aux(t_data *data, t_command *cmd);

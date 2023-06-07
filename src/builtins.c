@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/07 18:08:11 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:15:14 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	bt_cd(t_data *data, t_command *cmd)
 {
 	char	*aux;
 
+	if (data->n_commands != 1)
+		return ;
 	if (!cmd->opt[1])
 	{
 		aux = ft_getenv("ZDOTDIR", data, 0, 7);
@@ -57,10 +59,12 @@ void	bt_cd(t_data *data, t_command *cmd)
 	bt_cd_setnewpdw(data);
 }
 
-void	bt_pwd(void)
+void	bt_pwd(t_data *data)
 {
 	char	aux[2048];
 
+	if (data->n_commands != 1)
+		return ;
 	if (getcwd(aux, 2048) == NULL)
 		return (perror("pwd"));
 	else
@@ -74,7 +78,7 @@ void	bt_echo_n(t_data *data, t_command *cmd)
 	i = 1;
 	while (cmd->opt[++i])
 	{
-		printf("%s",cmd->opt[i]);
+		printf("%s", cmd->opt[i]);
 		if (cmd->opt[i + 1])
 			printf(" ");
 	}
@@ -86,7 +90,7 @@ int	select_builtin(t_data *data, t_command *comando)
 	if (ft_strncmp_null(comando->opt[0], "cd", 2) == 0)
 		return (bt_cd(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "pwd", 3) == 0)
-		return (bt_pwd(), data->lastcmd_value = 0, 1);
+		return (bt_pwd(data), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "env", 3) == 0)
 		return (bt_env(data), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "echo", 4) == 0 && \

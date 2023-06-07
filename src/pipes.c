@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/07 15:05:17 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:14:14 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,15 @@ void	child_generator(t_data *data)
 		if (data->cmd[cont].input_type != 0 || data->cmd[cont].output_type != 0)
 			if (!redir_check(data, &data->cmd[cont], cont))
 				break ;
-		if (data->n_commands == 1)
-			if (select_builtin(data, &data->cmd[cont]) == 1)
-				continue ;
-		pid = fork();
-		if (pid == 0)
-			child(&data->cmd[cont], data);
-		waitpid(-1, &aux, 0);
-		if (WIFEXITED(aux))
-			data->lastcmd_value = WEXITSTATUS(aux);
+		if (select_builtin(data, &data->cmd[cont]) == 0)
+		{
+			pid = fork();
+			if (pid == 0)
+				child(&data->cmd[cont], data);
+			waitpid(-1, &aux, 0);
+			if (WIFEXITED(aux))
+				data->lastcmd_value = WEXITSTATUS(aux);
+		}
 	}
 	reset_fd(fds);
 }
