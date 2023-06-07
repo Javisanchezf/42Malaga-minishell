@@ -1,14 +1,1 @@
-Makefile
-a.txt
-libftplus
-minishell
-minishell.a
-src
-test.txt
-Makefile
-a.txt
-libftplus
-minishell
-minishell.a
-src
-test.txt
+hola
