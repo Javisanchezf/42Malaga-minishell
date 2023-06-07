@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/07 17:54:09 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:08:44 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,10 @@ int	main(int argc, char **argv, char **env)
 		input = readlineplus(&data);
 		if (input)
 		{
-			data.input_str = ft_strdup(input);
 			parse_line(input, &data);
 			if (data.n_commands != 0)
 				child_generator(&data);
 			clean_commands(&data);
-			free(data.input_str);
 		}
 		// ft_leaks();
 	}

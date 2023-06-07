@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/06 20:25:40 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:08:11 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	bt_cd_setnewpdw(t_data *data)
 		ft_free_and_null((void **)&data->env[i]);
 		if (getcwd(aux2, 2048) == NULL)
 			return (perror("PWD"));
-		
 		data->env[i] = ft_strjoin("PWD=", aux2);
 	}
 }
@@ -70,31 +69,16 @@ void	bt_pwd(void)
 
 void	bt_echo_n(t_data *data, t_command *cmd)
 {
-	int		i;
-	int		index;
-	char	*aux;
-	int		cont;
+	int	i;
 
-	aux = ft_strdup(data->input_str);
-	index = -1;
-	while (ft_isspace(aux[++index]))
-		;
-	index += 8;
 	i = 1;
-	cont = 0;
 	while (cmd->opt[++i])
 	{
-		printf("%s", cmd->opt[i]);
-		while (!ft_isspace(aux[index]) && aux[index])
-			index++;
-		while (ft_isspace(aux[index]) && aux[index] && cont < (ft_split_size(cmd->opt) - 3))
-		{
-			printf("%c", aux[index]);
-			index++;
-		}
-		cont++;
+		printf("%s",cmd->opt[i]);
+		if (cmd->opt[i + 1])
+			printf(" ");
 	}
-	free(aux);
+	(void)data;
 }
 
 int	select_builtin(t_data *data, t_command *comando)
