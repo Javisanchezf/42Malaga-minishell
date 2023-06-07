@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/07 19:32:33 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/07 19:48:12 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	bt_echo_n(t_data *data, t_command *cmd)
 	int	i;
 	int	fd;
 
-	i = 1;
+	if (cmd->input_type != 0)
+		return ;
 	if (cmd->output_type == 0)
 		fd = 0;
 	else if (cmd->output_type == 1)
@@ -84,7 +85,8 @@ void	bt_echo_n(t_data *data, t_command *cmd)
 	else if (cmd->output_type == 2)
 		fd = open(cmd->output, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (cmd->output_type != 0 && fd == -1)
-		return (ft_perror("open"));
+		return (data->lastcmd_value = 1, ft_perror("open"));
+	i = 1;
 	while (cmd->opt[++i])
 	{
 		ft_putstr_fd(cmd->opt[i], fd);
@@ -93,7 +95,7 @@ void	bt_echo_n(t_data *data, t_command *cmd)
 	}
 	if (fd != 0)
 		close(fd);
-	(void)data;
+	data->lastcmd_value = 0;
 }
 
 int	select_builtin(t_data *data, t_command *comando)
@@ -106,7 +108,7 @@ int	select_builtin(t_data *data, t_command *comando)
 		return (bt_env(data), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "echo", 4) == 0 && \
 	ft_strncmp_null(comando->opt[1], "-n", 2) == 0)
-		return (bt_echo_n(data, comando), data->lastcmd_value = 0, 1);
+		return (bt_echo_n(data, comando), 1);
 	if (ft_strncmp_null(comando->opt[0], "exit", 4) == 0)
 		return (clean_and_exit_success(data), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "export", 6) == 0)
