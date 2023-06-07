@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/07 19:02:19 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/07 19:32:33 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,25 @@ void	bt_pwd(t_data *data)
 void	bt_echo_n(t_data *data, t_command *cmd)
 {
 	int	i;
+	int	fd;
 
 	i = 1;
+	if (cmd->output_type == 0)
+		fd = 0;
+	else if (cmd->output_type == 1)
+		fd = open(cmd->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (cmd->output_type == 2)
+		fd = open(cmd->output, O_CREAT | O_RDWR | O_APPEND, 0644);
+	if (cmd->output_type != 0 && fd == -1)
+		return (ft_perror("open"));
 	while (cmd->opt[++i])
 	{
-		printf("%s", cmd->opt[i]);
+		ft_putstr_fd(cmd->opt[i], fd);
 		if (cmd->opt[i + 1])
-			printf(" ");
+			ft_putstr_fd(" ", fd);
 	}
+	if (fd != 0)
+		close(fd);
 	(void)data;
 }
 
