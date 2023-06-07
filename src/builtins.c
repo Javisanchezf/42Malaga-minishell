@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/07 18:15:14 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/07 19:02:19 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	bt_cd_setnewpdw(t_data *data)
 		}
 		ft_free_and_null((void **)&data->env[i]);
 		if (getcwd(aux2, 2048) == NULL)
-			return (perror("PWD"));
+			return (ft_perror("PWD"));
 		data->env[i] = ft_strjoin("PWD=", aux2);
 	}
 }
@@ -55,7 +55,7 @@ void	bt_cd(t_data *data, t_command *cmd)
 	}
 	else
 		if (chdir(cmd->opt[1]) != 0)
-			return (perror("cd"));
+			return (ft_perror("cd"));
 	bt_cd_setnewpdw(data);
 }
 
@@ -66,7 +66,7 @@ void	bt_pwd(t_data *data)
 	if (data->n_commands != 1)
 		return ;
 	if (getcwd(aux, 2048) == NULL)
-		return (perror("pwd"));
+		return (ft_perror("pwd"));
 	else
 		printf("%s\n", aux);
 }

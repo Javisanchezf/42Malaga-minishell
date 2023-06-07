@@ -6,16 +6,11 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:27:36 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/06 18:05:17 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/07 18:59:06 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_leaks(void)
-{
-	system("leaks -q minishell");
-}
 
 int	ft_strncmp_null(const char *s1, const char *s2, size_t n)
 {

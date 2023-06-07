@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/07 18:16:56 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/07 19:01:58 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ void	sub_dup2(int zero, int one);
 char	*ft_getcmd(t_data *data, char *cmd);
 void	reset_fd(int *fds);
 void	print_fds(t_data *data, t_command *cmd);
-int ft_strncmp_null(const char *s1, const char *s2, size_t n);
+int		ft_strncmp_null(const char *s1, const char *s2, size_t n);
+void	ft_perror(const char *str);
 
 /*----------------------------PIPES----------------------------*/
 void	child_generator(t_data *data);

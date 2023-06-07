@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/07 18:14:14 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/07 19:04:25 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	create_tube(t_data *data, t_command *cmd, int cont)
 	if (cont != data->n_commands - 1)
 	{
 		if (pipe(piping) == -1)
-			perror(PIPE_ERROR);
+			ft_perror(PIPE_ERROR);
 		if (cmd->input_type == 0)
 			data->tube.fd_in = piping[0];
 		if (cmd->output_type == 0)
@@ -70,7 +70,7 @@ int	redir_check(t_data *data, t_command *cmd, int i)
 	{
 		data->tube.fd_in = open(data->cmd[i].input, O_RDONLY, 0644);
 		if (data->tube.fd_in == -1)
-			return (perror("Error reading file\n"), 0);
+			return (ft_perror("Error reading file"), 0);
 		dup2(data->tube.fd_in, 0);
 		if (i != data->n_commands - 1)
 			data->tube.fd_in = data->tube.piping[0];
@@ -89,7 +89,6 @@ int	redir_check(t_data *data, t_command *cmd, int i)
 	close(data->tube.fd_out);
 	return (1);
 }
-
 
 void	child_generator(t_data *data)
 {

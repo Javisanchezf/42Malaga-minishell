@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/07 18:08:44 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/07 19:02:29 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	init_data(t_data *data, char **env, int argc, char **argv)
 {
 	if (write(1, NULL, 0) == -1 || read(0, NULL, 0) == -1)
 	{
-		perror(RED"Error: No write/read permissions on main fd.\n"DEFAULT);
+		ft_perror("Error: No write/read permissions on main fd.\n");
 		exit(EXIT_FAILURE);
 	}
 	ft_printf("%s", &(HEADER));
