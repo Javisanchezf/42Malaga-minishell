@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:27:36 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/07 18:59:06 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/08 20:02:54 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,4 @@ void	reset_fd(int *fds)
 	close(fds[0]);
 	dup2(fds[1], 1);
 	close(fds[1]);
-}
-
-void	print_fds(t_data *data, t_command *cmd)
-{
-	printf("FD OUT: %d\n", data->tube.fd_out);
-	printf("TUBE OUT: %d\n", data->tube.piping[1]);
-	printf("FD IN: %d\n", data->tube.fd_in);
-	printf("TUBE IN: %d\n", data->tube.piping[0]);
-	printf("OUTPUT TYPE: %d\n", cmd->output_type);
-	printf("INPUT TYPE: %d\n\n", cmd->input_type);
 }
