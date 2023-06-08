@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/07 19:01:58 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/08 19:59:33 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_command
 
 typedef struct s_link
 {
-	int		piping[2];
 	int		fd_in;
 	int		fd_t_in;
 	int		fd_out;
@@ -119,9 +118,12 @@ void	ft_perror(const char *str);
 
 /*----------------------------PIPES----------------------------*/
 void	child_generator(t_data *data);
+void	close_tubes(t_data *data, int *tubes);
+void	check_close_and_dup_fd(int fd, int id);
 
 /*----------------------------BUILTINS----------------------------*/
 int		select_builtin(t_data *data, t_command *comando);
+
 
 /*----------------------------BUILTINS----------------------------*/
 int		select_builtin(t_data *data, t_command *comando);
