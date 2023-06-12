@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/08 20:00:05 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/09 00:38:00 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	child_generator(t_data *data)
 	cont = -1;
 	while (++cont < data->n_commands)
 	{		
-		if (select_builtin(data, &data->cmd[cont]) == 0)
+		if (select_builtin(data, &data->cmd[cont], cont, tubes) == 0)
 		{
 			pid = fork();
 			if (pid == 0)
