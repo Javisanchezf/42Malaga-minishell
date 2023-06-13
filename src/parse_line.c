@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:21 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/13 19:36:53 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/13 19:41:22 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,9 @@ void	heredoc_type_createtmp(t_data *data)
 			write(fd, data->cmd[i].input, strlen(data->cmd[i].input));
 			close(fd);
 			ft_free_and_null((void **)&data->cmd[i].input);
-			tmp = "/Users/ant6n16/Desktop/Minishell/",ft_itoa(i); // CAMBIAR AL MAC DE 42
-			data->cmd[i].input = ft_strjoin(tmp); 
+			tmp = ft_strjoin("/Users/ant6n16/Desktop/Minishell/",ft_itoa(i)); // CAMBIAR AL MAC DE 42
+			data->cmd[i].input = tmp;
 			data->cmd[i].input_type = 1;
-			free(tmp);
 		}
 	}
 }
