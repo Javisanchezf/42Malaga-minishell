@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/07 19:52:46 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/09 15:08:32 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,32 @@ void	bt_cd(t_data *data, t_command *cmd)
 	bt_cd_setnewpdw(data);
 }
 
-void	bt_pwd(t_data *data)
+void	bt_pwd(t_data *data, t_command *cmd)
 {
 	char	aux[2048];
+	char	*aux2;
+	int		fd;
+	(void) cmd;
+	
+	fd = 0;
+	if (cmd->output_type == 1)
+		fd = open(cmd->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (cmd->output_type == 2)
+		fd = open(cmd->output, O_CREAT | O_RDWR | O_APPEND, 0644);
+	if (fd == -1)
+		return (data->lastcmd_value = 1, ft_perror("open"));
 
 	if (data->n_commands != 1)
 		return ;
 	if (getcwd(aux, 2048) == NULL)
 		return (ft_perror("pwd"));
 	else
-		printf("%s\n", aux);
+	{
+		// printf("%s\n", aux);
+		aux2 = ft_strjoin(aux, "\n");
+		ft_putstr_fd(aux2, fd);
+		free(aux2);
+	}
 }
 
 void	bt_echo_n(t_data *data, t_command *cmd)
@@ -76,8 +92,8 @@ void	bt_echo_n(t_data *data, t_command *cmd)
 	int	i;
 	int	fd;
 
-	if (cmd->input_type != 0)
-		return ;
+	/* if (cmd->input_type != 0)
+		return ; */
 	fd = 0;
 	if (cmd->output_type == 1)
 		fd = open(cmd->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -97,12 +113,16 @@ void	bt_echo_n(t_data *data, t_command *cmd)
 	data->lastcmd_value = 0;
 }
 
-int	select_builtin(t_data *data, t_command *comando)
+int	select_builtin(t_data *data, t_command *comando, int cont, int *tubes)
 {	
+	(void) cont;
+	(void) tubes;
+
+
 	if (ft_strncmp_null(comando->opt[0], "cd", 2) == 0)
 		return (bt_cd(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "pwd", 3) == 0)
-		return (bt_pwd(data), data->lastcmd_value = 0, 1);
+		return (bt_pwd(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "env", 3) == 0)
 		return (bt_env(data), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "echo", 4) == 0 && \
@@ -114,5 +134,6 @@ int	select_builtin(t_data *data, t_command *comando)
 		return (bt_export_aux(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "unset", 5) == 0)
 		return (bt_unset_init(data, comando), data->lastcmd_value = 0, 1);
+	printf("Entro\n");
 	return (0);
 }

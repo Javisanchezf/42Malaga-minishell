@@ -3,16 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/07 19:19:30 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/09 00:38:00 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	child(t_command *comando, t_data *data)
+void	child_redir_and_tubes(t_data *data, int cont, int *tubes)
+{
+	int	fd;
+
+	if (data->cmd[cont].input_type == 1)
+	{
+		fd = open(data->cmd[cont].input, O_RDONLY, 0644);
+		check_close_and_dup_fd(fd, STDIN_FILENO);
+	}
+	if (cont > 0)
+		dup2(tubes[(cont - 1) * 2], STDIN_FILENO);
+	if (cont < data->n_commands - 1)
+		dup2(tubes[cont * 2 + 1], STDOUT_FILENO);
+	if (data->cmd[cont].output_type == 1)
+	{
+		fd = open(data->cmd[cont].output, O_TRUNC | O_CREAT | O_RDWR, 0644);
+		check_close_and_dup_fd(fd, STDOUT_FILENO);
+	}
+	if (data->cmd[cont].output_type == 2)
+	{
+		fd = open(data->cmd[cont].output, O_CREAT | O_RDWR | O_APPEND, 0644);
+		check_close_and_dup_fd(fd, STDOUT_FILENO);
+	}
+	cont = -1;
+	while (++cont < 2 * (data->n_commands - 1))
+		close(tubes[cont]);
+}
+
+int	child(t_command *comando, t_data *data, int cont, int *tubes)
 {
 	if (!comando->path[0])
 	{
@@ -22,15 +50,7 @@ int	child(t_command *comando, t_data *data)
 		ft_putstr_fd(": command not found\n"DEFAULT, 2);
 		exit(127);
 	}
-	if (!ft_strncmp(comando->opt[0], "cat", 3) && \
-	!comando->opt[1] && comando->input_type > 1)
-	{
-		if (comando->input_type == 3)
-			printf("%s\n", comando->input);
-		else
-			printf("%s", comando->input);
-		exit(0);
-	}
+	child_redir_and_tubes(data, cont, tubes);
 	execve(comando->path, comando->opt, data->env);
 	ft_putstr_fd(RED"minishell: ", 2);
 	ft_putstr_fd(comando->opt[0], 2);
@@ -40,81 +60,47 @@ int	child(t_command *comando, t_data *data)
 	exit(errno);
 }
 
-void	create_tube(t_data *data, t_command *cmd, int cont)
+int	*create_tube(t_data *data)
 {
-	int	piping[2];
+	int	*piping;
+	int	i;
 
-	if (cmd->input_type == 0)
-		dup2(data->tube.fd_in, 0);
-	if (cont != data->n_commands - 1)
+	piping = ft_calloc(sizeof(int), 2 * (data->n_commands - 1));
+	i = 0;
+	while (i < (data->n_commands - 1))
 	{
-		if (pipe(piping) == -1)
+		if (pipe(piping + i * 2) < 0)
 			ft_perror(PIPE_ERROR);
-		if (cmd->input_type == 0)
-			data->tube.fd_in = piping[0];
-		if (cmd->output_type == 0)
-			data->tube.fd_out = piping[1];
+		i++;
 	}
-	else if (cmd->output_type == 0)
-		data->tube.fd_out = dup(data->tube.fd_t_out);
-	if (cmd->output_type == 0)
-	{
-		dup2(data->tube.fd_out, 1);
-		close(data->tube.fd_out);
-	}
-}
-
-int	redir_check(t_data *data, t_command *cmd, int i)
-{
-	if (cmd->input_type == 1)
-	{
-		data->tube.fd_in = open(data->cmd[i].input, O_RDONLY, 0644);
-		if (data->tube.fd_in == -1)
-			return (ft_perror("Error reading file"), 0);
-		dup2(data->tube.fd_in, 0);
-		if (i != data->n_commands - 1)
-			data->tube.fd_in = data->tube.piping[0];
-	}
-	if (cmd->output_type == 0)
-		return (1);
-	if (cmd->output_type == 1)
-		data->tube.fd_out = open(data->cmd[i].output, O_TRUNC | O_CREAT | O_RDWR, 0644);
-	else if (cmd->output_type == 2)
-		data->tube.fd_out = open(data->cmd[i].output, O_CREAT | O_RDWR | O_APPEND, 0644);
-	if (data->tube.fd_out == -1)
-		return (0);
-	if (i != data->n_commands - 1)
-		data->tube.fd_out = data->tube.piping[1];
-	dup2(data->tube.fd_out, 1);
-	close(data->tube.fd_out);
-	return (1);
+	return (piping);
 }
 
 void	child_generator(t_data *data)
 {
 	int		cont;
 	pid_t	pid;
-	int		fds[2];
 	int		aux;
+	int		*tubes;
 
-	fds[0] = dup(0);
-	fds[1] = dup(1);
+	tubes = create_tube(data);
 	cont = -1;
 	while (++cont < data->n_commands)
-	{	
-		create_tube(data, data->cmd, cont);
-		if (data->cmd[cont].input_type != 0 || data->cmd[cont].output_type != 0)
-			if (!redir_check(data, &data->cmd[cont], cont))
-				break ;
-		if (select_builtin(data, &data->cmd[cont]) == 0)
+	{		
+		if (select_builtin(data, &data->cmd[cont], cont, tubes) == 0)
 		{
 			pid = fork();
 			if (pid == 0)
-				child(&data->cmd[cont], data);
-			waitpid(-1, &aux, 0);
-			if (WIFEXITED(aux))
-				data->lastcmd_value = WEXITSTATUS(aux);
+				child(&data->cmd[cont], data, cont, tubes);
 		}
 	}
-	reset_fd(fds);
+	close_tubes(data, tubes);
+	cont = -1;
+	while (++cont < data->n_commands)
+	{
+		waitpid(-1, &aux, 0);
+		if (WIFEXITED(aux))
+			data->lastcmd_value = WEXITSTATUS(aux);
+	}
+	free(tubes);
 }

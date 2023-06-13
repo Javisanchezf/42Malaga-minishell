@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/07 19:01:58 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/09 00:38:25 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_command
 
 typedef struct s_link
 {
-	int		piping[2];
 	int		fd_in;
 	int		fd_t_in;
 	int		fd_out;
@@ -119,12 +118,12 @@ void	ft_perror(const char *str);
 
 /*----------------------------PIPES----------------------------*/
 void	child_generator(t_data *data);
+void	close_tubes(t_data *data, int *tubes);
+void	check_close_and_dup_fd(int fd, int id);
+void	child_redir_and_tubes(t_data *data, int cont, int *tubes);
 
 /*----------------------------BUILTINS----------------------------*/
-int		select_builtin(t_data *data, t_command *comando);
-
-/*----------------------------BUILTINS----------------------------*/
-int		select_builtin(t_data *data, t_command *comando);
+int	select_builtin(t_data *data, t_command *comando, int cont, int *tubes);
 void	bt_echo_n(t_data *data, t_command *cmd);
 void	bt_cd(t_data *data, t_command *cmd);
 void	bt_env(t_data *data);
