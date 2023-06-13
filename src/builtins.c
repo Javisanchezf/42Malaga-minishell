@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/13 16:59:24 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/13 20:03:20 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,10 @@ void	bt_pwd(t_data *data, t_command *cmd)
 		fd = open(cmd->output, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd == -1)
 		return (data->lastcmd_value = 1, ft_perror("open"));
-
-	if (data->n_commands != 1)
-		return ;
 	if (getcwd(aux, 2048) == NULL)
 		return (ft_perror("pwd"));
 	else
 	{
-		// printf("%s\n", aux);
 		aux2 = ft_strjoin(aux, "\n");
 		ft_putstr_fd(aux2, fd);
 		free(aux2);
