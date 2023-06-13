@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/13 17:03:07 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/13 19:37:04 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,10 @@ int	*create_tube(t_data *data)
 	return (piping);
 }
 
-void	heredoc_type()
-{
-
-}
-
 void	child_generator(t_data *data)
 {
 	int		cont;
 	pid_t	pid;
-	int		aux;
 	int		*tubes;
 
 	tubes = create_tube(data);
@@ -99,6 +93,15 @@ void	child_generator(t_data *data)
 				child(&data->cmd[cont], data, cont, tubes);
 		}
 	}
+	free_tubes(data, tubes);
+}
+
+void	free_tubes(t_data *data, int *tubes)
+{
+	int		cont;
+	char	*tmp;
+	int		aux;
+	
 	close_tubes(data, tubes);
 	cont = -1;
 	while (++cont < data->n_commands)
@@ -106,6 +109,12 @@ void	child_generator(t_data *data)
 		waitpid(-1, &aux, 0);
 		if (WIFEXITED(aux))
 			data->lastcmd_value = WEXITSTATUS(aux);
+		if (ft_atoi(data->cmd[cont].input) == cont)
+		{
+			tmp = ft_strjoin("/Users/ant6n16/Desktop/Minishell/",ft_itoa(cont));
+			delete_file(tmp); // CAMBIAR AL MAC DE 42
+			free(tmp);
+		}
 	}
 	free(tubes);
 }
