@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/09 00:38:00 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:03:07 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ int	*create_tube(t_data *data)
 	return (piping);
 }
 
+void	heredoc_type()
+{
+
+}
+
 void	child_generator(t_data *data)
 {
 	int		cont;
@@ -86,7 +91,7 @@ void	child_generator(t_data *data)
 	tubes = create_tube(data);
 	cont = -1;
 	while (++cont < data->n_commands)
-	{		
+	{
 		if (select_builtin(data, &data->cmd[cont], cont, tubes) == 0)
 		{
 			pid = fork();

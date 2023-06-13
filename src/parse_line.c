@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:21 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/06 17:02:37 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/13 17:45:39 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,26 @@ char	**normalize_line(char **split, t_data *data, int i)
 	return (split);
 }
 
+void	heredoc_type_createtmp(t_data *data) //ESTAAAAAAA
+{
+	int	i;
+	int	fd;
+
+	i = -1;
+	while (++i < data->n_commands)
+	{
+		if (data->cmd[i].input_type == 2)
+		{
+			fd = open(".tmp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			write(fd, data->cmd[i].input, strlen(data->cmd[i].input));
+			close(fd);
+			ft_free_and_null((void **)&data->cmd[i].input);
+			data->cmd[i].input = ft_strdup(".tmp");
+			data->cmd[i].input_type = 1;
+		}
+	}
+}
+
 void	parse_line(char *input, t_data *data)
 {
 	char	**commands;
@@ -122,4 +142,5 @@ void	parse_line(char *input, t_data *data)
 	}
 	ft_free_and_null((void **)&commands);
 	ft_free_and_null((void **)&input);
+	heredoc_type_createtmp(data);
 }

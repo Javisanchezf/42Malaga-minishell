@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/09 15:08:32 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/13 16:59:24 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,6 @@ int	select_builtin(t_data *data, t_command *comando, int cont, int *tubes)
 {	
 	(void) cont;
 	(void) tubes;
-
-
 	if (ft_strncmp_null(comando->opt[0], "cd", 2) == 0)
 		return (bt_cd(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "pwd", 3) == 0)
@@ -134,6 +132,5 @@ int	select_builtin(t_data *data, t_command *comando, int cont, int *tubes)
 		return (bt_export_aux(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "unset", 5) == 0)
 		return (bt_unset_init(data, comando), data->lastcmd_value = 0, 1);
-	printf("Entro\n");
 	return (0);
 }
