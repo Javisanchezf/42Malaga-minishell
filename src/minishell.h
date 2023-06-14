@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/13 17:45:23 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/13 19:35:52 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,14 @@ void	reset_fd(int *fds);
 void	print_fds(t_data *data, t_command *cmd);
 int		ft_strncmp_null(const char *s1, const char *s2, size_t n);
 void	ft_perror(const char *str);
+int		delete_file(char *filename);
 
 /*----------------------------PIPES----------------------------*/
 void	child_generator(t_data *data);
 void	close_tubes(t_data *data, int *tubes);
 void	check_close_and_dup_fd(int fd, int id);
 void	child_redir_and_tubes(t_data *data, int cont, int *tubes);
+void	free_tubes(t_data *data, int *tubes);
 
 /*----------------------------BUILTINS----------------------------*/
 int	select_builtin(t_data *data, t_command *comando, int cont, int *tubes);
