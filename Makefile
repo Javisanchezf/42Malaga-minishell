@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+         #
+#    By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 18:02:29 by javiersa          #+#    #+#              #
-#    Updated: 2023/06/13 18:48:56 by antdelga         ###   ########.fr        #
+#    Updated: 2023/06/14 20:18:47 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # General variables
 NAME = minishell.a
 PROGRAM = minishell
-CFLAGS = -Wall -Werror -Wextra -I "/opt/homebrew/include/"
+CFLAGS = -Wall -Werror -Wextra -I "/Users/$(USER)/.brew/opt/readline/include/"
 PERSONALNAME = Minishell
 LIBFTPLUS = libftplus
 LIBFTPLUS_LIB = $(LIBFTPLUS)/libftplus.a
@@ -35,7 +35,7 @@ all: $(PROGRAM)
 
 
 $(PROGRAM): $(LIBFTPLUS_LIB) $(NAME)
-	@$(CC) $(CFLAGS) $(NAME) $(LIBFTPLUS_LIB) -L"/opt/homebrew/lib/" -o $(PROGRAM) -lreadline
+	@$(CC) $(CFLAGS) $(NAME) $(LIBFTPLUS_LIB) -L"/Users/$(USER)/.brew/opt/readline/lib/" -o $(PROGRAM) -lreadline
 	@echo "$(MAGENTA)Program $(PERSONALNAME) created successfully.$(DEFAULT)"
 
 .c.o:

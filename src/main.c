@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/13 17:45:19 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/14 20:25:44 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static void	init_data(t_data *data, char **env, int argc, char **argv)
 	data->n_commands = 0;
 	enviroment_extract(env, data);
 	data->lastcmd_value = 0;
-	signal(SIGINT, sigint_handler);
+	signal(SIGINT, ctrl_c);
+	signal(SIGQUIT, ctrl_backslash);
 	data->tube.fd_in = dup(0);
 	data->tube.fd_t_in = dup(0);
 	data->tube.fd_t_out = dup(1);

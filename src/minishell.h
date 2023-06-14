@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/13 19:35:52 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/14 20:25:23 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,9 @@ void	clean_and_exit_success(t_data *data);
 void	clean_and_exit_fail(t_data *data);
 
 /*----------------------------SIGNALS----------------------------*/
-void	sigint_handler(int sig);
+void	ctrl_c(int sig);
 void	ctrl_d(char *input, t_data *data);
+void	ctrl_backslash(int sig);
 
 /*----------------------------UTILS----------------------------*/
 void	ft_leaks(void);

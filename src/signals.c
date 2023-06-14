@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 18:47:30 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/05 18:47:31 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/14 20:35:44 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,15 @@ Si hay control C mientras hay heredocs
 Con el control C no se cambia lastcmd
 Resuelto mas o menos: Control D con heredocs pero no se esta liberando memoria y mas paranollas
 */
-
-void	sigint_handler(int sig)
+void	ctrl_backslash(int sig)
+{
+	(void)sig;
+	ft_printf("\033[K");
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
+void	ctrl_c(int sig)
 {
 	(void) sig;
 	rl_on_new_line();
