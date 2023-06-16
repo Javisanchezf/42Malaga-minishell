@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/13 19:37:04 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:00:21 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,18 @@ void	free_tubes(t_data *data, int *tubes)
 	{
 		waitpid(-1, &aux, 0);
 		if (WIFEXITED(aux))
+		{
 			data->lastcmd_value = WEXITSTATUS(aux);
+			if (ft_atoi(data->cmd[cont].input) == cont)
+			{
+				tmp = ft_strjoin("/Users/antdelga/Desktop/Minishell/",ft_itoa(cont));
+				delete_file(tmp);
+				free(tmp);
+			}
+		}
 		if (ft_atoi(data->cmd[cont].input) == cont)
 		{
-			tmp = ft_strjoin("/Users/ant6n16/Desktop/Minishell/",ft_itoa(cont));
+			tmp = ft_strjoin("/Users/antdelga/Desktop/Minishell/",ft_itoa(cont));
 			delete_file(tmp); // CAMBIAR AL MAC DE 42
 			free(tmp);
 		}
