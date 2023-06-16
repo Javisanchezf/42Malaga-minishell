@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 18:47:30 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/14 20:35:44 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:06:05 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ void	ctrl_backslash(int sig)
 	rl_on_new_line();
 	rl_redisplay();
 }
-void	ctrl_c(int sig)
+void	ctrl_c(int sig, t_data *data)
 {
 	(void) sig;
+	data->lastcmd_value = 1;
 	rl_on_new_line();
 	rl_redisplay();
 	ft_putstr_fd("   ", 1);
