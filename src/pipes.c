@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/16 18:00:21 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:12:03 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	child_generator(t_data *data)
 
 	tubes = create_tube(data);
 	cont = -1;
+	//cree .tmp (data->tmp_dir)
 	while (++cont < data->n_commands)
 	{
 		if (select_builtin(data, &data->cmd[cont], cont, tubes) == 0)
@@ -93,6 +94,7 @@ void	child_generator(t_data *data)
 				child(&data->cmd[cont], data, cont, tubes);
 		}
 	}
+	//borrar .tmp
 	free_tubes(data, tubes);
 }
 
@@ -101,7 +103,7 @@ void	free_tubes(t_data *data, int *tubes)
 	int		cont;
 	char	*tmp;
 	int		aux;
-	
+
 	close_tubes(data, tubes);
 	cont = -1;
 	while (++cont < data->n_commands)
