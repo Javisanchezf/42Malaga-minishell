@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/14 20:25:44 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/17 17:08:58 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_data	data;
 
 static void	enviroment_extract(char **env, t_data *data)
 {
@@ -55,7 +57,6 @@ static void	init_data(t_data *data, char **env, int argc, char **argv)
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
-	t_data	data;
 
 	// atexit(ft_leaks);
 	init_data(&data, env, argc, argv);
@@ -68,6 +69,7 @@ int	main(int argc, char **argv, char **env)
 			if (data.n_commands != 0)
 				child_generator(&data);
 			clean_commands(&data);
+			
 		}
 		// ft_leaks();
 	}
