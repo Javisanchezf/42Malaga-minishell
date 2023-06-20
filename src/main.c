@@ -6,13 +6,13 @@
 /*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/20 19:43:06 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:57:02 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_data	data;
+t_data	g_data;
 
 static void	enviroment_extract(char **env, t_data *data)
 {
@@ -65,20 +65,18 @@ int	main(int argc, char **argv, char **env)
 {
 	char	*input;
 
-	// atexit(ft_leaks);
-	init_data(&data, env, argc, argv);
+	atexit(ft_leaks);
+	init_data(&g_data, env, argc, argv);
 	while (1)
 	{
-		input = readlineplus(&data);
+		input = readlineplus(&g_data);
 		if (input)
 		{
-			parse_line(input, &data);
-			ft_leaks();
-			if (data.n_commands != 0)
-				child_generator(&data);
-			clean_commands(&data);
+			parse_line(input, &g_data);
+			if (g_data.n_commands != 0)
+				child_generator(&g_data);
+			clean_commands(&g_data);
 		}
-		
 	}
-	clean_and_exit_success(&data);
+	clean_and_exit_success(&g_data);
 }

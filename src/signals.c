@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 18:47:30 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/20 18:25:44 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:57:44 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Problemillas con señales:
-Si hay control C mientras hay heredocs
-Con el control C no se cambia lastcmd
-Resuelto mas o menos: Control D con heredocs pero no se esta liberando memoria y mas paranollas
-*/
 void	ctrl_backslash(int sig)
 {
 	(void)sig;
@@ -29,7 +24,7 @@ void	ctrl_backslash(int sig)
 void	ctrl_c(int sig)
 {
 	(void) sig;
-	data.lastcmd_value = 1;
+	g_data.lastcmd_value = 1;
 	rl_on_new_line();
 	rl_redisplay();
 	ft_putstr_fd("   ", 1);
