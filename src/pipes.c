@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/20 19:12:03 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:39:57 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,18 @@ int	*create_tube(t_data *data)
 	return (piping);
 }
 
+void	heredoc_type_createtmp_i(t_data *data, int i)
+{
+	int	fd;
+
+	fd = open(data->tmp_dir, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	write(fd, data->cmd[i].input, ft_strlen(data->cmd[i].input));
+	close(fd);
+	ft_free_and_null((void **)&data->cmd[i].input);
+	data->cmd[i].input = ft_strdup(data->tmp_dir);
+	data->cmd[i].input_type = 1;
+}
+
 void	child_generator(t_data *data)
 {
 	int		cont;
@@ -84,9 +96,10 @@ void	child_generator(t_data *data)
 
 	tubes = create_tube(data);
 	cont = -1;
-	//cree .tmp (data->tmp_dir)
 	while (++cont < data->n_commands)
 	{
+		if (data->cmd[cont].input_type == 2)
+			heredoc_type_createtmp_i(data, cont);
 		if (select_builtin(data, &data->cmd[cont], cont, tubes) == 0)
 		{
 			pid = fork();
@@ -94,14 +107,13 @@ void	child_generator(t_data *data)
 				child(&data->cmd[cont], data, cont, tubes);
 		}
 	}
-	//borrar .tmp
 	free_tubes(data, tubes);
+	delete_file(data->tmp_dir);
 }
 
 void	free_tubes(t_data *data, int *tubes)
 {
 	int		cont;
-	char	*tmp;
 	int		aux;
 
 	close_tubes(data, tubes);
@@ -110,21 +122,7 @@ void	free_tubes(t_data *data, int *tubes)
 	{
 		waitpid(-1, &aux, 0);
 		if (WIFEXITED(aux))
-		{
 			data->lastcmd_value = WEXITSTATUS(aux);
-			if (ft_atoi(data->cmd[cont].input) == cont)
-			{
-				tmp = ft_strjoin("/Users/antdelga/Desktop/Minishell/",ft_itoa(cont));
-				delete_file(tmp);
-				free(tmp);
-			}
-		}
-		if (ft_atoi(data->cmd[cont].input) == cont)
-		{
-			tmp = ft_strjoin("/Users/antdelga/Desktop/Minishell/",ft_itoa(cont));
-			delete_file(tmp); // CAMBIAR AL MAC DE 42
-			free(tmp);
-		}
 	}
 	free(tubes);
 }

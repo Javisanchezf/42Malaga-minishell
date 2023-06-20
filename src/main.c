@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/20 19:05:09 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:43:06 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,12 @@ int	main(int argc, char **argv, char **env)
 		if (input)
 		{
 			parse_line(input, &data);
+			ft_leaks();
 			if (data.n_commands != 0)
 				child_generator(&data);
 			clean_commands(&data);
 		}
-		ft_leaks();
+		
 	}
 	clean_and_exit_success(&data);
 }
