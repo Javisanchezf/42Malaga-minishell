@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/13 20:03:20 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:50:41 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	bt_pwd(t_data *data, t_command *cmd)
 	char	aux[2048];
 	char	*aux2;
 	int		fd;
+
 	(void) cmd;
-	
 	fd = 0;
 	if (cmd->output_type == 1)
 		fd = open(cmd->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -88,8 +88,6 @@ void	bt_echo_n(t_data *data, t_command *cmd)
 	int	i;
 	int	fd;
 
-	/* if (cmd->input_type != 0)
-		return ; */
 	fd = 0;
 	if (cmd->output_type == 1)
 		fd = open(cmd->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);

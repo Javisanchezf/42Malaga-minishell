@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:57 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/07 19:21:55 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/20 20:06:19 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	input_parse(t_data *data, int i, int j, int cont)
 	|| ft_isspace(data->cmd[i].opt[j][k])))
 		k++;
 	data->cmd[i].input_type = cont;
-	ft_free_and_null((void **)&data->cmd[i].output);
+	ft_free_and_null((void **)&data->cmd[i].input);
 	data->cmd[i].input = ft_substr(data->cmd[i].opt[j], k, \
 	ft_strlen(data->cmd[i].opt[j]) - k);
 	if (cont == 1 || cont == 3)
