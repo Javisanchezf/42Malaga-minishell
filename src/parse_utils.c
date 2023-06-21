@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:35 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/21 19:35:14 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:59:46 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_getenv_int(char *env, t_data *data, int start, int size)
 				return (i);
 		i++;
 	}
-	return (i);
+	return (-1);
 }
 
 char	*ft_getenv(char *env, t_data *data, int start, int size)

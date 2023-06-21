@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:19 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/21 20:23:30 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:53:01 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,6 @@ void	bt_export(t_data *data, t_command *cmd, int loc)
 		while (++i < ft_split_size(data->env))
 				new_env[i] = ft_strdup(data->env[i]);
 		new_env[i] = ft_strdup(cmd->opt[loc]);
-		i = -1;
-		while (cmd->opt[++i])
-			;
-		loc = ft_getenv_int("_", data, 0, 1);
-		if (loc != -1)
-		{
-			free(new_env[loc]);
-			new_env[loc] = ft_strjoin("_=", \
-			ft_substr(cmd->opt[i - 1], ft_strchr(cmd->opt[i - 1], '=') + 1 - cmd->opt[i - 1], ft_strlen(cmd->opt[i - 1])));
-			printf("%s\n", new_env[loc]);
-		}
 		return (ft_split_free(data->env), data->env = new_env, free(aux));
 	}
 	free(aux);

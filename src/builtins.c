@@ -6,45 +6,74 @@
 /*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/21 20:37:33 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/21 21:27:38 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	bt_cd_setnewpdw(t_data *data)
-{
-	int		i;
-	char	aux2[2048];
-	char	**aux;
+// void	bt_cd_setnewpdw(t_data *data)
+// {
+// 	int		i;
+// 	char	aux2[2048];
+// 	char	**aux;
 
-	i = 0;
-	while (ft_strncmp(data->env[i], "PWD=", 4) != 0)
-		i++;
-	if (data->env[i])
-	{
-		if (data->env[i + 1])
-		{
-			aux = ft_split(data->env[i], '=');
-			if (aux[1])
-			{
-				ft_free_and_null((void **)&data->env[i + 1]);
-				data->env[i + 1] = ft_strjoin("OLDPWD=", aux[1]);
-				ft_split_free(aux);
-			}
-		}
-		ft_free_and_null((void **)&data->env[i]);
-		if (getcwd(aux2, 2048) == NULL)
-			return (ft_perror("PWD"));
-		data->env[i] = ft_strjoin("PWD=", aux2);
-	}
+// 	i = 0;
+// 	while (ft_strncmp(data->env[i], "PWD=", 4) != 0)
+// 		i++;
+// 	if (data->env[i])
+// 	{
+// 		if (data->env[i + 1])
+// 		{
+// 			aux = ft_split(data->env[i], '=');
+// 			if (aux[1])
+// 			{
+// 				ft_free_and_null((void **)&data->env[i + 1]);
+// 				data->env[i + 1] = ft_strjoin("OLDPWD=", aux[1]);
+// 				ft_split_free(aux);
+// 			}
+// 		}
+// 		ft_free_and_null((void **)&data->env[i]);
+// 		if (getcwd(aux2, 2048) == NULL)
+// 			return (ft_perror("PWD"));
+// 		data->env[i] = ft_strjoin("PWD=", aux2);
+// 	}
+// }
+
+char	**chain_add_one(char **array, char *new)
+{
+	int		size;
+	char	**new_array;
+	int		i;
+
+	size = 0;
+	size = ft_split_size(array);
+	if (!new)
+		return (array);
+	new_array = (char **)ft_calloc((size + 1), sizeof(char *));
+	if (!new_array)
+		return (array);
+	i = -1;
+	while (++i < size)
+		new_array[i] = array[i];
+	new_array[i] = new;
+	ft_free_and_null((void **)&array);
+	return (new_array);
 }
 
 void	bt_cd(t_data *data, t_command *cmd)
 {
 	char	*aux;
-	int		loc;
+	// char	aux2[1024];
+	int		i;
 
+	printf("asf");
+	i = ft_getenv_int("OLDPWD", data, 0, 6);
+	// if (i != -1)
+	// 	data->env = chain_delete_one(data->env, i);
+	// getcwd(aux2, 1023);
+	// data->env = chain_add_one(data->env, ft_strjoin("OLDPWD=", aux2));
+	printf("a");
 	if (data->n_commands != 1)
 		return ;
 	if (!cmd->opt[1])
@@ -57,13 +86,12 @@ void	bt_cd(t_data *data, t_command *cmd)
 	else
 		if (chdir(cmd->opt[1]) != 0)
 			return (ft_perror("cd"));
-	bt_cd_setnewpdw(data);
-	loc = ft_getenv_int("_", data, 0, 1);
-	if (loc != -1 && cmd->opt[1])
-	{
-		free(data->env[loc]);
-		data->env[loc] = ft_strjoin("_=", cmd->opt[1]);
-	}
+	// i = ft_getenv_int("PWD", data, 0, 6);
+	// if (i != -1)
+	// 	data->env = chain_delete_one(data->env, i);
+	// getcwd(aux2, 1023);
+	// data->env = chain_add_one(data->env, ft_strjoin("PWD=", aux2));
+	// bt_cd_setnewpdw(data);
 }
 
 void	bt_pwd(t_data *data, t_command *cmd)
@@ -71,7 +99,6 @@ void	bt_pwd(t_data *data, t_command *cmd)
 	char	aux[2048];
 	char	*aux2;
 	int		fd;
-	int		loc;
 
 	fd = 0;
 	if (cmd->output_type == 1)
@@ -88,19 +115,12 @@ void	bt_pwd(t_data *data, t_command *cmd)
 		ft_putstr_fd(aux2, fd);
 		free(aux2);
 	}
-	loc = ft_getenv_int("_", data, 0, 1);
-	if (loc != -1)
-	{
-		free(data->env[loc]);
-		data->env[loc] = ft_strjoin("_=", aux);
-	}
 }
 
 void	bt_echo_n(t_data *data, t_command *cmd)
 {
 	int	i;
 	int	fd;
-	int	loc;
 
 	fd = 0;
 	if (cmd->output_type == 1)
@@ -119,12 +139,6 @@ void	bt_echo_n(t_data *data, t_command *cmd)
 	if (fd != 0)
 		close(fd);
 	data->lastcmd_value = 0;
-	loc = ft_getenv_int("_", data, 0, 1);
-	if (loc != -1)
-	{
-		free(data->env[loc]);
-		data->env[loc] = ft_strjoin("_=", cmd->opt[i - 1]);
-	}
 }
 
 int	select_builtin(t_data *data, t_command *comando, int cont, int *tubes)
