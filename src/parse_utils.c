@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:35 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/05 19:24:13 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:15:57 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_getenv(char *env, t_data *data, int start, int size)
 	{
 		aux = ft_strchr(data->env[i], '=') + 1;
 		if (size == aux - data->env[i] - 1)
-			if (ft_strncmp(&env[start], data->env[i], size - 2) == 0)
+			if (ft_strncmp(&env[start], data->env[i], size) == 0)
 				return (ft_strdup(aux));
 		i++;
 	}

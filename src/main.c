@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/20 19:57:02 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:13:38 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	init_data(t_data *data, char **env, int argc, char **argv)
 	enviroment_extract(env, data);
 	data->lastcmd_value = 0;
 	signal(SIGINT, ctrl_c);
-	signal(SIGQUIT, ctrl_backslash);
+	signal(SIGQUIT, SIG_IGN);
 	data->tube.fd_in = dup(0);
 	data->tube.fd_t_in = dup(0);
 	data->tube.fd_t_out = dup(1);

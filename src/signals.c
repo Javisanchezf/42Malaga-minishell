@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 18:47:30 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/20 19:57:44 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:14:14 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ctrl_backslash(int sig)
-{
-	(void)sig;
-	ft_printf("\033[K");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-}
 
 void	ctrl_c(int sig)
 {
