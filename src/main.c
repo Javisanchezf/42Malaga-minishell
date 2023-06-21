@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/21 19:13:38 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:23:36 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	init_data(t_data *data, char **env, int argc, char **argv)
 	data->tube.fd_in = dup(0);
 	data->tube.fd_t_in = dup(0);
 	data->tube.fd_t_out = dup(1);
+	data->ctrl_c_flag = 0;
 	(void)argc;
 	(void)argv;
 }
@@ -73,9 +74,11 @@ int	main(int argc, char **argv, char **env)
 		if (input)
 		{
 			parse_line(input, &g_data);
+			g_data.ctrl_c_flag = 1;
 			if (g_data.n_commands != 0)
 				child_generator(&g_data);
 			clean_commands(&g_data);
+			g_data.ctrl_c_flag = 0;
 		}
 	}
 	clean_and_exit_success(&g_data);
