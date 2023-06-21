@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/21 19:21:30 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:43:32 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ char	**chain_delete_one(char **array, int index);
 void	forward_quotes(char *input, int *i);
 char	*ft_getenv(char *env, t_data *data, int start, int size);
 char	*dollar_heredoc(t_data *data, char *str);
+int		ft_getenv_int(char *env, t_data *data, int start, int size);
 
 /*----------------------------CLEAN----------------------------*/
 void	clean_commands(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/20 19:50:41 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:37:33 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	bt_cd_setnewpdw(t_data *data)
 void	bt_cd(t_data *data, t_command *cmd)
 {
 	char	*aux;
+	int		loc;
 
 	if (data->n_commands != 1)
 		return ;
@@ -57,6 +58,12 @@ void	bt_cd(t_data *data, t_command *cmd)
 		if (chdir(cmd->opt[1]) != 0)
 			return (ft_perror("cd"));
 	bt_cd_setnewpdw(data);
+	loc = ft_getenv_int("_", data, 0, 1);
+	if (loc != -1 && cmd->opt[1])
+	{
+		free(data->env[loc]);
+		data->env[loc] = ft_strjoin("_=", cmd->opt[1]);
+	}
 }
 
 void	bt_pwd(t_data *data, t_command *cmd)
@@ -64,8 +71,8 @@ void	bt_pwd(t_data *data, t_command *cmd)
 	char	aux[2048];
 	char	*aux2;
 	int		fd;
+	int		loc;
 
-	(void) cmd;
 	fd = 0;
 	if (cmd->output_type == 1)
 		fd = open(cmd->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -81,12 +88,19 @@ void	bt_pwd(t_data *data, t_command *cmd)
 		ft_putstr_fd(aux2, fd);
 		free(aux2);
 	}
+	loc = ft_getenv_int("_", data, 0, 1);
+	if (loc != -1)
+	{
+		free(data->env[loc]);
+		data->env[loc] = ft_strjoin("_=", aux);
+	}
 }
 
 void	bt_echo_n(t_data *data, t_command *cmd)
 {
 	int	i;
 	int	fd;
+	int	loc;
 
 	fd = 0;
 	if (cmd->output_type == 1)
@@ -105,6 +119,12 @@ void	bt_echo_n(t_data *data, t_command *cmd)
 	if (fd != 0)
 		close(fd);
 	data->lastcmd_value = 0;
+	loc = ft_getenv_int("_", data, 0, 1);
+	if (loc != -1)
+	{
+		free(data->env[loc]);
+		data->env[loc] = ft_strjoin("_=", cmd->opt[i - 1]);
+	}
 }
 
 int	select_builtin(t_data *data, t_command *comando, int cont, int *tubes)
