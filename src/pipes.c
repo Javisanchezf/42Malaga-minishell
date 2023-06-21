@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/20 20:40:19 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:35:25 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	child_redir_and_tubes(t_data *data, int cont, int *tubes)
 
 int	child(t_command *comando, t_data *data, int cont, int *tubes)
 {
+	int	loc;
+	int	i;
+
 	if (!comando->path[0])
 	{
 		ft_putstr_fd(RED"minishell: ", 2);
@@ -59,6 +62,16 @@ int	child(t_command *comando, t_data *data, int cont, int *tubes)
 		exit(127);
 	}
 	child_redir_and_tubes(data, cont, tubes);
+	loc = ft_getenv_int("_", data, 0, 1);
+	i = -1;
+	while (comando->opt[++i])
+		;
+	if (loc != -1)
+	{
+		free(data->env[loc]);
+		data->env[loc] = ft_strjoin("_=", comando->opt[i - 1]);
+		// printf("%s\n", data->env[loc]);
+	}
 	execve(comando->path, comando->opt, data->env);
 	ft_putstr_fd(RED"minishell: ", 2);
 	ft_putstr_fd(comando->opt[0], 2);
