@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 18:47:30 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/21 19:14:14 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:26:44 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,18 @@ void	ctrl_c(int sig)
 {
 	(void) sig;
 	g_data.lastcmd_value = 1;
-	rl_on_new_line();
-	rl_redisplay();
-	ft_putstr_fd("   ", 1);
-	ft_printf("\n");
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	if (g_data.ctrl_c_flag == 0)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		ft_putstr_fd("   ", 1);
+		ft_printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else
+		printf("\033[K\n");
 }
 
 void	ctrl_d(char *input, t_data *data)

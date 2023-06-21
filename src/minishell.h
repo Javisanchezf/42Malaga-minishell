@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/21 19:14:50 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:21:30 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_data
 	char		**rute;
 	t_link		tube;
 	char		tmp_dir[1024];
+	int			ctrl_c_flag;
 }				t_data;
 
 extern t_data	g_data;
