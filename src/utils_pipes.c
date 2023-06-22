@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:57:24 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/08 20:00:11 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:52:48 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	check_close_and_dup_fd(int fd, int id)
 {
 	if (fd < 0)
 	{
-		perror("Error when opening file");
+		ft_perror("Error when opening file");
 		exit(1);
 	}
 	if (dup2(fd, id) < 0)
 	{
-		perror("Error when redirecting");
+		ft_perror("Error when redirecting");
 		exit(1);
 	}
 	close(fd);

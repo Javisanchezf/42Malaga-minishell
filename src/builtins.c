@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/21 21:27:38 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:52:28 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ void	bt_cd(t_data *data, t_command *cmd)
 {
 	char	*aux;
 	// char	aux2[1024];
-	int		i;
+	// int		i;
 
 	printf("asf");
-	i = ft_getenv_int("OLDPWD", data, 0, 6);
+	// i = ft_getenv_int("OLDPWD", data, 0, 6);
 	// if (i != -1)
 	// 	data->env = chain_delete_one(data->env, i);
 	// getcwd(aux2, 1023);
@@ -80,7 +80,7 @@ void	bt_cd(t_data *data, t_command *cmd)
 	{
 		aux = ft_getenv("ZDOTDIR", data, 0, 7);
 		if (chdir(aux) != 0)
-			return (free(aux), perror("cd"));
+			return (free(aux), ft_perror("cd"));
 		free(aux);
 	}
 	else
@@ -120,25 +120,30 @@ void	bt_pwd(t_data *data, t_command *cmd)
 void	bt_echo_n(t_data *data, t_command *cmd)
 {
 	int	i;
+	int flag;
 	int	fd;
 
 	fd = 0;
+	flag = 0;
 	if (cmd->output_type == 1)
 		fd = open(cmd->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (cmd->output_type == 2)
 		fd = open(cmd->output, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd == -1)
 		return (data->lastcmd_value = 1, ft_perror("open"));
-	i = 1;
+	if (ft_strncmp_null(cmd->opt[1], "-n", 2) == 0)
+		flag = 1;
+	i = flag;
 	while (cmd->opt[++i])
 	{
 		ft_putstr_fd(cmd->opt[i], fd);
 		if (cmd->opt[i + 1])
 			ft_putstr_fd(" ", fd);
 	}
+	if (flag == 0)
+		ft_putstr_fd("\n", fd);
 	if (fd != 0)
 		close(fd);
-	data->lastcmd_value = 0;
 }
 
 int	select_builtin(t_data *data, t_command *comando, int cont, int *tubes)
@@ -151,9 +156,8 @@ int	select_builtin(t_data *data, t_command *comando, int cont, int *tubes)
 		return (bt_pwd(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "env", 3) == 0)
 		return (bt_env(data), data->lastcmd_value = 0, 1);
-	if (ft_strncmp_null(comando->opt[0], "echo", 4) == 0 && \
-	ft_strncmp_null(comando->opt[1], "-n", 2) == 0)
-		return (bt_echo_n(data, comando), 1);
+	if (ft_strncmp_null(comando->opt[0], "echo", 4) == 0)
+		return (bt_echo_n(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "exit", 4) == 0)
 		return (clean_and_exit_success(data), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "export", 6) == 0)
