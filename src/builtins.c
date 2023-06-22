@@ -6,39 +6,11 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/22 20:56:07 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:27:39 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	bt_cd_setnewpdw(t_data *data)
-// {
-// 	int		i;
-// 	char	aux2[2048];
-// 	char	**aux;
-
-// 	i = 0;
-// 	while (ft_strncmp(data->env[i], "PWD=", 4) != 0)
-// 		i++;
-// 	if (data->env[i])
-// 	{
-// 		if (data->env[i + 1])
-// 		{
-// 			aux = ft_split(data->env[i], '=');
-// 			if (aux[1])
-// 			{
-// 				ft_free_and_null((void **)&data->env[i + 1]);
-// 				data->env[i + 1] = ft_strjoin("OLDPWD=", aux[1]);
-// 				ft_split_free(aux);
-// 			}
-// 		}
-// 		ft_free_and_null((void **)&data->env[i]);
-// 		if (getcwd(aux2, 2048) == NULL)
-// 			return (ft_perror("PWD"));
-// 		data->env[i] = ft_strjoin("PWD=", aux2);
-// 	}
-// }
 
 char	**chain_add_one(char **array, char *new)
 {
@@ -50,7 +22,7 @@ char	**chain_add_one(char **array, char *new)
 	size = ft_split_size(array);
 	if (!new)
 		return (array);
-	new_array = (char **)ft_calloc((size + 1), sizeof(char *));
+	new_array = (char **)ft_calloc((size + 2), sizeof(char *));
 	if (!new_array)
 		return (array);
 	i = -1;
@@ -61,21 +33,34 @@ char	**chain_add_one(char **array, char *new)
 	return (new_array);
 }
 
+void	bt_cd_setnewpdw(t_data *data, char *type)
+{
+	char	*aux;
+	char	aux2[2048];
+	int		i;
+
+	if (getcwd(aux2, 2048) == NULL)
+		return (ft_perror("getcwd"));
+	aux = ft_strjoin(type, "=");
+	i = ft_getenv_int(type, data, 0, ft_strlen(type));
+	if (i != -1)
+	{
+		ft_free_and_null((void **)&data->env[i]);
+		data->env[i] = ft_strjoin(aux, aux2);
+		ft_free_and_null((void **)&aux);
+		return;
+	}
+	data->env = chain_add_one(data->env, ft_strjoin(aux, aux2));
+	ft_free_and_null((void **)&aux);
+}
+
 void	bt_cd(t_data *data, t_command *cmd)
 {
 	char	*aux;
-	// char	aux2[1024];
-	// int		i;
 
-	printf("asf");
-	// i = ft_getenv_int("OLDPWD", data, 0, 6);
-	// if (i != -1)
-	// 	data->env = chain_delete_one(data->env, i);
-	// getcwd(aux2, 1023);
-	// data->env = chain_add_one(data->env, ft_strjoin("OLDPWD=", aux2));
-	printf("a");
-	if (data->n_commands != 1)
-		return ;
+	bt_cd_setnewpdw(data, "OLDPWD");
+	// if (data->n_commands != 1)
+	// 	return ;
 	if (!cmd->opt[1])
 	{
 		aux = ft_getenv("ZDOTDIR", data, 0, 7);
@@ -86,12 +71,7 @@ void	bt_cd(t_data *data, t_command *cmd)
 	else
 		if (chdir(cmd->opt[1]) != 0)
 			return (ft_perror("cd"));
-	// i = ft_getenv_int("PWD", data, 0, 6);
-	// if (i != -1)
-	// 	data->env = chain_delete_one(data->env, i);
-	// getcwd(aux2, 1023);
-	// data->env = chain_add_one(data->env, ft_strjoin("PWD=", aux2));
-	// bt_cd_setnewpdw(data);
+	bt_cd_setnewpdw(data, "PWD");
 }
 
 void	bt_pwd(t_data *data, t_command *cmd)

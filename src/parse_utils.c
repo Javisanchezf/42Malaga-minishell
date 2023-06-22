@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:35 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/21 20:59:46 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/22 21:08:42 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	ft_getenv_int(char *env, t_data *data, int start, int size)
 		if (size == aux - data->env[i] - 1)
 			if (ft_strncmp(&env[start], data->env[i], size) == 0)
 				return (i);
-		i++;
 	}
 	return (-1);
 }
