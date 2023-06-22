@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/22 20:52:28 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/22 20:56:07 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	bt_pwd(t_data *data, t_command *cmd)
 	}
 }
 
-void	bt_echo_n(t_data *data, t_command *cmd)
+void	bt_echo(t_data *data, t_command *cmd)
 {
 	int	i;
 	int flag;
@@ -131,7 +131,7 @@ void	bt_echo_n(t_data *data, t_command *cmd)
 		fd = open(cmd->output, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd == -1)
 		return (data->lastcmd_value = 1, ft_perror("open"));
-	if (ft_strncmp_null(cmd->opt[1], "-n", 2) == 0)
+	if (ft_strncmp_null(cmd->opt[1], "-n\0", 3) == 0)
 		flag = 1;
 	i = flag;
 	while (cmd->opt[++i])
@@ -150,19 +150,19 @@ int	select_builtin(t_data *data, t_command *comando, int cont, int *tubes)
 {	
 	(void) cont;
 	(void) tubes;
-	if (ft_strncmp_null(comando->opt[0], "cd", 2) == 0)
+	if (ft_strncmp_null(comando->opt[0], "cd\0", 3) == 0)
 		return (bt_cd(data, comando), data->lastcmd_value = 0, 1);
-	if (ft_strncmp_null(comando->opt[0], "pwd", 3) == 0)
+	if (ft_strncmp_null(comando->opt[0], "pwd\0", 4) == 0)
 		return (bt_pwd(data, comando), data->lastcmd_value = 0, 1);
-	if (ft_strncmp_null(comando->opt[0], "env", 3) == 0)
+	if (ft_strncmp_null(comando->opt[0], "env\0", 4) == 0)
 		return (bt_env(data), data->lastcmd_value = 0, 1);
-	if (ft_strncmp_null(comando->opt[0], "echo", 4) == 0)
-		return (bt_echo_n(data, comando), data->lastcmd_value = 0, 1);
-	if (ft_strncmp_null(comando->opt[0], "exit", 4) == 0)
+	if (ft_strncmp_null(comando->opt[0], "echo\0", 5) == 0)
+		return (bt_echo(data, comando), data->lastcmd_value = 0, 1);
+	if (ft_strncmp_null(comando->opt[0], "exit\0", 5) == 0)
 		return (clean_and_exit_success(data), data->lastcmd_value = 0, 1);
-	if (ft_strncmp_null(comando->opt[0], "export", 6) == 0)
+	if (ft_strncmp_null(comando->opt[0], "export\0", 7) == 0)
 		return (bt_export_aux(data, comando), data->lastcmd_value = 0, 1);
-	if (ft_strncmp_null(comando->opt[0], "unset", 5) == 0)
+	if (ft_strncmp_null(comando->opt[0], "unset\0", 6) == 0)
 		return (bt_unset_init(data, comando), data->lastcmd_value = 0, 1);
 	return (0);
 }
