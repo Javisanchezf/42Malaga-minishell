@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/23 12:52:55 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:30:20 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	bt_pwd(t_data *data, t_command *cmd)
 	char	*aux2;
 	int		fd;
 
-	fd = 0;
+	fd = 1;
 	if (cmd->output_type == 1)
 		fd = open(cmd->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (cmd->output_type == 2)
@@ -103,7 +103,7 @@ void	bt_echo(t_data *data, t_command *cmd)
 	int flag;
 	int	fd;
 
-	fd = 0;
+	fd = STDOUT_FILENO;
 	flag = 0;
 	if (cmd->output_type == 1)
 		fd = open(cmd->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -122,7 +122,7 @@ void	bt_echo(t_data *data, t_command *cmd)
 	}
 	if (flag == 0)
 		ft_putstr_fd("\n", fd);
-	if (fd != 0)
+	if (fd != STDOUT_FILENO)
 		close(fd);
 }
 
