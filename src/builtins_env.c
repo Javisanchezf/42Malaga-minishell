@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:19 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/21 20:53:01 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:34:22 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	bt_export_aux(t_data *data, t_command *cmd)
 {
 	int	index;
 
-	if (data->n_commands != 1)
-		return ;
 	index = 0;
 	while (cmd->opt[++index])
 	{
@@ -106,8 +104,6 @@ void	bt_unset(t_data *data, t_command *cmd, int loc, int *cont)
 	int		i;
 	char	**aux;
 
-	if (data->n_commands != 1)
-		return ;
 	i = -1;
 	while (data->env[++i])
 	{

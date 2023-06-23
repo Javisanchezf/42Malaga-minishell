@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/23 12:57:09 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:55:54 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	child_generator(t_data *data)
 	int		cont;
 	pid_t	pid;
 	int		*tubes;
+	int		status;
 
 	if (data->n_commands == 1)
 		if (select_builtin(data, &data->cmd[0]) == 1)
@@ -102,9 +103,11 @@ void	child_generator(t_data *data)
 			child_redir_and_tubes(data, cont, tubes);
 			if (select_builtin(data, &data->cmd[cont]) == 0)
 				child(&data->cmd[cont], data);
-			exit (0);
+			exit (errno);
 		}
 	}
+	wait(&status);
+	data->lastcmd_value = WEXITSTATUS(status);
 	free_tubes(data, tubes);
 	delete_file(data->tmp_dir);
 }

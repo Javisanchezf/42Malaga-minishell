@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/23 13:30:20 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:34:13 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	bt_cd(t_data *data, t_command *cmd)
 	char	*aux;
 
 	bt_cd_setnewpdw(data, "OLDPWD");
-	// if (data->n_commands != 1)
-	// 	return ;
 	if (!cmd->opt[1])
 	{
 		aux = ft_getenv("ZDOTDIR", data, 0, 7);
