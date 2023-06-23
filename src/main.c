@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/21 19:23:36 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:36:20 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	init_data(t_data *data, char **env, int argc, char **argv)
 		ft_perror("Error: getcwd failure.\n");
 		exit(EXIT_FAILURE);
 	}
+	ft_strlcpy(data->builtins_dir, data->tmp_dir, ft_strlen(data->tmp_dir));
 	ft_strlcpy(&data->tmp_dir[ft_strlen(data->tmp_dir)], "/.tmp\0", 6);
 	ft_printf("%s\n", data->tmp_dir);
 	ft_printf("%s", &(HEADER));

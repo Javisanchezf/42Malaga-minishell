@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:58:58 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/20 19:54:05 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:14:12 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**chain_add_one(char **array, char *new)
+{
+	int		size;
+	char	**new_array;
+	int		i;
+
+	size = 0;
+	size = ft_split_size(array);
+	if (!new)
+		return (array);
+	new_array = (char **)ft_calloc((size + 2), sizeof(char *));
+	if (!new_array)
+		return (array);
+	i = -1;
+	while (++i < size)
+		new_array[i] = array[i];
+	new_array[i] = new;
+	ft_free_and_null((void **)&array);
+	return (new_array);
+}
 
 void	ft_leaks(void)
 {

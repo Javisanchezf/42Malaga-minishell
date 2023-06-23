@@ -6,32 +6,11 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/23 13:34:13 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:13:26 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**chain_add_one(char **array, char *new)
-{
-	int		size;
-	char	**new_array;
-	int		i;
-
-	size = 0;
-	size = ft_split_size(array);
-	if (!new)
-		return (array);
-	new_array = (char **)ft_calloc((size + 2), sizeof(char *));
-	if (!new_array)
-		return (array);
-	i = -1;
-	while (++i < size)
-		new_array[i] = array[i];
-	new_array[i] = new;
-	ft_free_and_null((void **)&array);
-	return (new_array);
-}
 
 void	bt_cd_setnewpdw(t_data *data, char *type)
 {

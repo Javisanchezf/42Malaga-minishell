@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/23 13:55:54 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:31:03 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,31 +83,47 @@ int	*create_tube(t_data *data)
 	return (piping);
 }
 
+void	set_lastcmd(t_data *data, char	*new_dir)
+{
+	int		i;
+
+	if (!new_dir || !new_dir[0])
+		new_dir = data->builtins_dir;
+	i = ft_getenv_int("_", data, 0, 1);
+	if (i != -1)
+	{
+		ft_free_and_null((void **)&data->env[i]);
+		data->env[i] = ft_strjoin("_=", new_dir);
+		return;
+	}
+	data->env = chain_add_one(data->env, ft_strjoin("_=", new_dir));
+}
+
 void	child_generator(t_data *data)
 {
 	int		cont;
-	pid_t	pid;
 	int		*tubes;
-	int		status;
 
 	if (data->n_commands == 1)
 		if (select_builtin(data, &data->cmd[0]) == 1)
-			return ;
+			return set_lastcmd(data, data->cmd[0].path);
 	tubes = create_tube(data);
 	cont = -1;
 	while (++cont < data->n_commands)
 	{
-		pid = fork();
-		if (pid == 0)
+		if (fork() == 0)
 		{
 			child_redir_and_tubes(data, cont, tubes);
 			if (select_builtin(data, &data->cmd[cont]) == 0)
 				child(&data->cmd[cont], data);
 			exit (errno);
 		}
+		set_lastcmd(data, data->cmd[cont].path);
 	}
-	wait(&status);
-	data->lastcmd_value = WEXITSTATUS(status);
+	wait(&cont);
+	data->lastcmd_value = WEXITSTATUS(cont);
+	if (WIFSIGNALED(cont))
+		data->lastcmd_value = WIFSIGNALED(cont);
 	free_tubes(data, tubes);
 	delete_file(data->tmp_dir);
 }

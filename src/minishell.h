@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/23 12:53:14 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/23 14:33:32 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_data
 	char		**rute;
 	t_link		tube;
 	char		tmp_dir[1024];
+	char		builtins_dir[1024];
 	int			ctrl_c_flag;
 }				t_data;
 
@@ -121,6 +122,7 @@ void	print_fds(t_data *data, t_command *cmd);
 int		ft_strncmp_null(const char *s1, const char *s2, size_t n);
 void	ft_perror(const char *str);
 int		delete_file(char *filename);
+char	**chain_add_one(char **array, char *new);
 
 /*----------------------------PIPES----------------------------*/
 void	child_generator(t_data *data);
