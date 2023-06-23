@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/21 20:53:56 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/23 12:57:09 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	child_redir_and_tubes(t_data *data, int cont, int *tubes)
 		close(tubes[cont]);
 }
 
-int	child(t_command *comando, t_data *data, int cont, int *tubes)
+int	child(t_command *comando, t_data *data)
 {
 	if (!comando->path[0])
 	{
@@ -58,7 +58,6 @@ int	child(t_command *comando, t_data *data, int cont, int *tubes)
 		ft_putstr_fd(": command not found\n"DEFAULT, 2);
 		exit(127);
 	}
-	child_redir_and_tubes(data, cont, tubes);
 	execve(comando->path, comando->opt, data->env);
 	ft_putstr_fd(RED"minishell: ", 2);
 	ft_putstr_fd(comando->opt[0], 2);
@@ -84,35 +83,26 @@ int	*create_tube(t_data *data)
 	return (piping);
 }
 
-// void	heredoc_type_createtmp_i(t_data *data, int i)
-// {
-// 	int	fd;
-
-// 	fd = open(data->tmp_dir, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 	write(fd, data->cmd[i].input, ft_strlen(data->cmd[i].input));
-// 	close(fd);
-// 	ft_free_and_null((void **)&data->cmd[i].input);
-// 	data->cmd[i].input = ft_strdup(data->tmp_dir);
-// 	data->cmd[i].input_type = 1;
-// }
-
 void	child_generator(t_data *data)
 {
 	int		cont;
 	pid_t	pid;
 	int		*tubes;
 
+	if (data->n_commands == 1)
+		if (select_builtin(data, &data->cmd[0]) == 1)
+			return ;
 	tubes = create_tube(data);
 	cont = -1;
 	while (++cont < data->n_commands)
 	{
-		// if (data->cmd[cont].input_type == 2)
-		// 	heredoc_type_createtmp_i(data, cont);
-		if (select_builtin(data, &data->cmd[cont], cont, tubes) == 0)
+		pid = fork();
+		if (pid == 0)
 		{
-			pid = fork();
-			if (pid == 0)
-				child(&data->cmd[cont], data, cont, tubes);
+			child_redir_and_tubes(data, cont, tubes);
+			if (select_builtin(data, &data->cmd[cont]) == 0)
+				child(&data->cmd[cont], data);
+			exit (0);
 		}
 	}
 	free_tubes(data, tubes);

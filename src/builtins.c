@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/22 21:27:39 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/23 12:52:55 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,8 @@ void	bt_echo(t_data *data, t_command *cmd)
 		close(fd);
 }
 
-int	select_builtin(t_data *data, t_command *comando, int cont, int *tubes)
-{	
-	(void) cont;
-	(void) tubes;
+int	select_builtin(t_data *data, t_command *comando)
+{
 	if (ft_strncmp_null(comando->opt[0], "cd\0", 3) == 0)
 		return (bt_cd(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "pwd\0", 4) == 0)
