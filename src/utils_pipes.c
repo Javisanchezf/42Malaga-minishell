@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:57:24 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/25 19:28:12 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:29:55 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,3 @@ int	check_errno(int cont)
 		aux = 0;
 	return (aux);
 }
-
-/* void	set_lastcmd(t_data *data, char	*new_dir)
-{
-	int		i;
-
-	if (!new_dir || !new_dir[0])
-		new_dir = data->builtins_dir;
-	i = ft_getenv_int("_", data, 0, 1);
-	if (i != -1)
-	{
-		ft_free_and_null((void **)&data->env[i]);
-		data->env[i] = ft_strjoin("_=", new_dir);
-		return ;
-	}
-	data->env = chain_add_one(data->env, ft_strjoin("_=", new_dir));
-} */

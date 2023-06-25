@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/25 18:38:31 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:31:07 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	bt_pwd(t_data *data, t_command *cmd)
 		ft_putstr_fd(aux2, fd);
 		free(aux2);
 	}
-	// errno = 0;
-	// printf("%d\n", errno);
 }
 
 void	bt_echo(t_data *data, t_command *cmd)
