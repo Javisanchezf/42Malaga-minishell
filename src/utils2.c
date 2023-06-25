@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:58:58 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/23 14:14:12 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:28:17 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,15 @@ void	free_tubes(t_data *data, int *tubes)
 {
 	int		cont;
 	int		aux;
+	int		aux2;
 
 	close_tubes(data, tubes);
 	cont = -1;
 	while (++cont < data->n_commands)
 	{
 		waitpid(-1, &aux, 0);
-		if (WIFEXITED(aux))
-			data->lastcmd_value = WEXITSTATUS(aux);
+		aux2 = check_errno(aux);
+		data->lastcmd_value = aux2;
 	}
 	free(tubes);
 }

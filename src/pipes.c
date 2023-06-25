@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/25 18:51:02 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:28:23 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,6 @@ void	child_generator(t_data *data)
 		}
 		set_lastcmd(data, data->cmd[cont].opt);
 	}
-	wait(&cont);
-	check_errno(&data->lastcmd_value, cont);
 	free_tubes(data, tubes);
 	delete_file(data->tmp_dir);
 }

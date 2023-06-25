@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/25 18:50:50 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:23:03 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	close_tubes(t_data *data, int *tubes);
 void	check_close_and_dup_fd(int fd, int id);
 void	child_redir_and_tubes(t_data *data, int cont, int *tubes);
 void	free_tubes(t_data *data, int *tubes);
-void	check_errno(int	*num, int cont);
+int		check_errno(int cont);
 
 /*----------------------------BUILTINS----------------------------*/
 int		select_builtin(t_data *data, t_command *comando);

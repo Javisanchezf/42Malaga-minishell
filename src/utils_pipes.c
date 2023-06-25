@@ -6,7 +6,7 @@
 /*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:57:24 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/25 18:51:18 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:28:12 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,16 @@ void	set_lastcmd(t_data *data, char	**opt)
 	data->env = chain_add_one(data->env, ft_strjoin("_=", opt[select]));
 }
 
-void	check_errno(int	*num, int cont)
+int	check_errno(int cont)
 {
-	*num = WEXITSTATUS(cont);
-	if (WIFSIGNALED(cont))
-		*num = WIFSIGNALED(cont);
-	if (*num == 22)
-		*num = 0;
+	int	aux;
+
+	aux = WEXITSTATUS(cont);
+	if (WIFSIGNALED(aux))
+		aux = WIFSIGNALED(cont);
+	if (aux == 22)
+		aux = 0;
+	return (aux);
 }
 
 /* void	set_lastcmd(t_data *data, char	*new_dir)
