@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/23 14:33:32 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:50:50 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ extern t_data	g_data;
 # define WHITE	"\033[37;1m"
 # define DEFAULT	"\033[0m"
 
-/*----------------------------MACROS----------------------------*/
+/*------------------------------MACROS----------------------------*/
 # define CMD_ERROR "Command not found"
 # define PIPE_ERROR "Pipe error"
 
-/*----------------------------PARSE GENERAL----------------------------*/
+/*---------------------------PARSE GENERAL----------------------------*/
 char	*readlineplus(t_data *data);
 void	parse_line(char *input, t_data *data);
 int		parse_redirections(t_data *data, int i);
@@ -123,6 +123,7 @@ int		ft_strncmp_null(const char *s1, const char *s2, size_t n);
 void	ft_perror(const char *str);
 int		delete_file(char *filename);
 char	**chain_add_one(char **array, char *new);
+void	set_lastcmd(t_data *data, char	**opt);
 
 /*----------------------------PIPES----------------------------*/
 void	child_generator(t_data *data);
@@ -130,6 +131,7 @@ void	close_tubes(t_data *data, int *tubes);
 void	check_close_and_dup_fd(int fd, int id);
 void	child_redir_and_tubes(t_data *data, int cont, int *tubes);
 void	free_tubes(t_data *data, int *tubes);
+void	check_errno(int	*num, int cont);
 
 /*----------------------------BUILTINS----------------------------*/
 int		select_builtin(t_data *data, t_command *comando);

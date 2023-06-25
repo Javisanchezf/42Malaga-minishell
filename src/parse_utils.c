@@ -3,47 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:35 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/22 21:08:42 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/25 17:33:54 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_getenv_int(char *env, t_data *data, int start, int size)
-{
-	int		i;
-	char	*aux;
-
-	i = -1;
-	while (data->env[++i])
-	{
-		aux = ft_strchr(data->env[i], '=') + 1;
-		if (size == aux - data->env[i] - 1)
-			if (ft_strncmp(&env[start], data->env[i], size) == 0)
-				return (i);
-	}
-	return (-1);
-}
-
-char	*ft_getenv(char *env, t_data *data, int start, int size)
-{
-	int		i;
-	char	*aux;
-
-	i = 0;
-	while (data->env[i])
-	{
-		aux = ft_strchr(data->env[i], '=') + 1;
-		if (size == aux - data->env[i] - 1)
-			if (ft_strncmp(&env[start], data->env[i], size) == 0)
-				return (ft_strdup(aux));
-		i++;
-	}
-	return (ft_strdup(""));
-}
 
 void	forward_quotes(char *input, int *i)
 {
@@ -128,4 +95,21 @@ char	*dollar_heredoc(t_data *data, char *str)
 	}
 	ft_free_and_null((void **)&str);
 	return (str_new);
+}
+
+char	*ft_getenv(char *env, t_data *data, int start, int size)
+{
+	int		i;
+	char	*aux;
+
+	i = 0;
+	while (data->env[i])
+	{
+		aux = ft_strchr(data->env[i], '=') + 1;
+		if (size == aux - data->env[i] - 1)
+			if (ft_strncmp(&env[start], data->env[i], size) == 0)
+				return (ft_strdup(aux));
+		i++;
+	}
+	return (ft_strdup(""));
 }

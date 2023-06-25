@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/23 14:13:26 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:38:31 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	bt_cd_setnewpdw(t_data *data, char *type)
 		ft_free_and_null((void **)&data->env[i]);
 		data->env[i] = ft_strjoin(aux, aux2);
 		ft_free_and_null((void **)&aux);
-		return;
+		return ;
 	}
 	data->env = chain_add_one(data->env, ft_strjoin(aux, aux2));
 	ft_free_and_null((void **)&aux);
@@ -72,12 +72,14 @@ void	bt_pwd(t_data *data, t_command *cmd)
 		ft_putstr_fd(aux2, fd);
 		free(aux2);
 	}
+	// errno = 0;
+	// printf("%d\n", errno);
 }
 
 void	bt_echo(t_data *data, t_command *cmd)
 {
 	int	i;
-	int flag;
+	int	flag;
 	int	fd;
 
 	fd = STDOUT_FILENO;

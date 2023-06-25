@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/23 14:31:03 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/25 18:51:02 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	child_redir_and_tubes(t_data *data, int cont, int *tubes)
+int	output_redir(t_data *data, int cont)
 {
 	int	fd;
 
@@ -23,12 +23,23 @@ void	child_redir_and_tubes(t_data *data, int cont, int *tubes)
 		close(fd);
 		fd = open(data->tmp_dir, O_RDONLY, 0644);
 		check_close_and_dup_fd(fd, STDIN_FILENO);
+		return (1);
 	}
 	else if (data->cmd[cont].input_type == 1)
 	{
 		fd = open(data->cmd[cont].input, O_RDONLY, 0644);
 		check_close_and_dup_fd(fd, STDIN_FILENO);
+		return (1);
 	}
+	return (0);
+}
+
+void	child_redir_and_tubes(t_data *data, int cont, int *tubes)
+{
+	int	fd;
+
+	if (output_redir(data, cont))
+		return ;
 	else if (cont > 0)
 		dup2(tubes[(cont - 1) * 2], STDIN_FILENO);
 	if (data->cmd[cont].output_type == 1)
@@ -83,22 +94,6 @@ int	*create_tube(t_data *data)
 	return (piping);
 }
 
-void	set_lastcmd(t_data *data, char	*new_dir)
-{
-	int		i;
-
-	if (!new_dir || !new_dir[0])
-		new_dir = data->builtins_dir;
-	i = ft_getenv_int("_", data, 0, 1);
-	if (i != -1)
-	{
-		ft_free_and_null((void **)&data->env[i]);
-		data->env[i] = ft_strjoin("_=", new_dir);
-		return;
-	}
-	data->env = chain_add_one(data->env, ft_strjoin("_=", new_dir));
-}
-
 void	child_generator(t_data *data)
 {
 	int		cont;
@@ -106,7 +101,7 @@ void	child_generator(t_data *data)
 
 	if (data->n_commands == 1)
 		if (select_builtin(data, &data->cmd[0]) == 1)
-			return set_lastcmd(data, data->cmd[0].path);
+			return (set_lastcmd(data, data->cmd[0].opt));
 	tubes = create_tube(data);
 	cont = -1;
 	while (++cont < data->n_commands)
@@ -118,12 +113,10 @@ void	child_generator(t_data *data)
 				child(&data->cmd[cont], data);
 			exit (errno);
 		}
-		set_lastcmd(data, data->cmd[cont].path);
+		set_lastcmd(data, data->cmd[cont].opt);
 	}
 	wait(&cont);
-	data->lastcmd_value = WEXITSTATUS(cont);
-	if (WIFSIGNALED(cont))
-		data->lastcmd_value = WIFSIGNALED(cont);
+	check_errno(&data->lastcmd_value, cont);
 	free_tubes(data, tubes);
 	delete_file(data->tmp_dir);
 }

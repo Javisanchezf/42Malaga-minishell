@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:27:36 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/23 14:43:43 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/25 17:33:17 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,22 @@ int	ft_strncmp_null(const char *s1, const char *s2, size_t n)
 		return (ft_strncmp(s1, s2, n));
 }
 
-void	sub_dup2(int zero, int one)
+int	ft_getenv_int(char *env, t_data *data, int start, int size)
 {
-	dup2(zero, 0);
-	dup2(one, 1);
+	int		i;
+	char	*aux;
+
+	i = -1;
+	while (data->env[++i])
+	{
+		aux = ft_strchr(data->env[i], '=') + 1;
+		if (size == aux - data->env[i] - 1)
+			if (ft_strncmp(&env[start], data->env[i], size) == 0)
+				return (i);
+	}
+	return (-1);
 }
+
 char	*ft_getcmd_builtin(t_data *data, char *cmd)
 {
 	if (ft_strncmp_null(cmd, "cd\0", 3) == 0)
