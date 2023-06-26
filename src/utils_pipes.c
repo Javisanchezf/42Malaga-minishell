@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:57:24 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/26 13:28:12 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:11:29 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

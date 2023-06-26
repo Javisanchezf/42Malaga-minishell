@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:49:05 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/25 19:31:33 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:02:08 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	init_data(t_data *data, char **env, int argc, char **argv)
 	}
 	ft_strlcpy(data->builtins_dir, data->tmp_dir, ft_strlen(data->tmp_dir));
 	ft_strlcpy(&data->tmp_dir[ft_strlen(data->tmp_dir)], "/.tmp\0", 6);
-	ft_printf("%s\n", data->tmp_dir);
 	ft_printf("%s", &(HEADER));
 	data->n_commands = 0;
 	enviroment_extract(env, data);
