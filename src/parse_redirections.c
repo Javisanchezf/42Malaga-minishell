@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:57 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/20 20:06:19 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:59:16 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,11 @@ void	input_parse(t_data *data, int i, int j, int cont)
 		file = open(data->cmd[i].output, O_RDONLY, 0644);
 		close(file);
 		if (cont == 3)
+		{
+			data->cmd[i].input = ft_freeandjoin(\
+data->cmd[i].input, ft_strdup("\n\0"));
 			data->cmd[i].input_type = 3;
+		}
 	}
 	else
 		heredoc(data, i);

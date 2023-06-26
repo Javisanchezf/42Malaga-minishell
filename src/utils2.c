@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:58:58 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/20 19:54:05 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/25 19:28:17 by antdelga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**chain_add_one(char **array, char *new)
+{
+	int		size;
+	char	**new_array;
+	int		i;
+
+	size = 0;
+	size = ft_split_size(array);
+	if (!new)
+		return (array);
+	new_array = (char **)ft_calloc((size + 2), sizeof(char *));
+	if (!new_array)
+		return (array);
+	i = -1;
+	while (++i < size)
+		new_array[i] = array[i];
+	new_array[i] = new;
+	ft_free_and_null((void **)&array);
+	return (new_array);
+}
 
 void	ft_leaks(void)
 {
@@ -36,14 +57,15 @@ void	free_tubes(t_data *data, int *tubes)
 {
 	int		cont;
 	int		aux;
+	int		aux2;
 
 	close_tubes(data, tubes);
 	cont = -1;
 	while (++cont < data->n_commands)
 	{
 		waitpid(-1, &aux, 0);
-		if (WIFEXITED(aux))
-			data->lastcmd_value = WEXITSTATUS(aux);
+		aux2 = check_errno(aux);
+		data->lastcmd_value = aux2;
 	}
 	free(tubes);
 }

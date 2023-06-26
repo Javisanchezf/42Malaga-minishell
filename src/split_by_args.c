@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_by_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:46:24 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/05 18:46:41 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:03:42 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	**split_by_args(char *input, int i, int j, int size_split)
 			forward_quotes(input, &i);
 		else if (input[i] == '<' || input[i] == '>')
 			forward_operators(input, &i);
-		else if (!is_separator_char(input[i]))
+		if (!is_separator_char(input[i]))
 			while (!is_separator_char(input[i]))
 				i++;
 		split[n] = ft_substr(input, j, i - j);

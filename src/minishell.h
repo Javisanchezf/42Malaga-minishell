@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/21 20:43:32 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:52:47 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_data
 	char		**rute;
 	t_link		tube;
 	char		tmp_dir[1024];
+	char		builtins_dir[1024];
 	int			ctrl_c_flag;
 }				t_data;
 
@@ -85,11 +86,11 @@ extern t_data	g_data;
 # define WHITE	"\033[37;1m"
 # define DEFAULT	"\033[0m"
 
-/*----------------------------MACROS----------------------------*/
+/*------------------------------MACROS----------------------------*/
 # define CMD_ERROR "Command not found"
 # define PIPE_ERROR "Pipe error"
 
-/*----------------------------PARSE GENERAL----------------------------*/
+/*---------------------------PARSE GENERAL----------------------------*/
 char	*readlineplus(t_data *data);
 void	parse_line(char *input, t_data *data);
 int		parse_redirections(t_data *data, int i);
@@ -121,6 +122,8 @@ void	print_fds(t_data *data, t_command *cmd);
 int		ft_strncmp_null(const char *s1, const char *s2, size_t n);
 void	ft_perror(const char *str);
 int		delete_file(char *filename);
+char	**chain_add_one(char **array, char *new);
+void	set_lastcmd(t_data *data, char	**opt);
 
 /*----------------------------PIPES----------------------------*/
 void	child_generator(t_data *data);
@@ -128,12 +131,13 @@ void	close_tubes(t_data *data, int *tubes);
 void	check_close_and_dup_fd(int fd, int id);
 void	child_redir_and_tubes(t_data *data, int cont, int *tubes);
 void	free_tubes(t_data *data, int *tubes);
+int		check_errno(int cont);
 
 /*----------------------------BUILTINS----------------------------*/
-int		select_builtin(t_data *data, t_command *comando, int cont, int *tubes);
+int		select_builtin(t_data *data, t_command *comando);
 void	bt_echo_n(t_data *data, t_command *cmd);
 void	bt_cd(t_data *data, t_command *cmd);
-void	bt_env(t_data *data);
+void	bt_env(t_data *data, t_command *cmd);
 void	bt_export_aux(t_data *data, t_command *cmd);
 void	bt_export(t_data *data, t_command *cmd, int loc);
 void	bt_unset_aux(t_data *data, t_command *cmd, char **new_env);
