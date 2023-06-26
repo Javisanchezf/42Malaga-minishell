@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:37 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/25 19:31:07 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:52:59 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	select_builtin(t_data *data, t_command *comando)
 	if (ft_strncmp_null(comando->opt[0], "pwd\0", 4) == 0)
 		return (bt_pwd(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "env\0", 4) == 0)
-		return (bt_env(data), data->lastcmd_value = 0, 1);
+		return (bt_env(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "echo\0", 5) == 0)
 		return (bt_echo(data, comando), data->lastcmd_value = 0, 1);
 	if (ft_strncmp_null(comando->opt[0], "exit\0", 5) == 0)

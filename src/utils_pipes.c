@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 19:57:24 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/25 19:29:55 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:28:12 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	set_lastcmd(t_data *data, char	**opt)
 	int	select;
 
 	select = -1;
+	if (!opt[0])
+		return ;
 	while (opt[++select])
 		;
 	select--;

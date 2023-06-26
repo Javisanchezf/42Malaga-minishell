@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/25 19:28:23 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:31:01 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	output_redir(t_data *data, int cont)
 {
 	int	fd;
 
-	if (data->cmd[cont].input_type == 2)
+	if (data->cmd[cont].input_type == 2 || data->cmd[cont].input_type == 3)
 	{
 		fd = open(data->tmp_dir, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		write(fd, data->cmd[cont].input, ft_strlen(data->cmd[cont].input));

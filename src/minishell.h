@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/25 19:23:03 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:52:47 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int		check_errno(int cont);
 int		select_builtin(t_data *data, t_command *comando);
 void	bt_echo_n(t_data *data, t_command *cmd);
 void	bt_cd(t_data *data, t_command *cmd);
-void	bt_env(t_data *data);
+void	bt_env(t_data *data, t_command *cmd);
 void	bt_export_aux(t_data *data, t_command *cmd);
 void	bt_export(t_data *data, t_command *cmd, int loc);
 void	bt_unset_aux(t_data *data, t_command *cmd, char **new_env);

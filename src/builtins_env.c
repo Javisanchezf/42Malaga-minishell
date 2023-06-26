@@ -6,26 +6,32 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:22:19 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/23 13:34:22 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:52:03 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	bt_env(t_data *data)
+void	bt_env(t_data *data, t_command *cmd)
 {
 	int	i;
-	int	loc;
+	int	fd;
 
-	loc = ft_getenv_int("_", data, 0, 1);
-	if (loc != -1)
-	{
-		free(data->env[loc]);
-		data->env[loc] = ft_strjoin("_=", "/usr/bin/env");
-	}
+	fd = STDOUT_FILENO;
+	if (cmd->output_type == 1)
+		fd = open(cmd->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (cmd->output_type == 2)
+		fd = open(cmd->output, O_CREAT | O_RDWR | O_APPEND, 0644);
+	if (fd == -1)
+		return (data->lastcmd_value = 1, ft_perror("open"));
 	i = -1;
 	while (data->env[++i])
-		printf("%s\n", data->env[i]);
+	{
+		ft_putstr_fd(data->env[i], fd);
+		ft_putstr_fd("\n", fd);
+	}
+	if (fd != STDOUT_FILENO)
+		close(fd);
 }
 
 void	bt_export_aux(t_data *data, t_command *cmd)
@@ -33,6 +39,8 @@ void	bt_export_aux(t_data *data, t_command *cmd)
 	int	index;
 
 	index = 0;
+	if (!cmd->opt[1])
+		return (bt_env(data, cmd));
 	while (cmd->opt[++index])
 	{
 		if (cmd->opt[index][0] == '=')
