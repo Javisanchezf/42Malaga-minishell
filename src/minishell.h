@@ -6,7 +6,7 @@
 /*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:55 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/26 13:52:47 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:26:26 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ void	ctrl_c(int sig);
 void	ctrl_d(char *input, t_data *data);
 
 /*----------------------------UTILS----------------------------*/
-void	ft_leaks(void);
 void	sub_dup2(int zero, int one);
+void	ft_usleep(void);
 char	*ft_getcmd(t_data *data, char *cmd);
 void	reset_fd(int *fds);
 void	print_fds(t_data *data, t_command *cmd);
@@ -134,19 +134,13 @@ void	free_tubes(t_data *data, int *tubes);
 int		check_errno(int cont);
 
 /*----------------------------BUILTINS----------------------------*/
-int		select_builtin(t_data *data, t_command *comando);
-void	bt_echo_n(t_data *data, t_command *cmd);
+int		select_builtin(t_data *data, t_command *cmd);
+void	bt_pwd(t_data *data, t_command *cmd);
+void	bt_exit(t_data *data, t_command *cmd);
+void	bt_echo(t_data *data, t_command *cmd);
 void	bt_cd(t_data *data, t_command *cmd);
 void	bt_env(t_data *data, t_command *cmd);
-void	bt_export_aux(t_data *data, t_command *cmd);
-void	bt_export(t_data *data, t_command *cmd, int loc);
-void	bt_unset_aux(t_data *data, t_command *cmd, char **new_env);
-void	bt_unset(t_data *data, t_command *cmd, int loc, int *cont);
-
-/*----------------------BUILTINS UTILS----------------------*/
-int		choose_largest_string(char *a, char *b);
-void	modify_values(int *index, int *loc, int *offset, int *cont);
-void	restart_loop(int *cont, int *loc, char **aux);
-void	bt_unset_init(t_data *data, t_command *cmd);
+void	bt_export(t_data *data, t_command *cmd);
+void	bt_unset(t_data *data, t_command *cmd);
 
 #endif

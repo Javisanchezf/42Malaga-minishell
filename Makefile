@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+         #
+#    By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 18:02:29 by javiersa          #+#    #+#              #
-#    Updated: 2023/06/25 19:34:29 by antdelga         ###   ########.fr        #
+#    Updated: 2023/06/27 14:20:48 by javiersa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIBFTPLUS = libftplus
 LIBFTPLUS_LIB = $(LIBFTPLUS)/libftplus.a
 CC = gcc
 CLEAN = rm -Rf
-SRC = $(wildcard src/*.c)
+SRC = $(wildcard src/builtins/*.c) $(wildcard src/parse/*.c) $(wildcard src/utils/*.c) $(wildcard src/main/*.c) $(wildcard src/*.c)
 OBJS := $(SRC:.c=.o)
 
 # Personal use variables

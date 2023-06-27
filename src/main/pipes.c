@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javiersa <javiersa@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:21 by antdelga          #+#    #+#             */
-/*   Updated: 2023/06/26 18:11:33 by javiersa         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:27:25 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	output_redir(t_data *data, int cont)
 {
@@ -98,11 +98,11 @@ void	child_generator(t_data *data)
 {
 	int		cont;
 	int		*tubes;
-	int		aux;
 
 	if (data->n_commands == 1)
 		if (select_builtin(data, &data->cmd[0]) == 1)
-			return (set_lastcmd(data, data->cmd[0].opt));
+			return (data->lastcmd_value = errno, \
+set_lastcmd(data, data->cmd[0].opt));
 	tubes = create_tube(data);
 	cont = -1;
 	while (++cont < data->n_commands)
@@ -114,9 +114,7 @@ void	child_generator(t_data *data)
 				child(&data->cmd[cont], data);
 			exit (errno);
 		}
-		aux = -1;
-		while (aux < 42424242)
-			aux++;
+		ft_usleep();
 		set_lastcmd(data, data->cmd[cont].opt);
 	}
 	free_tubes(data, tubes);

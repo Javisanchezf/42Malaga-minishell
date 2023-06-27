@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:58:58 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/25 19:28:17 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:27:12 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	**chain_add_one(char **array, char *new)
 {
@@ -33,9 +33,13 @@ char	**chain_add_one(char **array, char *new)
 	return (new_array);
 }
 
-void	ft_leaks(void)
+void	ft_usleep(void)
 {
-	system("leaks -q minishell");
+	int	i;
+
+	i = -1;
+	while (i < 42424242)
+		i++;
 }
 
 void	ft_perror(const char *str)

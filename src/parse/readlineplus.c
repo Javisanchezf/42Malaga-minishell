@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   readlineplus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:47:10 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/03 13:47:13 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:07:31 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	add_history_plus(char *input)
 {

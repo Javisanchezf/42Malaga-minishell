@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_by_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:27:24 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/03 13:46:03 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:07:38 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	ft_size_split_by_pipes(char *input)
 {

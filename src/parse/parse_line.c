@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antdelga <antdelga@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: javiersa <javiersa@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 13:48:21 by javiersa          #+#    #+#             */
-/*   Updated: 2023/06/20 19:42:15 by antdelga         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:07:17 by javiersa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static char	*dollar_normalize(char *input, char *line, int *i, t_data *data)
 {
